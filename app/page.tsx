@@ -7,6 +7,8 @@ import Events from "./components/Events";
 import SplashScreen from "./components/SplashScreen";
 import Gallery from "./components/Gallery";
 import Contact from "./components/Contact";
+import About2 from "./components/About2";
+import KrishnaQuoteMarquee from "./components/Marquee";
 
 
 export default function Home() {
@@ -32,7 +34,8 @@ export default function Home() {
 </a>
    <SplashScreen></SplashScreen>
    <Hero></Hero>
-   <About></About>
+   <About2></About2>
+   <KrishnaQuoteMarquee></KrishnaQuoteMarquee>
    <Timing></Timing>
    <Events></Events>
    <Gallery></Gallery>
