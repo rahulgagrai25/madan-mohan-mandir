@@ -80,21 +80,12 @@ export default function Hero() {
 
         {/* Main Heading */}
         <h1
-  className="mb-4 text-4xl font-bold leading-tight md:text-6xl lg:text-7xl pb-30"
-  style={{
-    fontFamily: "var(--font-cinzel)",
-    backgroundImage:
-      "linear-gradient(180deg, #FFF8DC 0%, #F5D76E 20%, #C2A95B 45%, #8B6914 60%, #F5D76E 80%, #FFF8DC 100%)",
-    backgroundClip: "text",
-    WebkitBackgroundClip: "text",
-    color: "transparent",
-    WebkitTextFillColor: "transparent",
-    filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.55)) drop-shadow(0 0 24px rgba(245,215,110,0.35))",
-  }}
->
-  Madan Mohan
-  <span className="block">Mandir</span>
-</h1>
+          className="mb-4 text-4xl font-bold leading-tight text-amber-50 md:text-6xl lg:text-7xl pb-30"
+          style={{ fontFamily: "var(--font-cinzel)" }}
+        >
+          Madan Mohan
+          <span className="block text-amber-300">Mandir</span>
+        </h1>
 
         {/* Hindi Subheading */}
         {/* <p
