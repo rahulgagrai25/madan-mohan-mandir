@@ -49,7 +49,7 @@ export default function NavBar() {
         <a href="/" className="flex flex-col items-start">
           <h1
             className={`text-xl font-bold tracking-wide transition-colors duration-500 md:text-2xl ${
-              scrolled ? "text-[#800000]" : "text-amber-100"
+              scrolled ? "text-[#800000]" : "text-[#FFF8E7]"
             }`}
             style={{ fontFamily: "var(--font-cinzel)" }}
           >

@@ -90,14 +90,14 @@ export default function Events() {
         <div className="mb-8 flex flex-col items-center justify-between gap-4 sm:mb-10 md:mb-14 md:flex-row md:items-end md:gap-6">
           <div className="text-center md:text-left">
             <p
-              className="mb-2 text-[10px] font-medium uppercase tracking-[0.35em] text-[#C2A95B] sm:text-xs md:mb-3 md:text-base md:tracking-[0.4em]"
+              className="mb-2 text-[10px] font-medium uppercase tracking-[0.35em] text-[#C2A95B] sm:text-xs md:mb-3 md:text-xs md:tracking-[0.4em]"
               style={{ fontFamily: "var(--font-jakarta)" }}
             >
               Celebrations
             </p>
 
             <h2
-              className="mb-3 text-2xl font-bold text-[#800000] sm:text-3xl md:mb-4 md:text-5xl"
+              className="mb-3 text-3xl font-bold text-[#800000] sm:text-3xl md:mb-4 md:text-5xl"
               style={{ fontFamily: "var(--font-cinzel)" }}
             >
               Upcoming <span className="text-[#C2A95B]">Festivals</span>

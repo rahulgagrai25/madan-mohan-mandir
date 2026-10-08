@@ -80,38 +80,46 @@ export default function SplashScreen({
 
   return (
     <div
-      className={`${cinzel.variable} ${jakarta.variable} fixed inset-0 z-[999] flex items-center justify-center overflow-hidden bg-black transition-opacity duration-700 ${
+      className={`${cinzel.variable} ${jakarta.variable} fixed inset-0 z-[999] flex items-center justify-center overflow-hidden bg-[#FFF8E7] transition-opacity duration-700 ${
         phase === "fadeOut" ? "opacity-0" : "opacity-100"
       }`}
     >
-      {/* Fading background image */}
-      <div
+      {/* Background image */}
+      {/* <div
         className={`absolute inset-0 bg-cover bg-center bg-no-repeat transition-all ease-out ${imageOpacity} ${imageScale}`}
         style={{
           backgroundImage: `url(${imageSrc})`,
           transitionDuration: `${transitionMs}ms`,
         }}
       >
-        <div className="absolute inset-0 bg-black/50" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(251,191,36,0.18),_transparent_65%)]" />
-      </div>
+        <div className="absolute inset-0 bg-[#FFF8E7]/85" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#FFF8E7]/70 via-[#FFF8E7]/40 to-[#FFF8E7]/95" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(194,169,91,0.28),_transparent_65%)]" />
+      </div> */}
+
+      
+
+      {/* Soft golden glows */}
+      {/* <div className="pointer-events-none absolute -left-40 top-1/2 h-[500px] w-[500px] -translate-y-1/2 rounded-full bg-[#C2A95B]/15 blur-[120px]" />
+      <div className="pointer-events-none absolute -right-40 top-1/2 h-[500px] w-[500px] -translate-y-1/2 rounded-full bg-[#C2A95B]/15 blur-[120px]" /> */}
+
+      {/* Top & bottom golden lines */}
+      {/* <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#C2A95B]/70 to-transparent" />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-[#C2A95B]/70 to-transparent" /> */}
 
       {/* Center content */}
       <div
         className={`relative z-10 flex flex-col items-center px-6 text-center transition-opacity ease-out ${imageOpacity}`}
         style={{ transitionDuration: `${transitionMs}ms` }}
       >
-        {/* ॐ symbol */}
-        <span
-          className="mb-4 text-5xl text-amber-300 md:text-6xl"
-          style={{ fontFamily: "var(--font-jakarta)" }}
-        >
-          ॐ
-        </span>
+        {/* ॐ badge */}
+        <div className="mb-6 flex h-40 w-40 items-center justify-center rounded-full border border-[#C2A95B]/50 bg-[#C2A95B]/10 backdrop-blur-sm md:h-40 md:w-40">
+          <img src="/elements/om.png" alt="" />
+        </div>
 
-        {/* Main title */}
+        {/* Title */}
         <h1
-          className="text-3xl font-bold tracking-wide text-amber-50 md:text-5xl"
+          className="text-3xl font-bold tracking-wide text-[#800000] md:text-5xl"
           style={{ fontFamily: "var(--font-cinzel)" }}
         >
           Madan Mohan Mandir
@@ -119,25 +127,34 @@ export default function SplashScreen({
 
         {/* Hindi subtitle */}
         <p
-          className="mt-3 text-sm tracking-[0.3em] text-amber-200/80 md:text-base"
+          className="mt-3 text-sm tracking-[0.3em] text-[#C2A95B] md:text-base"
           style={{ fontFamily: "var(--font-jakarta)" }}
         >
           श्री मदन मोहन मंदिर
         </p>
 
-        {/* Decorative divider */}
-        <div className="mt-5 flex items-center justify-center gap-3">
-          <span className="h-[1px] w-12 bg-gradient-to-r from-transparent to-amber-400/70" />
-          <span className="text-xs text-amber-400">✦</span>
-          <span className="h-[1px] w-12 bg-gradient-to-l from-transparent to-amber-400/70" />
+        {/* Divider */}
+        <div className="mt-6 flex items-center justify-center gap-3">
+          <span className="h-[1px] w-12 bg-gradient-to-r from-transparent to-[#C2A95B]/80" />
+          <span className="text-xs text-[#C2A95B]">✦</span>
+          <span className="h-[1px] w-12 bg-gradient-to-l from-transparent to-[#C2A95B]/80" />
         </div>
 
+        {/* Tagline */}
+        {/* <p
+          className="mt-6 max-w-md text-xs font-light leading-relaxed text-[#800000]/70 md:text-sm"
+          style={{ fontFamily: "var(--font-jakarta)" }}
+        >
+          A sacred abode of devotion, where the divine presence of Lord
+          Krishna fills every heart with peace and eternal bliss.
+        </p> */}
+
         {/* Loading dots */}
-        <div className="mt-6 flex items-center gap-2">
+        <div className="mt-8 flex items-center gap-2">
           {[0, 1, 2].map((i) => (
             <span
               key={i}
-              className="h-1.5 w-1.5 animate-pulse rounded-full bg-amber-300/70"
+              className="h-1.5 w-1.5 animate-pulse rounded-full bg-[#C2A95B]"
               style={{ animationDelay: `${i * 200}ms` }}
             />
           ))}

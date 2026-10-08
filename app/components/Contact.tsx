@@ -35,7 +35,7 @@ export default function Contact() {
   return (
     <section
       id="contact"
-      className={`${cinzel.variable} ${jakarta.variable} relative w-full overflow-hidden bg-white py-24 md:py-32`}
+      className={`${cinzel.variable} ${jakarta.variable} relative w-full overflow-hidden bg-white py-12 sm:py-16 md:py-24 lg:py-32`}
     >
       {/* =====================================================
           MANDIR BACKGROUND PATTERN
@@ -77,7 +77,7 @@ export default function Contact() {
       {/* =====================================================
           TOP-LEFT DECORATIVE IMAGE SLOT
       ====================================================== */}
-      <div className="pointer-events-none absolute left-0 top-0 z-20 hidden h-40 w-40 md:block lg:h-56 lg:w-56">
+      <div className="pointer-events-none absolute left-0 top-0 z-20 hidden h-28 w-28 sm:h-32 sm:w-32 md:block md:h-40 md:w-40 lg:h-56 lg:w-56">
         {/* Replace src with your decorative PNG */}
         <Image
           src="/elements/feather.png"
@@ -92,7 +92,7 @@ export default function Contact() {
       {/* =====================================================
           TOP-RIGHT DECORATIVE IMAGE SLOT
       ====================================================== */}
-      <div className="pointer-events-none absolute right-0 top-0 z-20 hidden h-40 w-40 md:block lg:h-56 lg:w-56">
+      <div className="pointer-events-none absolute right-0 top-0 z-20 hidden h-28 w-28 sm:h-32 sm:w-32 md:block md:h-40 md:w-40 lg:h-56 lg:w-56">
         {/* Replace src with your decorative PNG */}
         <Image
           src="/elements/feather.png"
@@ -104,28 +104,28 @@ export default function Contact() {
         />
       </div>
 
-      <div className="relative z-10 mx-auto max-w-7xl px-6 md:px-12">
+      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 md:px-12">
         {/* Heading */}
-        <div className="mb-14 text-center">
+        <div className="mb-8 text-center sm:mb-10 md:mb-14">
           <p
-            className="mb-4 text-xs font-medium uppercase tracking-[0.4em] text-[#C2A95B]"
+            className="mb-2 text-[10px] font-medium uppercase tracking-[0.35em] text-[#C2A95B] sm:mb-3 sm:text-xs sm:tracking-[0.4em]"
             style={{ fontFamily: "var(--font-jakarta)" }}
           >
             We'd Love to Hear From You
           </p>
           <h2
-            className="mb-6 text-3xl font-bold text-[#800000] md:text-5xl"
+            className="mb-3 text-2xl font-bold text-[#800000] sm:mb-4 sm:text-3xl md:mb-6 md:text-5xl"
             style={{ fontFamily: "var(--font-cinzel)" }}
           >
             Get in <span className="text-[#C2A95B]">Touch</span>
           </h2>
-          <div className="mx-auto flex items-center justify-center gap-3">
-            <span className="h-[1px] w-16 bg-gradient-to-r from-transparent to-[#C2A95B]/70" />
-            <span className="text-[#C2A95B]">✦</span>
-            <span className="h-[1px] w-16 bg-gradient-to-l from-transparent to-[#C2A95B]/70" />
+          <div className="mx-auto flex items-center justify-center gap-2 sm:gap-3">
+            <span className="h-[1px] w-10 bg-gradient-to-r from-transparent to-[#C2A95B]/70 sm:w-16" />
+            <span className="text-sm text-[#C2A95B] sm:text-base">✦</span>
+            <span className="h-[1px] w-10 bg-gradient-to-l from-transparent to-[#C2A95B]/70 sm:w-16" />
           </div>
           <p
-            className="mx-auto mt-6 max-w-2xl text-sm font-light leading-relaxed text-[#800000]/70 md:text-base"
+            className="mx-auto mt-3 max-w-2xl text-xs font-light leading-relaxed text-[#800000]/70 sm:mt-4 sm:text-sm md:mt-6 md:text-base"
             style={{ fontFamily: "var(--font-jakarta)" }}
           >
             Planning a visit, offering seva, or just curious? Reach out — the
@@ -133,23 +133,23 @@ export default function Contact() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-[1fr_1.2fr] lg:gap-8">
+        <div className="grid grid-cols-1 gap-4 sm:gap-6 lg:grid-cols-[1fr_1.2fr] lg:gap-8">
           {/* LEFT: Contact info cards */}
-          <div className="space-y-4">
+          <div className="space-y-3 sm:space-y-4">
             {contactInfo.map((c) => (
               <div
                 key={c.title}
-                className="group relative overflow-hidden rounded-2xl border border-[#C2A95B]/25 bg-white/80 p-6 shadow-sm backdrop-blur-sm transition-all duration-500 hover:-translate-y-1 hover:border-[#C2A95B] hover:shadow-md"
+                className="group relative overflow-hidden rounded-xl border border-[#C2A95B]/25 bg-white/80 p-4 shadow-sm backdrop-blur-sm transition-all duration-500 hover:-translate-y-1 hover:border-[#C2A95B] hover:shadow-md sm:rounded-2xl sm:p-6"
               >
                 <div className="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-[#C2A95B]/10 opacity-0 blur-2xl transition-opacity duration-500 group-hover:opacity-100" />
 
-                <div className="relative flex items-start gap-4">
-                  <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl border border-[#C2A95B]/30 bg-[#C2A95B]/5 text-2xl">
+                <div className="relative flex items-start gap-3 sm:gap-4">
+                  <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg border border-[#C2A95B]/30 bg-[#C2A95B]/5 text-xl sm:h-12 sm:w-12 sm:rounded-xl sm:text-2xl">
                     {c.icon}
                   </div>
                   <div>
                     <h3
-                      className="mb-2 text-base font-bold text-[#800000] md:text-lg"
+                      className="mb-1 text-sm font-bold text-[#800000] sm:mb-2 sm:text-base md:text-lg"
                       style={{ fontFamily: "var(--font-cinzel)" }}
                     >
                       {c.title}
@@ -157,7 +157,7 @@ export default function Contact() {
                     {c.lines.map((line) => (
                       <p
                         key={line}
-                        className="text-xs font-light leading-relaxed text-[#800000]/70 md:text-sm"
+                        className="text-[11px] font-light leading-relaxed text-[#800000]/70 sm:text-xs md:text-sm"
                         style={{ fontFamily: "var(--font-jakarta)" }}
                       >
                         {line}
@@ -171,52 +171,52 @@ export default function Contact() {
             {/* Quick action */}
             <a
               href="/contact"
-              className="group flex items-center justify-between rounded-2xl border border-[#C2A95B]/30 bg-gradient-to-r from-[#C2A95B]/[0.08] to-transparent p-6 backdrop-blur-sm transition-all duration-500 hover:border-[#C2A95B] hover:from-[#C2A95B]/[0.15]"
+              className="group flex items-center justify-between rounded-xl border border-[#C2A95B]/30 bg-gradient-to-r from-[#C2A95B]/[0.08] to-transparent p-4 backdrop-blur-sm transition-all duration-500 hover:border-[#C2A95B] hover:from-[#C2A95B]/[0.15] sm:rounded-2xl sm:p-6"
             >
               <div>
                 <p
-                  className="mb-1 text-xs font-medium uppercase tracking-widest text-[#C2A95B]"
+                  className="mb-1 text-[10px] font-medium uppercase tracking-widest text-[#C2A95B] sm:text-xs"
                   style={{ fontFamily: "var(--font-jakarta)" }}
                 >
                   Full Contact Page
                 </p>
                 <p
-                  className="text-sm font-semibold text-[#800000] md:text-base"
+                  className="text-xs font-semibold text-[#800000] sm:text-sm md:text-base"
                   style={{ fontFamily: "var(--font-cinzel)" }}
                 >
                   Departments, FAQs & Map
                 </p>
               </div>
-              <span className="text-2xl text-[#C2A95B] transition-transform duration-300 group-hover:translate-x-1">
+              <span className="text-xl text-[#C2A95B] transition-transform duration-300 group-hover:translate-x-1 sm:text-2xl">
                 →
               </span>
             </a>
           </div>
 
           {/* RIGHT: Quick form */}
-          <div className="relative overflow-hidden rounded-2xl border border-[#C2A95B]/25 bg-gradient-to-br from-[#C2A95B]/[0.05] to-transparent p-6 backdrop-blur-sm md:p-8">
+          <div className="relative overflow-hidden rounded-xl border border-[#C2A95B]/25 bg-gradient-to-br from-[#C2A95B]/[0.30] to-transparent p-4 backdrop-blur-sm sm:rounded-2xl sm:p-6 md:p-8">
             <div className="pointer-events-none absolute -top-16 -right-16 h-48 w-48 rounded-full bg-[#C2A95B]/10 blur-3xl" />
 
             <div className="relative">
               <h3
-                className="mb-2 text-xl font-bold text-[#800000]"
+                className="mb-1 text-lg font-bold text-[#800000] sm:mb-2 sm:text-xl"
                 style={{ fontFamily: "var(--font-cinzel)" }}
               >
                 Send a Quick Message
               </h3>
               <p
-                className="mb-6 text-xs font-light text-[#800000]/60 md:text-sm"
+                className="mb-4 text-[11px] font-light text-[#800000]/60 sm:mb-6 sm:text-xs md:text-sm"
                 style={{ fontFamily: "var(--font-jakarta)" }}
               >
                 We'll respond within 24–48 hours.
               </p>
 
-              <form className="space-y-4">
+              <form className="space-y-3 sm:space-y-4">
                 {/* Name + Email */}
-                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
                   <div>
                     <label
-                      className="mb-2 block text-[10px] font-medium uppercase tracking-widest text-[#C2A95B]"
+                      className="mb-1 block text-[9px] font-medium uppercase tracking-widest text-[#C2A95B] sm:mb-2 sm:text-[10px]"
                       style={{ fontFamily: "var(--font-jakarta)" }}
                     >
                       Name
@@ -224,13 +224,13 @@ export default function Contact() {
                     <input
                       type="text"
                       placeholder="Your name"
-                      className="w-full rounded-xl border border-[#C2A95B]/25 bg-white/60 px-4 py-3 text-sm text-[#800000] placeholder-[#800000]/30 outline-none transition-all duration-300 focus:border-[#C2A95B] focus:bg-white"
+                      className="w-full rounded-lg border border-[#C2A95B]/25 bg-white/60 px-3 py-2.5 text-xs text-[#800000] placeholder-[#800000]/30 outline-none transition-all duration-300 focus:border-[#C2A95B] focus:bg-white sm:rounded-xl sm:px-4 sm:py-3 sm:text-sm"
                       style={{ fontFamily: "var(--font-jakarta)" }}
                     />
                   </div>
                   <div>
                     <label
-                      className="mb-2 block text-[10px] font-medium uppercase tracking-widest text-[#C2A95B]"
+                      className="mb-1 block text-[9px] font-medium uppercase tracking-widest text-[#C2A95B] sm:mb-2 sm:text-[10px]"
                       style={{ fontFamily: "var(--font-jakarta)" }}
                     >
                       Email
@@ -238,7 +238,7 @@ export default function Contact() {
                     <input
                       type="email"
                       placeholder="you@example.com"
-                      className="w-full rounded-xl border border-[#C2A95B]/25 bg-white/60 px-4 py-3 text-sm text-[#800000] placeholder-[#800000]/30 outline-none transition-all duration-300 focus:border-[#C2A95B] focus:bg-white"
+                      className="w-full rounded-lg border border-[#C2A95B]/25 bg-white/60 px-3 py-2.5 text-xs text-[#800000] placeholder-[#800000]/30 outline-none transition-all duration-300 focus:border-[#C2A95B] focus:bg-white sm:rounded-xl sm:px-4 sm:py-3 sm:text-sm"
                       style={{ fontFamily: "var(--font-jakarta)" }}
                     />
                   </div>
@@ -247,7 +247,7 @@ export default function Contact() {
                 {/* Phone */}
                 <div>
                   <label
-                    className="mb-2 block text-[10px] font-medium uppercase tracking-widest text-[#C2A95B]"
+                    className="mb-1 block text-[9px] font-medium uppercase tracking-widest text-[#C2A95B] sm:mb-2 sm:text-[10px]"
                     style={{ fontFamily: "var(--font-jakarta)" }}
                   >
                     Phone (optional)
@@ -255,7 +255,7 @@ export default function Contact() {
                   <input
                     type="tel"
                     placeholder="+91 98765 43210"
-                    className="w-full rounded-xl border border-[#C2A95B]/25 bg-white/60 px-4 py-3 text-sm text-[#800000] placeholder-[#800000]/30 outline-none transition-all duration-300 focus:border-[#C2A95B] focus:bg-white"
+                    className="w-full rounded-lg border border-[#C2A95B]/25 bg-white/60 px-3 py-2.5 text-xs text-[#800000] placeholder-[#800000]/30 outline-none transition-all duration-300 focus:border-[#C2A95B] focus:bg-white sm:rounded-xl sm:px-4 sm:py-3 sm:text-sm"
                     style={{ fontFamily: "var(--font-jakarta)" }}
                   />
                 </div>
@@ -263,15 +263,15 @@ export default function Contact() {
                 {/* Message */}
                 <div>
                   <label
-                    className="mb-2 block text-[10px] font-medium uppercase tracking-widest text-[#C2A95B]"
+                    className="mb-1 block text-[9px] font-medium uppercase tracking-widest text-[#C2A95B] sm:mb-2 sm:text-[10px]"
                     style={{ fontFamily: "var(--font-jakarta)" }}
                   >
                     Message
                   </label>
                   <textarea
-                    rows={4}
+                    rows={3}
                     placeholder="How can we help you?"
-                    className="w-full resize-none rounded-xl border border-[#C2A95B]/25 bg-white/60 px-4 py-3 text-sm text-[#800000] placeholder-[#800000]/30 outline-none transition-all duration-300 focus:border-[#C2A95B] focus:bg-white"
+                    className="w-full resize-none rounded-lg border border-[#C2A95B]/25 bg-white/60 px-3 py-2.5 text-xs text-[#800000] placeholder-[#800000]/30 outline-none transition-all duration-300 focus:border-[#C2A95B] focus:bg-white sm:rounded-xl sm:px-4 sm:py-3 sm:text-sm"
                     style={{ fontFamily: "var(--font-jakarta)" }}
                   />
                 </div>
@@ -279,7 +279,7 @@ export default function Contact() {
                 {/* Submit */}
                 <button
                   type="submit"
-                  className="w-full rounded-full bg-gradient-to-r from-[#C2A95B] to-[#a88f45] px-8 py-3.5 text-sm font-semibold tracking-wide text-white shadow-lg shadow-[#C2A95B]/30 transition-all duration-300 hover:shadow-[#C2A95B]/50 hover:brightness-110"
+                  className="w-full rounded-full bg-gradient-to-r from-[#C2A95B] to-[#a88f45] px-6 py-3 text-xs font-semibold tracking-wide text-white shadow-lg shadow-[#C2A95B]/30 transition-all duration-300 hover:shadow-[#C2A95B]/50 hover:brightness-110 sm:px-8 sm:py-3.5 sm:text-sm"
                   style={{ fontFamily: "var(--font-jakarta)" }}
                 >
                   Send Message →
