@@ -19,7 +19,15 @@ const jakarta = Plus_Jakarta_Sans({
 
 const categories = ["All", "Temple", "Deity", "Festivals", "Aarti", "Devotees"];
 
-const galleryItems = [
+type GalleryItem = {
+  id: number;
+  src: string;
+  category: string;
+  title: string;
+  span: string;
+};
+
+const galleryItems: GalleryItem[] = [
   { id: 1, src: "/gallery/image.png", category: "Temple", title: "Temple Exterior", span: "md:col-span-2 md:row-span-2" },
   { id: 2, src: "/gallery/image.png", category: "Deity", title: "Madan Mohan Shringar", span: "" },
   { id: 3, src: "/gallery/image.png", category: "Aarti", title: "Evening Aarti", span: "" },
@@ -36,23 +44,25 @@ const galleryItems = [
 
 export default function GalleryPage() {
   const [activeCategory, setActiveCategory] = useState("All");
-  const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedImage, setSelectedImage] = useState<GalleryItem | null>(null);
 
   const filteredItems =
     activeCategory === "All"
       ? galleryItems
       : galleryItems.filter((item) => item.category === activeCategory);
 
-  const openLightbox = (item) => setSelectedImage(item);
+  const openLightbox = (item: GalleryItem) => setSelectedImage(item);
   const closeLightbox = () => setSelectedImage(null);
 
   const showNext = () => {
+    if (!selectedImage) return;
     const currentIndex = filteredItems.findIndex((i) => i.id === selectedImage.id);
     const nextIndex = (currentIndex + 1) % filteredItems.length;
     setSelectedImage(filteredItems[nextIndex]);
   };
 
   const showPrev = () => {
+    if (!selectedImage) return;
     const currentIndex = filteredItems.findIndex((i) => i.id === selectedImage.id);
     const prevIndex = (currentIndex - 1 + filteredItems.length) % filteredItems.length;
     setSelectedImage(filteredItems[prevIndex]);
@@ -60,11 +70,10 @@ export default function GalleryPage() {
 
   return (
     <main className={`${cinzel.variable} ${jakarta.variable} min-h-screen bg-black`}>
-     <NavBar></NavBar>
+      <NavBar />
 
       {/* Page Header */}
       <section className="relative w-full overflow-hidden bg-gradient-to-b from-black via-[#0a0503] to-black pt-[140px] pb-16 md:pt-[180px] md:pb-24">
-        {/* Glow */}
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,_rgba(251,191,36,0.12),_transparent_60%)]" />
 
         <div className="relative mx-auto max-w-4xl px-6 text-center md:px-12">
@@ -128,7 +137,7 @@ export default function GalleryPage() {
               <button
                 key={item.id}
                 onClick={() => openLightbox(item)}
-                className={`group relative overflow-hidden rounded-2xl border  hover:cursor-pointer border-amber-400/15 bg-white/[0.02] text-left transition-all duration-500 hover:-translate-y-1 hover:border-amber-400/60 hover:shadow-xl hover:shadow-amber-500/20 ${item.span}`}
+                className={`group relative overflow-hidden rounded-2xl border hover:cursor-pointer border-amber-400/15 bg-white/[0.02] text-left transition-all duration-500 hover:-translate-y-1 hover:border-amber-400/60 hover:shadow-xl hover:shadow-amber-500/20 ${item.span}`}
               >
                 <Image
                   src={item.src}
@@ -138,10 +147,8 @@ export default function GalleryPage() {
                   className="object-cover transition-transform duration-700 group-hover:scale-110"
                 />
 
-                {/* Gradient overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-70 transition-opacity duration-500 group-hover:opacity-90" />
 
-                {/* Category tag */}
                 <span
                   className="absolute top-4 left-4 rounded-full border border-amber-400/40 bg-black/60 px-3 py-1 text-[10px] font-medium uppercase tracking-widest text-amber-200 backdrop-blur-sm"
                   style={{ fontFamily: "var(--font-jakarta)" }}
@@ -149,7 +156,6 @@ export default function GalleryPage() {
                   {item.category}
                 </span>
 
-                {/* Title */}
                 <div className="absolute bottom-0 left-0 right-0 p-4 md:p-5">
                   <h3
                     className="text-base font-semibold text-amber-50 md:text-lg"
@@ -167,10 +173,6 @@ export default function GalleryPage() {
                     </span>
                   </div>
                 </div>
-
-                {/* Corner ornament */}
-                {/* <div className="absolute right-3 top-3 h-5 w-5 border-t border-r border-amber-400/50 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-                <div className="absolute bottom-3 left-3 h-5 w-5 border-b border-l border-amber-400/50 opacity-0 transition-opacity duration-500 group-hover:opacity-100" /> */}
               </button>
             ))}
           </div>
@@ -189,13 +191,13 @@ export default function GalleryPage() {
       {/* Lightbox */}
       {selectedImage && (
         <div
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/95 backdrop-blur-md"
+          className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-black/95 p-4 backdrop-blur-md md:p-8"
           onClick={closeLightbox}
         >
           {/* Close button */}
           <button
             onClick={closeLightbox}
-            className="absolute right-6 top-6 z-10 flex h-10 w-10 items-center justify-center rounded-full border border-amber-400/40 text-amber-200 transition-colors hover:border-amber-400 hover:bg-amber-400/10"
+            className="absolute right-4 top-4 z-10 flex h-10 w-10 items-center justify-center rounded-full border border-amber-400/40 text-amber-200 transition-colors hover:border-amber-400 hover:bg-amber-400/10 md:right-6 md:top-6"
             aria-label="Close"
           >
             ✕
@@ -207,7 +209,7 @@ export default function GalleryPage() {
               e.stopPropagation();
               showPrev();
             }}
-            className="absolute left-4 z-10 flex h-12 w-12 items-center justify-center rounded-full border border-amber-400/40 text-xl text-amber-200 transition-colors hover:border-amber-400 hover:bg-amber-400/10 md:left-8"
+            className="absolute left-2 z-10 flex h-10 w-10 items-center justify-center rounded-full border border-amber-400/40 text-xl text-amber-200 transition-colors hover:border-amber-400 hover:bg-amber-400/10 md:left-6 md:h-12 md:w-12"
             aria-label="Previous"
           >
             ‹
@@ -219,24 +221,25 @@ export default function GalleryPage() {
               e.stopPropagation();
               showNext();
             }}
-            className="absolute right-4 z-10 flex h-12 w-12 items-center justify-center rounded-full border border-amber-400/40 text-xl text-amber-200 transition-colors hover:border-amber-400 hover:bg-amber-400/10 md:right-8"
+            className="absolute right-2 z-10 flex h-10 w-10 items-center justify-center rounded-full border border-amber-400/40 text-xl text-amber-200 transition-colors hover:border-amber-400 hover:bg-amber-400/10 md:right-6 md:h-12 md:w-12"
             aria-label="Next"
           >
             ›
           </button>
 
-          {/* Image */}
+          {/* Image + Caption wrapper */}
           <div
-            className="relative mx-4 max-h-[85vh] w-full max-w-5xl"
+            className="flex w-full max-w-5xl flex-col items-center"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl border border-amber-400/30 shadow-2xl shadow-amber-500/20">
+            {/* Image container — capped so caption always fits */}
+            <div className="relative h-[70vh] w-full overflow-hidden rounded-2xl border border-amber-400/30 shadow-2xl shadow-amber-500/20 md:h-[75vh]">
               <Image
                 src={selectedImage.src}
                 alt={selectedImage.title}
                 fill
                 sizes="90vw"
-                className="object-contain bg-black"
+                className="object-contain"
               />
             </div>
 
