@@ -109,24 +109,7 @@ export default function About2() {
         }}
       />
 
-      {/* Large subtle mandala circles - left */}
-      <div className="pointer-events-none absolute -left-32 top-20 h-[420px] w-[420px] rounded-full border border-[#C2A95B]/10" />
-
-      <div className="pointer-events-none absolute -left-24 top-28 h-[340px] w-[340px] rounded-full border border-[#C2A95B]/10" />
-
-      <div className="pointer-events-none absolute -left-16 top-36 h-[260px] w-[260px] rounded-full border border-[#C2A95B]/10" />
-
-      {/* Large subtle mandala circles - right */}
-      <div className="pointer-events-none absolute -right-32 bottom-10 h-[420px] w-[420px] rounded-full border border-[#C2A95B]/10" />
-
-      <div className="pointer-events-none absolute -right-24 bottom-20 h-[340px] w-[340px] rounded-full border border-[#C2A95B]/10" />
-
-      <div className="pointer-events-none absolute -right-16 bottom-28 h-[260px] w-[260px] rounded-full border border-[#C2A95B]/10" />
-
-      {/* Soft golden glow */}
-      <div className="pointer-events-none absolute -left-40 -top-40 h-[500px] w-[500px] rounded-full bg-[#C2A95B]/5 blur-3xl" />
-
-      <div className="pointer-events-none absolute -bottom-40 -right-40 h-[500px] w-[500px] rounded-full bg-[#800000]/5 blur-3xl" />
+      
 
       {/* =====================================================
           MAIN CONTENT

@@ -1,4 +1,5 @@
 import { Cinzel_Decorative, Plus_Jakarta_Sans } from "next/font/google";
+import Link from "next/link";
 
 const cinzel = Cinzel_Decorative({
   subsets: ["latin"],
@@ -12,21 +13,18 @@ const jakarta = Plus_Jakarta_Sans({
   variable: "--font-jakarta",
 });
 
-const quickLinks = [
-  { name: "Home", href: "#home" },
-  { name: "About", href: "#about" },
-  { name: "Darshan", href: "#darshan" },
-  { name: "Events", href: "#events" },
-  { name: "Gallery", href: "#gallery" },
-  { name: "Contact", href: "#contact" },
-];
+/* ============================================================
+   LINKS — aligned with NavBar
+============================================================ */
 
-const sevas = [
-  { name: "Donate", href: "#donate" },
-  { name: "Annadan Seva", href: "#annadan" },
-  { name: "Gau Seva", href: "#gau-seva" },
-  { name: "Book Aarti", href: "#aarti" },
-  { name: "Volunteer", href: "#volunteer" },
+const quickLinks = [
+  { name: "Home", href: "/" },
+  { name: "About", href: "/about" },
+  { name: "History", href: "/history" },
+  { name: "Darshan", href: "/darshan" },
+  { name: "Events", href: "/events" },
+  { name: "Gallery", href: "/gallery" },
+  { name: "Contact", href: "/contact" },
 ];
 
 const socials = [
@@ -79,13 +77,12 @@ export default function Footer() {
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{
-          backgroundImage:
-            "url('/hero/hero2.png')",
+          backgroundImage: "url('/hero/hero2.png')",
         }}
       />
 
       {/* Fade overlay: transparent at top → gold at bottom */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#C2A95B]/70 via-[#b39a4f]/85 to-[#a88f45] " />
+      <div className="absolute inset-0 bg-gradient-to-b from-[#C2A95B]/30 via-[#b39a4f]/60 to-[#800000]" />
 
       {/* Subtle top divider */}
       <div className="relative z-20 h-[1px] w-full bg-gradient-to-r from-transparent via-white/50 to-transparent" />
@@ -96,8 +93,8 @@ export default function Footer() {
       <div className="relative z-10 mx-auto max-w-7xl px-5 pt-10 pb-6 md:px-12 md:pt-20 md:pb-10">
         {/* BRAND HERO — centered logo + name + tagline */}
         <div className="mb-8 flex flex-col items-center text-center md:mb-14">
-          <div className="mb-3 flex h-14 w-14 items-center justify-center rounded-full border border-white/40 bg-white/10 backdrop-blur-sm md:mb-5 md:h-20 md:w-20">
-            <span className="text-2xl text-white md:text-4xl">ॐ</span>
+          <div className="mb-6 flex h-40 w-40 items-center justify-center rounded-full border border-[#C2A95B]/50 bg-[#C2A95B]/10 backdrop-blur-sm md:h-40 md:w-40">
+            <img src="/elements/om.png" alt="" />
           </div>
 
           <h3
@@ -108,7 +105,7 @@ export default function Footer() {
           </h3>
 
           <p
-            className="mb-3 text-[9px] uppercase tracking-[0.3em] text-white/80 md:mb-6 md:text-xs md:tracking-[0.4em]"
+            className="mb-3 rounded bg-[#C2A95B]/40 p-2 text-[9px] uppercase tracking-[0.3em] text-white/80 md:mb-6 md:text-xs md:tracking-[0.4em]"
             style={{ fontFamily: "var(--font-jakarta)" }}
           >
             Boreya · Kanke, Ranchi - Jharkhand - 834006
@@ -137,89 +134,131 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* NAV SPLIT — Quick Links (left) | Seva (right) */}
-        <div className="mx-auto mb-8 grid max-w-4xl grid-cols-2 gap-6 border-t border-white/20 pt-6 sm:gap-10 md:mb-14 md:pt-12">
-          {/* Quick Links */}
-          <div className="text-left">
+        {/* QUICK LINKS + DONATE CTA */}
+        <div className="mx-auto mb-8 max-w-3xl border-t border-white/20 pt-6 md:mb-14 md:pt-12">
+          {/* Quick Links — matches NavBar routes, centered */}
+          <div className="text-center">
             <h4
-              className="mb-3 text-[10px] font-semibold uppercase tracking-[0.2em] text-white md:mb-5 md:text-sm md:tracking-[0.25em]"
+              className="mb-4 text-[10px] font-semibold uppercase tracking-[0.2em] text-white md:mb-6 md:text-sm md:tracking-[0.25em]"
               style={{ fontFamily: "var(--font-jakarta)" }}
             >
               Quick Links
             </h4>
-            <ul className="space-y-2 md:grid md:grid-cols-2 md:gap-x-6 md:gap-y-3 md:space-y-0">
+
+            <ul className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2.5 md:gap-x-8 md:gap-y-3">
               {quickLinks.map((link) => (
                 <li key={link.name}>
-                  <a
+                  <Link
                     href={link.href}
                     className="group inline-flex items-center gap-1.5 text-xs font-light text-white/80 transition-colors duration-300 hover:text-white md:gap-2 md:text-sm"
                     style={{ fontFamily: "var(--font-jakarta)" }}
                   >
                     <span className="h-[1px] w-0 bg-white transition-all duration-300 group-hover:w-3" />
                     {link.name}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Seva */}
-          <div className="text-left">
-            <h4
-              className="mb-3 text-[10px] font-semibold uppercase tracking-[0.2em] text-white md:mb-5 md:text-sm md:tracking-[0.25em]"
+          {/* Donate CTA */}
+          <div className="mt-8 flex justify-center md:mt-10">
+            <Link
+              href="/donate"
+              className="group inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#C2A95B] via-[#D4BC72] to-[#C2A95B] px-7 py-3 text-xs font-semibold uppercase tracking-[0.2em] text-[#3D2A00] shadow-md transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg md:px-9 md:py-3.5 md:text-sm"
               style={{ fontFamily: "var(--font-jakarta)" }}
             >
-              Seva &amp; Offerings
-            </h4>
-            <ul className="space-y-2 md:grid md:grid-cols-2 md:gap-x-6 md:gap-y-3 md:space-y-0">
-              {sevas.map((link) => (
-                <li key={link.name}>
-                  <a
-                    href={link.href}
-                    className="group inline-flex items-center gap-1.5 text-xs font-light text-white/80 transition-colors duration-300 hover:text-white md:gap-2 md:text-sm"
-                    style={{ fontFamily: "var(--font-jakarta)" }}
-                  >
-                    <span className="h-[1px] w-0 bg-white transition-all duration-300 group-hover:w-3" />
-                    {link.name}
-                  </a>
-                </li>
-              ))}
-            </ul>
+              <span>Donate</span>
+              <span className="text-sm transition-transform duration-300 group-hover:translate-x-1">
+                →
+              </span>
+            </Link>
           </div>
         </div>
 
-        {/* CONTACT + NEWSLETTER BAR (hidden on md+) */}
-        <div className="mx-auto mb-8 grid max-w-5xl grid-cols-1 gap-5 rounded-2xl border border-white/25 bg-white/10 p-4 backdrop-blur-sm md:mb-14 md:grid-cols-2 md:items-center md:gap-8 md:p-8 md:hidden lg:hidden">
-          {/* Contact info */}
-          <div className="space-y-1.5 text-center md:space-y-3 md:text-left">
+        {/* =====================================================
+            VISIT US — refined contact card (mobile only)
+        ====================================================== */}
+        <div className="mx-auto mb-8 max-w-md rounded-2xl border border-white/25 bg-white/10 p-5 backdrop-blur-sm md:hidden">
+          {/* Header */}
+          <div className="mb-4 flex items-center justify-center gap-2">
+            <span className="h-px w-6 bg-[#C2A95B]" />
             <h4
-              className="mb-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-white md:mb-3 md:text-sm md:tracking-[0.25em]"
+              className="text-[10px] font-semibold uppercase tracking-[0.25em] text-[#C2A95B]"
               style={{ fontFamily: "var(--font-jakarta)" }}
             >
               Visit Us
             </h4>
-
-            <p
-              className="text-xs font-light leading-relaxed text-white/80 md:text-sm"
-              style={{ fontFamily: "var(--font-jakarta)" }}
-            >
-              📍 Madan Mohan Mandir, Vrindavan, UP – 281121
-            </p>
-            <a
-              href="tel:+919999999999"
-              className="block text-xs font-light text-white/80 transition-colors hover:text-white md:text-sm"
-              style={{ fontFamily: "var(--font-jakarta)" }}
-            >
-              📞 +91 99999 99999
-            </a>
-            <a
-              href="mailto:info@madanmohanmandir.org"
-              className="block text-xs font-light text-white/80 transition-colors hover:text-white md:text-sm"
-              style={{ fontFamily: "var(--font-jakarta)" }}
-            >
-              ✉️ info@madanmohanmandir.org
-            </a>
+            <span className="h-px w-6 bg-[#C2A95B]" />
           </div>
+
+          {/* Contact items */}
+          <ul className="space-y-3">
+            {/* Address */}
+            <li className="flex items-start gap-3">
+              <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-[#C2A95B]/40 bg-[#C2A95B]/10 text-sm">
+                <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M12 21C15.5 17.4 19 14.1764 19 10.2C19 6.22355 15.866 3 12 3C8.13401 3 5 6.22355 5 10.2C5 14.1764 8.5 17.4 12 21Z" stroke="#C2A95B" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path> </g></svg>
+              </span>
+              <div className="min-w-0">
+                <p
+                  className="text-[10px] uppercase tracking-[0.15em] text-white/60"
+                  style={{ fontFamily: "var(--font-jakarta)" }}
+                >
+                  Address
+                </p>
+                <p
+                  className="text-[12px] font-light leading-snug text-white/90"
+                  style={{ fontFamily: "var(--font-jakarta)" }}
+                >
+                  Madan Mohan Mandir, Boreya, Kanke, Ranchi – 834006
+                </p>
+              </div>
+            </li>
+
+            {/* Phone */}
+            <li className="flex items-start gap-3">
+              <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-[#C2A95B]/40 bg-[#C2A95B]/10 text-sm">
+                <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M12 7V12L14.5 10.5M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="#C2A95B" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path> </g></svg>
+              </span>
+              <div className="min-w-0">
+                <p
+                  className="text-[10px] uppercase tracking-[0.15em] text-white/60"
+                  style={{ fontFamily: "var(--font-jakarta)" }}
+                >
+                  Phone
+                </p>
+                <a
+                  href="tel:+917488395587"
+                  className="text-[12px] font-light text-white/90 transition-colors hover:text-[#C2A95B]"
+                  style={{ fontFamily: "var(--font-jakarta)" }}
+                >
+                  +91 74883 95587
+                </a>
+              </div>
+            </li>
+
+            {/* Email */}
+            <li className="flex items-start gap-3">
+              <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-[#C2A95B]/40 bg-[#C2A95B]/10 text-sm">
+                <svg width="20px" height="20px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="#000000"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <title></title> <g id="Complete"> <g id="mail"> <g> <polyline fill="none" points="4 8.2 12 14.1 20 8.2" stroke="#C2A95B" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"></polyline> <rect fill="none" height="14" rx="2" ry="2" stroke="#C2A95B" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" width="18" x="3" y="6.5"></rect> </g> </g> </g> </g></svg>
+              </span>
+              <div className="min-w-0">
+                <p
+                  className="text-[10px] uppercase tracking-[0.15em] text-white/60"
+                  style={{ fontFamily: "var(--font-jakarta)" }}
+                >
+                  Email
+                </p>
+                <a
+                  href="mailto:madanmohanmandir1665@gmail.com"
+                  className="break-all text-[12px] font-light text-white/90 transition-colors hover:text-[#C2A95B]"
+                  style={{ fontFamily: "var(--font-jakarta)" }}
+                >
+                  madanmohanmandir1665@gmail.com
+                </a>
+              </div>
+            </li>
+          </ul>
         </div>
 
         {/* Divider */}
@@ -236,10 +275,10 @@ export default function Footer() {
             style={{ fontFamily: "var(--font-jakarta)" }}
           >
             © {new Date().getFullYear()} Madan Mohan Mandir. All rights
-            reserved. Crafted with Devotion from Ranchi &nbsp;<span className="text-white">❤</span>
+            reserved. Crafted with Devotion from Ranchi &nbsp;
+            <span className="text-white">❤</span>
           </p>
         </div>
-
       </div>
     </footer>
   );

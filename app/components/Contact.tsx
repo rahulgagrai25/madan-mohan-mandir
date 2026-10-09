@@ -17,17 +17,17 @@ const contactInfo = [
   {
     icon: "📍",
     title: "Visit Us",
-    lines: ["Mandir Marg, Near River Ghat", "Vrindavan, UP 281121"],
+    lines: ["Madan Mohan Mandir, Boreya, Kanke", "Ranchi, Jharkhand – 834006 (India)"],
   },
   {
     icon: "📞",
     title: "Call Us",
-    lines: ["+91 98765 43210", "Mon–Sat · 9 AM – 6 PM"],
+    lines: ["+91 74883 95587", "Mon–Sat : 5 AM – 9 PM"],
   },
   {
     icon: "✉️",
     title: "Email Us",
-    lines: ["info@madanmohanmandir.org", "Replies within 24–48 hrs"],
+    lines: ["madanmohanmandir1665@gmail.com", "Replies within 24–48 hrs"],
   },
 ];
 
@@ -184,7 +184,7 @@ export default function Contact() {
                   className="text-xs font-semibold text-[#800000] sm:text-sm md:text-base"
                   style={{ fontFamily: "var(--font-cinzel)" }}
                 >
-                  Departments, FAQs & Map
+                  Departments & Map
                 </p>
               </div>
               <span className="text-xl text-[#C2A95B] transition-transform duration-300 group-hover:translate-x-1 sm:text-2xl">

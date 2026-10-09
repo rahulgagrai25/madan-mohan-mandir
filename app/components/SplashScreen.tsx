@@ -127,7 +127,7 @@ export default function SplashScreen({
 
         {/* Hindi subtitle */}
         <p
-          className="mt-3 text-sm tracking-[0.3em] text-[#C2A95B] md:text-base"
+          className="mt-3 text-sm tracking-[0.3em] text-[#C2A95B] md:text-2xl"
           style={{ fontFamily: "var(--font-jakarta)" }}
         >
           श्री मदन मोहन मंदिर

@@ -2,8 +2,6 @@
 
 import { useState } from "react";
 import { Cinzel_Decorative, Plus_Jakarta_Sans } from "next/font/google";
-import Image from "next/image";
-
 
 const cinzel = Cinzel_Decorative({
   subsets: ["latin"],
@@ -17,811 +15,722 @@ const jakarta = Plus_Jakarta_Sans({
   variable: "--font-jakarta",
 });
 
-/* ---------------- Data ---------------- */
+/* ============================================================
+   DATA
+============================================================ */
 
-const sevaOptions = [
+const donationTiers = [
   {
-    id: "annadan",
-    icon: "🍛",
-    name: "Annadan Seva",
-    tagline: "Feed a Devotee",
-    desc: "Sponsor a day of free meals for pilgrims and the underprivileged. Over 5,000 plates are served daily at the temple kitchen.",
-    amounts: [501, 1100, 2100, 5100],
-    impact: "1 plate = ₹50 · 100 plates = ₹5,000",
-    highlight: false,
+    amount: "501",
+    label: "Deepa Seva",
+    text: "Sponsor a day of ghee lamps offered at the evening aarti.",
+    popular: false,
   },
   {
-    id: "gau",
-    icon: "🐄",
-    name: "Gau Seva",
-    tagline: "Care for the Sacred Cow",
-    desc: "Support the temple gaushala — shelter, fodder, and medical care for over 200 cows and calves.",
-    amounts: [501, 1100, 2100, 5100],
-    impact: "A month of fodder for one cow = ₹1,100",
-    highlight: false,
+    amount: "1100",
+    label: "Pushpa Seva",
+    text: "Offer fresh flowers and garlands for the daily shringar of the deity.",
+    popular: false,
   },
   {
-    id: "vidya",
-    icon: "📚",
-    name: "Vidya Daan",
-    tagline: "Educate a Child",
-    desc: "Provide free education, books, and school supplies to underprivileged children in the temple's pathshala.",
-    amounts: [1001, 2500, 5001, 11000],
-    impact: "One year of schooling = ₹5,001",
-    highlight: true,
+    amount: "2501",
+    label: "Bhog Seva",
+    text: "Provide a full day's sattvic bhog offering to the Lord.",
+    popular: false,
   },
   {
-    id: "aarti",
-    icon: "🪔",
-    name: "Aarti Seva",
-    tagline: "Sponsor a Daily Aarti",
-    desc: "Sponsor one of the four daily aartis as an offering of gratitude. Includes sankalp in your name and prasad delivery.",
-    amounts: [251, 501, 1100, 2501],
-    impact: "One aarti sponsorship = ₹501",
-    highlight: false,
+    amount: "5100",
+    label: "Gau Seva",
+    text: "Support the temple gaushala — fodder and care for the cows.",
+    popular: false,
   },
   {
-    id: "medical",
-    icon: "🩺",
-    name: "Medical Seva",
-    tagline: "Heal the Needy",
-    desc: "Support the weekly free medical camp — doctor consultations, medicines, and health checkups for the poor.",
-    amounts: [501, 1100, 2501, 5001],
-    impact: "One patient's treatment = ₹250",
-    highlight: false,
+    amount: "11000",
+    label: "Festival Seva",
+    text: "Contribute to the celebration of a major festival like Janmashtami.",
+    popular: false,
   },
   {
-    id: "temple",
-    icon: "🛕",
-    name: "Temple Preservation",
-    tagline: "Preserve the Heritage",
-    desc: "Contribute to the upkeep, renovation, and beautification of the temple — flowers, lighting, and restoration.",
-    amounts: [1100, 2501, 5001, 11000],
-    impact: "Daily flower offering = ₹1,100",
-    highlight: false,
+    amount: "25000",
+    label: "Mandir Seva",
+    text: "Support the upkeep, repairs and daily running of the temple.",
+    popular: false,
   },
 ];
 
-const presetAmounts = [251, 501, 1100, 2501, 5001, 11000];
-
-const impactStats = [
-  { value: "5,000+", label: "Meals Served Daily" },
-  { value: "200+", label: "Cows Cared For" },
-  { value: "450+", label: "Children Educated" },
-  { value: "10,000+", label: "Patients Treated/Year" },
+const sevaPurposes = [
+  {
+    icon: "🪔",
+    title: "Daily Puja & Aarti",
+    text: "Oil, ghee, wicks, camphor and flowers for the five daily aartis offered at the temple.",
+  },
+  {
+    icon: "🌸",
+    title: "Deity Shringar",
+    text: "Fresh flowers, sandalwood paste and ornaments for the daily adornment of the Lord.",
+  },
+  {
+    icon: "🍛",
+    title: "Bhog & Prasad",
+    text: "Sattvic food offerings prepared in the temple kitchen and distributed to devotees as prasad.",
+  },
+  {
+    icon: "🛕",
+    title: "Temple Upkeep",
+    text: "Maintenance of the 17th-century structure, the courtyard and the boundary wall built in 1668.",
+  },
+  {
+    icon: "🎉",
+    title: "Festival Celebrations",
+    text: "Support for Janmashtami, Radhashtami, Annakut and the other great festivals of the year.",
+  },
+  {
+    icon: "🐄",
+    title: "Gau Seva",
+    text: "Fodder, shelter and medical care for the cows kept in the temple gaushala.",
+  },
+  {
+    icon: "📚",
+    title: "Scriptures & Study",
+    text: "Preservation of temple texts, archival work and support for the study of the Bhakti tradition.",
+  },
+  {
+    icon: "🍲",
+    title: "Annadaan",
+    text: "Free meals offered to pilgrims, visitors and those in need in the spirit of the temple's founding.",
+  },
 ];
 
 const paymentMethods = [
-  { icon: "💳", label: "Credit / Debit Card", sub: "Visa, Mastercard, RuPay, Amex" },
-  { icon: "🏦", label: "Net Banking", sub: "All major Indian banks" },
-  { icon: "📱", label: "UPI", sub: "GPay, PhonePe, Paytm, BHIM" },
-  { icon: "🌐", label: "International", sub: "For overseas devotees" },
+  {
+    icon: "🏦",
+    title: "Bank Transfer",
+    lines: [
+      "Account Name: Madan Mohan Mandir Trust",
+      "Account No: 0000 1111 2222 3333",
+      "IFSC: SBIN0001234",
+      "Bank: State Bank of India, Kanke Branch",
+    ],
+  },
+  {
+    icon: "📱",
+    title: "UPI",
+    lines: [
+      "UPI ID: madanmohan@upi",
+      "Or scan the QR code at the temple counter",
+      "Accepted apps: GPay, PhonePe, Paytm, BHIM",
+    ],
+  },
+  {
+    icon: "💳",
+    title: "Online Payment",
+    lines: [
+      "Debit & Credit Cards accepted",
+      "Net Banking available",
+      "A receipt is issued for every donation",
+    ],
+  },
+  {
+    icon: "🙏",
+    title: "In Person",
+    lines: [
+      "Visit the temple counter during darshan hours",
+      "Cash and cheque accepted",
+      "All offerings are recorded in the temple register",
+    ],
+  },
 ];
 
-const trustPoints = [
-  { icon: "🔒", title: "Secure Payments", desc: "256-bit SSL encryption via Razorpay / Stripe" },
-  { icon: "📜", title: "80G Tax Exemption", desc: "All donations are eligible for tax deduction" },
-  { icon: "🧾", title: "Instant Receipt", desc: "Digital receipt emailed immediately" },
-  { icon: "🙏", title: "100% to Seva", desc: "Zero admin fees — every rupee serves the Lord" },
+const transparency = [
+  {
+    title: "Every Rupee Accounted For",
+    text: "All donations are recorded and used solely for the purposes of the temple and its seva activities.",
+  },
+  {
+    title: "Annual Records",
+    text: "The temple maintains annual records of income and expenditure, which are available to trustees and auditors.",
+  },
+  {
+    title: "No Middlemen",
+    text: "Your offering reaches the temple directly. There is no third party involved in the donation process.",
+  },
+  {
+    title: "Tax Exemption",
+    text: "The trust is registered under Section 80G. Please write to us for a certificate and further details.",
+  },
 ];
 
 const faqs = [
   {
-    q: "Is my donation tax-deductible?",
-    a: "Yes. Madan Mohan Mandir Trust is registered under Section 80G of the Income Tax Act. You will receive an 80G certificate via email within 24 hours of your donation.",
+    q: "Is my donation tax exempt?",
+    a: "Yes, the Madan Mohan Mandir Trust is registered under Section 80G of the Income Tax Act. To receive a donation receipt and 80G certificate, please share your PAN and address after making your donation.",
   },
   {
-    q: "Can I donate from outside India?",
-    a: "Yes. We accept international donations via credit card, PayPal, and wire transfer. For FCRA-compliant foreign donations, please contact seva@madanmohanmandir.org.",
-  },
-  {
-    q: "How is my donation used?",
-    a: "100% of your donation goes directly to the seva you choose. Our administrative costs are covered separately by trustee contributions. You will receive a detailed impact report annually.",
-  },
-  {
-    q: "Can I set up a recurring monthly donation?",
-    a: "Yes. Toggle 'Monthly' above any seva card to set up an automatic recurring donation. You can pause or cancel anytime from your donor dashboard.",
+    q: "Can I donate for a specific purpose?",
+    a: "Absolutely. You can offer for a specific seva — daily puja, bhog, gau seva, festival celebration, or temple upkeep. Just mention your chosen purpose when making the donation.",
   },
   {
     q: "Will I receive a receipt?",
-    a: "Absolutely. An instant digital receipt is emailed to you, and a physical receipt is posted within 7 working days for donations above ₹5,000.",
+    a: "Yes. A receipt is issued for every donation, whether made online, by bank transfer, or in person at the temple counter. Please provide your details so we can send the receipt to you.",
   },
   {
-    q: "Can I dedicate my donation in someone's name?",
-    a: "Yes. During checkout, you can add a dedication note — 'In memory of', 'In honour of', or a special prayer intention — which will be read during the next aarti.",
+    q: "Can I donate in memory of a loved one?",
+    a: "Yes. Many devotees make offerings in memory of a departed family member or in honour of a special occasion. Please write to us and we will arrange the seva accordingly.",
+  },
+  {
+    q: "How do I know my donation is being used well?",
+    a: "The temple trust maintains records of all income and expenditure, and the accounts are reviewed annually. If you would like to know how your offering was used, please write to us.",
+  },
+  {
+    q: "Can I donate from outside India?",
+    a: "Currently, the temple accepts domestic donations within India. For foreign contributions, please contact us directly before making a transfer.",
   },
 ];
 
-/* ---------------- Component ---------------- */
+/* ============================================================
+   PAGE
+============================================================ */
 
 export default function DonatePage() {
-  const [frequency, setFrequency] = useState("once"); // "once" | "monthly"
-  const [selectedSeva, setSelectedSeva] = useState("vidya");
-  const [amount, setAmount] = useState(2501);
+  const [selectedTier, setSelectedTier] = useState<string | null>("2501");
   const [customAmount, setCustomAmount] = useState("");
-  const [openFaq, setOpenFaq] = useState(null);
+  const [openFaq, setOpenFaq] = useState<number | null>(0);
 
-  const handleAmountSelect = (val) => {
-    setAmount(val);
+  const activeAmount = customAmount || selectedTier || "";
+
+  const handleTierClick = (amount: string) => {
+    setSelectedTier(amount);
     setCustomAmount("");
   };
 
-  const handleCustomChange = (e) => {
-    const val = e.target.value.replace(/[^0-9]/g, "");
-    setCustomAmount(val);
-    setAmount(val ? parseInt(val) : 0);
+  const handleCustomChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCustomAmount(e.target.value.replace(/[^0-9]/g, ""));
+    setSelectedTier(null);
   };
 
-  const finalAmount = customAmount ? parseInt(customAmount) : amount;
-
   return (
-    <main className={`${cinzel.variable} ${jakarta.variable} min-h-screen bg-black`}>
+    <main
+      className={`${cinzel.variable} ${jakarta.variable} w-full pb-20 md:pb-0`}
+    >
+      {/* ============================================================
+          SECTION 1 — HERO
+      ============================================================ */}
+      <section className="relative w-full overflow-hidden bg-white py-12 md:py-24 max-sm:pt-30">
+        <div
+          className="pointer-events-none absolute inset-0 opacity-[0.055]"
+          style={{
+            backgroundImage: `
+              radial-gradient(circle at center, #C2A95B 1px, transparent 1.5px),
+              linear-gradient(45deg, transparent 48%, #C2A95B 49%, #C2A95B 51%, transparent 52%),
+              linear-gradient(-45deg, transparent 48%, #C2A95B 49%, #C2A95B 51%, transparent 52%)
+            `,
+            backgroundSize: "36px 36px",
+          }}
+        />
+        <div className="pointer-events-none absolute -left-40 -top-40 h-[400px] w-[400px] rounded-full bg-[#C2A95B]/5 blur-3xl md:h-[500px] md:w-[500px]" />
+        <div className="pointer-events-none absolute -bottom-40 -right-40 h-[400px] w-[400px] rounded-full bg-[#800000]/5 blur-3xl md:h-[500px] md:w-[500px]" />
 
+        <div className="relative z-10 mx-auto max-w-7xl px-4 md:px-10">
+          <div className="text-center">
+            <p
+              className="mb-2 text-[10px] font-medium uppercase tracking-[0.3em] text-[#C2A95B] md:mb-3 md:text-xs md:tracking-[0.4em]"
+              style={{ fontFamily: "var(--font-jakarta)" }}
+            >
+              Dakshina · Seva · Offering
+            </p>
 
-      {/* ============ PAGE HEADER ============ */}
-      <section className="relative w-full overflow-hidden bg-gradient-to-b from-black via-[#0a0503] to-black pt-[140px] pb-16 md:pt-[180px] md:pb-24">
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,_rgba(251,191,36,0.14),_transparent_60%)]" />
+            <h1
+              className="text-2xl font-bold leading-tight text-[#800000] sm:text-4xl md:text-5xl"
+              style={{ fontFamily: "var(--font-cinzel)" }}
+            >
+              Support the <span className="text-[#C2A95B]">Temple</span>
+            </h1>
 
-        <div className="relative mx-auto max-w-4xl px-6 text-center md:px-12">
-          <p
-            className="mb-4 text-xs font-medium uppercase tracking-[0.4em] text-amber-300/90"
-            style={{ fontFamily: "var(--font-jakarta)" }}
-          >
-            Offer Your Seva
-          </p>
-          <h1
-            className="mb-6 text-4xl font-bold leading-tight text-amber-50 md:text-6xl"
-            style={{ fontFamily: "var(--font-cinzel)" }}
-          >
-            Donate & <span className="text-amber-300">Serve</span>
-          </h1>
+            <div className="mt-4 flex items-center justify-center gap-3 md:mt-6">
+              <span className="h-px w-10 bg-[#C2A95B] md:w-12" />
+              <span className="text-sm text-[#C2A95B] md:text-base">✦</span>
+              <span className="h-px w-10 bg-[#C2A95B] md:w-12" />
+            </div>
 
-          <div className="mx-auto mb-6 flex items-center justify-center gap-3">
-            <span className="h-[1px] w-16 bg-gradient-to-r from-transparent to-amber-400/70" />
-            <span className="text-amber-400">✦</span>
-            <span className="h-[1px] w-16 bg-gradient-to-l from-transparent to-amber-400/70" />
-          </div>
+            <p
+              className="mx-auto mt-4 max-w-2xl text-xs font-light leading-relaxed text-[#800000]/70 md:mt-6 md:text-base"
+              style={{ fontFamily: "var(--font-jakarta)" }}
+            >
+              For over three centuries, the Madan Mohan Mandir has been kept
+              alive by the love of ordinary devotees. Every lamp lit, every
+              flower offered, every meal shared — is made possible by offerings
+              like yours.
+            </p>
 
-          <p
-            className="mx-auto max-w-2xl text-sm font-light leading-relaxed text-amber-50/70 md:text-base"
-            style={{ fontFamily: "var(--font-jakarta)" }}
-          >
-            Every offering at Madan Mohan Mandir is an act of love. Your
-            generosity feeds the hungry, cares for the sacred cow, educates the
-            young, and keeps the lamp of devotion burning.
-          </p>
-
-          {/* Sanskrit line */}
-          <p
-            className="mt-8 text-lg font-light text-amber-200/90 md:text-xl"
-            style={{ fontFamily: "var(--font-jakarta)" }}
-          >
-            दानं परमं धर्मः
-          </p>
-          <p
-            className="mt-1 text-xs italic text-amber-100/50"
-            style={{ fontFamily: "var(--font-jakarta)" }}
-          >
-            "Giving is the highest dharma."
-          </p>
-        </div>
-      </section>
-
-      {/* ============ IMPACT STATS ============ */}
-      <section className="relative w-full border-y border-amber-400/15 bg-[#0a0503] py-12">
-        <div className="mx-auto grid max-w-6xl grid-cols-2 gap-6 px-6 md:grid-cols-4 md:px-12">
-          {impactStats.map((s) => (
-            <div key={s.label} className="text-center">
+            {/* Sanskrit blessing */}
+            <div className="mx-auto mt-6 max-w-xl rounded-2xl border border-[#C2A95B]/30 bg-[#FFF8E7] p-5 md:mt-10 md:p-8">
               <p
-                className="mb-1 text-3xl font-bold text-amber-300 md:text-4xl"
+                className="text-xl font-bold leading-relaxed text-[#800000] md:text-4xl"
                 style={{ fontFamily: "var(--font-cinzel)" }}
               >
-                {s.value}
+                दानं परमं धर्मः
               </p>
-              <p
-                className="text-[10px] font-medium uppercase tracking-[0.25em] text-amber-100/60 md:text-xs"
-                style={{ fontFamily: "var(--font-jakarta)" }}
-              >
-                {s.label}
-              </p>
+              <div className="mx-auto my-3 flex items-center justify-center gap-3 md:my-4">
+                <span className="h-px w-8 bg-[#C2A95B]/50" />
+                <span className="text-xs text-[#C2A95B]">✦</span>
+                <span className="h-px w-8 bg-[#C2A95B]/50" />
+              </div>
             </div>
-          ))}
+          </div>
         </div>
       </section>
 
-      {/* ============ DONATION WIDGET ============ */}
-      <section className="relative w-full overflow-hidden bg-gradient-to-b from-[#0a0503] via-black to-[#0a0503] py-24 md:py-32">
-        {/* Background dots */}
+      {/* ============================================================
+          SECTION 2 — DONATION TIERS
+      ============================================================ */}
+      <section className="relative w-full overflow-hidden bg-[#FFF8E7] py-12 md:py-24">
         <div
-          className="pointer-events-none absolute inset-0 opacity-[0.03]"
+          className="pointer-events-none absolute inset-0 opacity-[0.07]"
           style={{
-            backgroundImage: "radial-gradient(circle, rgba(251,191,36,1) 1px, transparent 1px)",
-            backgroundSize: "32px 32px",
+            backgroundImage:
+              "radial-gradient(circle at center, #C2A95B 1px, transparent 1.5px)",
+            backgroundSize: "30px 30px",
           }}
         />
 
-        <div className="relative mx-auto max-w-6xl px-6 md:px-12">
-          <div className="grid grid-cols-1 gap-12 lg:grid-cols-[1.4fr_1fr] lg:gap-16">
-            {/* LEFT: Seva Selection */}
-            <div>
-              <p
-                className="mb-4 text-xs font-medium uppercase tracking-[0.4em] text-amber-300/90"
-                style={{ fontFamily: "var(--font-jakarta)" }}
-              >
-                Step 1 · Choose Your Seva
-              </p>
-              <h2
-                className="mb-8 text-3xl font-bold leading-tight text-amber-50 md:text-4xl"
-                style={{ fontFamily: "var(--font-cinzel)" }}
-              >
-                Where Shall Your <span className="text-amber-300">Offering Go?</span>
-              </h2>
-
-              {/* Seva cards grid */}
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                {sevaOptions.map((s) => (
-                  <button
-                    key={s.id}
-                    onClick={() => {
-                      setSelectedSeva(s.id);
-                      handleAmountSelect(s.amounts[1]);
-                    }}
-                    className={`group relative overflow-hidden rounded-2xl border p-5 text-left backdrop-blur-sm transition-all duration-500 hover:-translate-y-1 ${
-                      selectedSeva === s.id
-                        ? "border-amber-400/70 bg-gradient-to-br from-amber-400/[0.12] to-transparent shadow-lg shadow-amber-500/20"
-                        : "border-amber-400/20 bg-white/[0.03] hover:border-amber-400/50"
-                    }`}
-                  >
-                    {s.highlight && (
-                      <span
-                        className="absolute right-3 top-3 rounded-full border border-amber-400/50 bg-amber-400/15 px-2 py-0.5 text-[9px] font-semibold uppercase tracking-widest text-amber-200"
-                        style={{ fontFamily: "var(--font-jakarta)" }}
-                      >
-                        Popular
-                      </span>
-                    )}
-
-                    {/* Selection ring */}
-                    <span
-                      className={`absolute right-4 top-4 flex h-5 w-5 items-center justify-center rounded-full border transition-all duration-300 ${
-                        selectedSeva === s.id
-                          ? "border-amber-400 bg-amber-400"
-                          : "border-amber-400/40"
-                      } ${s.highlight ? "top-10" : ""}`}
-                    >
-                      {selectedSeva === s.id && (
-                        <span className="text-[10px] font-bold text-black">✓</span>
-                      )}
-                    </span>
-
-                    <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-xl border border-amber-400/30 bg-amber-400/5 text-2xl">
-                      {s.icon}
-                    </div>
-                    <h3
-                      className="mb-1 text-base font-bold text-amber-50"
-                      style={{ fontFamily: "var(--font-cinzel)" }}
-                    >
-                      {s.name}
-                    </h3>
-                    <p
-                      className="mb-3 text-[10px] font-medium uppercase tracking-widest text-amber-300/80"
-                      style={{ fontFamily: "var(--font-jakarta)" }}
-                    >
-                      {s.tagline}
-                    </p>
-                    <p
-                      className="mb-3 text-xs font-light leading-relaxed text-amber-100/60"
-                      style={{ fontFamily: "var(--font-jakarta)" }}
-                    >
-                      {s.desc}
-                    </p>
-                    <p
-                      className="text-[10px] italic text-amber-300/70"
-                      style={{ fontFamily: "var(--font-jakarta)" }}
-                    >
-                      {s.impact}
-                    </p>
-                  </button>
-                ))}
-              </div>
-
-              {/* Amount Selection */}
-              <div className="mt-12">
-                <p
-                  className="mb-4 text-xs font-medium uppercase tracking-[0.4em] text-amber-300/90"
-                  style={{ fontFamily: "var(--font-jakarta)" }}
-                >
-                  Step 2 · Choose Amount
-                </p>
-
-                {/* Frequency toggle */}
-                <div className="mb-6 inline-flex rounded-full border border-amber-400/30 bg-white/[0.03] p-1 backdrop-blur-sm">
-                  {[
-                    { key: "once", label: "One-Time" },
-                    { key: "monthly", label: "Monthly" },
-                  ].map((f) => (
-                    <button
-                      key={f.key}
-                      onClick={() => setFrequency(f.key)}
-                      className={`rounded-full px-6 py-2 text-xs font-semibold uppercase tracking-widest transition-all duration-300 md:text-sm ${
-                        frequency === f.key
-                          ? "bg-gradient-to-r from-amber-400 to-amber-500 text-black shadow-md shadow-amber-500/30"
-                          : "text-amber-200/80 hover:text-amber-100"
-                      }`}
-                      style={{ fontFamily: "var(--font-jakarta)" }}
-                    >
-                      {f.label}
-                    </button>
-                  ))}
-                </div>
-
-                {/* Preset amounts */}
-                <div className="grid grid-cols-3 gap-3 sm:grid-cols-6">
-                  {presetAmounts.map((a) => (
-                    <button
-                      key={a}
-                      onClick={() => handleAmountSelect(a)}
-                      className={`rounded-xl border px-3 py-3 text-sm font-semibold transition-all duration-300 ${
-                        amount === a && !customAmount
-                          ? "border-amber-400 bg-amber-400/15 text-amber-100 shadow-md shadow-amber-500/20"
-                          : "border-amber-400/25 bg-white/[0.03] text-amber-100/80 hover:border-amber-400/60 hover:bg-white/[0.06]"
-                      }`}
-                      style={{ fontFamily: "var(--font-jakarta)" }}
-                    >
-                      ₹{a.toLocaleString("en-IN")}
-                    </button>
-                  ))}
-                </div>
-
-                {/* Custom amount */}
-                <div className="mt-4">
-                  <label
-                    className="mb-2 block text-[10px] font-medium uppercase tracking-widest text-amber-300/80"
-                    style={{ fontFamily: "var(--font-jakarta)" }}
-                  >
-                    Or Enter Custom Amount
-                  </label>
-                  <div className="relative">
-                    <span
-                      className="absolute left-4 top-1/2 -translate-y-1/2 text-lg font-bold text-amber-300"
-                      style={{ fontFamily: "var(--font-jakarta)" }}
-                    >
-                      ₹
-                    </span>
-                    <input
-                      type="text"
-                      value={customAmount}
-                      onChange={handleCustomChange}
-                      placeholder="Enter amount"
-                      className="w-full rounded-xl border border-amber-400/25 bg-white/[0.03] py-3.5 pl-10 pr-4 text-sm font-semibold text-amber-50 placeholder-amber-200/30 outline-none transition-all duration-300 focus:border-amber-400/70 focus:bg-white/[0.06]"
-                      style={{ fontFamily: "var(--font-jakarta)" }}
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* RIGHT: Sticky Summary */}
-            <div className="lg:sticky lg:top-24 lg:h-fit">
-              <div className="relative overflow-hidden rounded-2xl border border-amber-400/30 bg-gradient-to-br from-amber-400/[0.08] via-white/[0.02] to-transparent p-6 backdrop-blur-sm md:p-8">
-                <div className="pointer-events-none absolute -top-16 -right-16 h-48 w-48 rounded-full bg-amber-400/15 blur-3xl" />
-
-                <div className="relative">
-                  <h3
-                    className="mb-6 text-xl font-bold text-amber-50"
-                    style={{ fontFamily: "var(--font-cinzel)" }}
-                  >
-                    Your Offering
-                  </h3>
-
-                  <div className="space-y-4 border-b border-amber-400/20 pb-6">
-                    <div className="flex items-start justify-between gap-4">
-                      <span
-                        className="text-xs font-medium uppercase tracking-widest text-amber-300/70"
-                        style={{ fontFamily: "var(--font-jakarta)" }}
-                      >
-                        Seva
-                      </span>
-                      <span
-                        className="text-right text-sm font-semibold text-amber-100"
-                        style={{ fontFamily: "var(--font-jakarta)" }}
-                      >
-                        {sevaOptions.find((s) => s.id === selectedSeva)?.name}
-                      </span>
-                    </div>
-
-                    <div className="flex items-start justify-between gap-4">
-                      <span
-                        className="text-xs font-medium uppercase tracking-widest text-amber-300/70"
-                        style={{ fontFamily: "var(--font-jakarta)" }}
-                      >
-                        Frequency
-                      </span>
-                      <span
-                        className="text-right text-sm font-semibold text-amber-100"
-                        style={{ fontFamily: "var(--font-jakarta)" }}
-                      >
-                        {frequency === "once" ? "One-Time" : "Monthly"}
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Amount */}
-                  <div className="py-6">
-                    <p
-                      className="mb-2 text-xs font-medium uppercase tracking-widest text-amber-300/70"
-                      style={{ fontFamily: "var(--font-jakarta)" }}
-                    >
-                      Amount
-                    </p>
-                    <p
-                      className="text-4xl font-bold text-amber-300 md:text-5xl"
-                      style={{ fontFamily: "var(--font-cinzel)" }}
-                    >
-                      ₹{finalAmount.toLocaleString("en-IN")}
-                    </p>
-                    {frequency === "monthly" && (
-                      <p
-                        className="mt-1 text-xs text-amber-200/60"
-                        style={{ fontFamily: "var(--font-jakarta)" }}
-                      >
-                        billed every month · cancel anytime
-                      </p>
-                    )}
-                  </div>
-
-                  {/* Donate button */}
-                  <a
-                    href={`#checkout?seva=${selectedSeva}&amount=${finalAmount}&freq=${frequency}`}
-                    className="mb-4 block w-full rounded-full bg-gradient-to-r from-amber-400 to-amber-500 px-8 py-4 text-center text-sm font-bold tracking-wider text-black shadow-lg shadow-amber-500/40 transition-all duration-300 hover:shadow-amber-400/60 hover:brightness-110"
-                    style={{ fontFamily: "var(--font-jakarta)" }}
-                  >
-                    🙏 Proceed to Donate
-                  </a>
-
-                  <p
-                    className="text-center text-[10px] font-light italic text-amber-100/50"
-                    style={{ fontFamily: "var(--font-jakarta)" }}
-                  >
-                    Secure payment · 80G eligible · Instant receipt
-                  </p>
-
-                  {/* Trust mini row */}
-                  <div className="mt-6 flex items-center justify-center gap-4 border-t border-amber-400/15 pt-5">
-                    {["🔒", "📜", "🧾"].map((icon) => (
-                      <span key={icon} className="text-lg opacity-70">
-                        {icon}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ============ PAYMENT METHODS ============ */}
-      <section className="relative w-full bg-[#0a0503] py-24 md:py-32">
-        <div className="mx-auto max-w-6xl px-6 md:px-12">
-          {/* Heading */}
-          <div className="mb-16 text-center">
+        <div className="relative z-10 mx-auto max-w-7xl px-4 md:px-10">
+          <div className="mb-8 text-center md:mb-14">
             <p
-              className="mb-4 text-xs font-medium uppercase tracking-[0.4em] text-amber-300/90"
+              className="mb-2 text-[10px] font-medium uppercase tracking-[0.3em] text-[#C2A95B] md:mb-3 md:text-xs md:tracking-[0.4em]"
               style={{ fontFamily: "var(--font-jakarta)" }}
             >
-              Multiple Ways to Give
+              Choose Your Offering
             </p>
+
             <h2
-              className="mb-6 text-3xl font-bold text-amber-50 md:text-5xl"
+              className="text-2xl font-bold leading-tight text-[#800000] sm:text-4xl md:text-5xl"
               style={{ fontFamily: "var(--font-cinzel)" }}
             >
-              Payment <span className="text-amber-300">Methods</span>
+              Any Amount Is <span className="text-[#C2A95B]">Welcome</span>
             </h2>
-            <div className="mx-auto flex items-center justify-center gap-3">
-              <span className="h-[1px] w-16 bg-gradient-to-r from-transparent to-amber-400/70" />
-              <span className="text-amber-400">✦</span>
-              <span className="h-[1px] w-16 bg-gradient-to-l from-transparent to-amber-400/70" />
+
+            <div className="mt-4 flex items-center justify-center gap-3 md:mt-6">
+              <span className="h-px w-10 bg-[#C2A95B] md:w-12" />
+              <span className="text-sm text-[#C2A95B] md:text-base">✦</span>
+              <span className="h-px w-10 bg-[#C2A95B] md:w-12" />
             </div>
-          </div>
 
-          {/* Payment cards */}
-          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {paymentMethods.map((p) => (
-              <div
-                key={p.label}
-                className="group flex flex-col items-center gap-4 rounded-2xl border border-amber-400/20 bg-gradient-to-br from-white/[0.04] to-white/[0.01] p-6 text-center backdrop-blur-sm transition-all duration-500 hover:-translate-y-1 hover:border-amber-400/60 hover:shadow-lg hover:shadow-amber-500/15"
-              >
-                <span className="text-4xl">{p.icon}</span>
-                <div>
-                  <h3
-                    className="mb-1 text-base font-bold text-amber-50"
-                    style={{ fontFamily: "var(--font-cinzel)" }}
-                  >
-                    {p.label}
-                  </h3>
-                  <p
-                    className="text-xs font-light text-amber-100/60"
-                    style={{ fontFamily: "var(--font-jakarta)" }}
-                  >
-                    {p.sub}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Bank details */}
-          <div className="mt-12 overflow-hidden rounded-2xl border border-amber-400/25 bg-gradient-to-br from-amber-400/[0.06] to-transparent p-6 backdrop-blur-sm md:p-8">
-            <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-              <div>
-                <h3
-                  className="mb-4 flex items-center gap-3 text-lg font-bold text-amber-100"
-                  style={{ fontFamily: "var(--font-cinzel)" }}
-                >
-                  🏦 Bank Transfer
-                </h3>
-                <ul className="space-y-2.5">
-                  {[
-                    ["Account Name", "Madan Mohan Mandir Trust"],
-                    ["Account Number", "1234 5678 9012 3456"],
-                    ["IFSC Code", "MMMT0001234"],
-                    ["Bank", "State Bank of India, Vrindavan"],
-                  ].map(([k, v]) => (
-                    <li key={k} className="flex items-start gap-3">
-                      <span
-                        className="w-32 flex-shrink-0 text-[10px] font-medium uppercase tracking-widest text-amber-300/70"
-                        style={{ fontFamily: "var(--font-jakarta)" }}
-                      >
-                        {k}
-                      </span>
-                      <span
-                        className="text-sm font-light text-amber-100/85"
-                        style={{ fontFamily: "var(--font-jakarta)" }}
-                      >
-                        {v}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <div>
-                <h3
-                  className="mb-4 flex items-center gap-3 text-lg font-bold text-amber-100"
-                  style={{ fontFamily: "var(--font-cinzel)" }}
-                >
-                  📱 UPI ID
-                </h3>
-                <div className="flex flex-wrap items-center gap-3">
-                  <code
-                    className="rounded-xl border border-amber-400/30 bg-black/50 px-4 py-2.5 text-sm font-semibold text-amber-200"
-                    style={{ fontFamily: "var(--font-jakarta)" }}
-                  >
-                    madanmohan@upi
-                  </code>
-                  <button
-                    className="rounded-full border border-amber-400/40 px-4 py-2 text-xs font-medium text-amber-200 transition-all hover:bg-amber-400/10"
-                    style={{ fontFamily: "var(--font-jakarta)" }}
-                  >
-                    Copy
-                  </button>
-                </div>
-                <p
-                  className="mt-4 text-xs font-light leading-relaxed text-amber-100/60"
-                  style={{ fontFamily: "var(--font-jakarta)" }}
-                >
-                  Scan the QR code or pay directly using any UPI app. After
-                  payment, please email the transaction ID to{" "}
-                  <span className="text-amber-200">seva@madanmohanmandir.org</span>{" "}
-                  for your receipt.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ============ TRUST / TRANSPARENCY ============ */}
-      <section className="relative w-full overflow-hidden bg-gradient-to-b from-[#0a0503] via-black to-[#0a0503] py-24 md:py-32">
-        <div className="mx-auto max-w-7xl px-6 md:px-12">
-          {/* Heading */}
-          <div className="mb-16 text-center">
             <p
-              className="mb-4 text-xs font-medium uppercase tracking-[0.4em] text-amber-300/90"
+              className="mx-auto mt-4 max-w-2xl text-xs font-light leading-relaxed text-[#800000]/70 md:mt-6 md:text-base"
               style={{ fontFamily: "var(--font-jakarta)" }}
             >
-              Transparency You Can Trust
+              Every offering, large or small, is received with equal gratitude.
             </p>
-            <h2
-              className="mb-6 text-3xl font-bold text-amber-50 md:text-5xl"
-              style={{ fontFamily: "var(--font-cinzel)" }}
-            >
-              Your Trust, <span className="text-amber-300">Our Promise</span>
-            </h2>
-            <div className="mx-auto flex items-center justify-center gap-3">
-              <span className="h-[1px] w-16 bg-gradient-to-r from-transparent to-amber-400/70" />
-              <span className="text-amber-400">✦</span>
-              <span className="h-[1px] w-16 bg-gradient-to-l from-transparent to-amber-400/70" />
-            </div>
           </div>
 
-          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {trustPoints.map((t) => (
-              <div
-                key={t.title}
-                className="group rounded-2xl border border-amber-400/20 bg-gradient-to-br from-white/[0.04] to-white/[0.01] p-6 backdrop-blur-sm transition-all duration-500 hover:-translate-y-1 hover:border-amber-400/60"
-              >
-                <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl border border-amber-400/30 bg-amber-400/5 text-2xl">
-                  {t.icon}
-                </div>
-                <h3
-                  className="mb-2 text-base font-bold text-amber-50"
-                  style={{ fontFamily: "var(--font-cinzel)" }}
-                >
-                  {t.title}
-                </h3>
-                <p
-                  className="text-xs font-light leading-relaxed text-amber-100/70 md:text-sm"
-                  style={{ fontFamily: "var(--font-jakarta)" }}
-                >
-                  {t.desc}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ============ DEDICATION / QUOTE ============ */}
-      <section className="relative w-full bg-[#0a0503] py-24 md:py-32">
-        <div className="mx-auto max-w-4xl px-6 text-center md:px-12">
-          <span className="mb-6 inline-block text-5xl text-amber-400/60">❝</span>
-
-          <p
-            className="mb-6 text-xl font-light leading-relaxed text-amber-100/90 md:text-2xl"
-            style={{ fontFamily: "var(--font-jakarta)" }}
-          >
-            Whatever you give with a pure heart, the Lord receives a thousandfold.
-            The hand that gives is holier than the hand that receives.
-          </p>
-
-          <div className="mx-auto mb-6 flex items-center justify-center gap-3">
-            <span className="h-[1px] w-16 bg-gradient-to-r from-transparent to-amber-400/70" />
-            <span className="text-amber-400">✦</span>
-            <span className="h-[1px] w-16 bg-gradient-to-l from-transparent to-amber-400/70" />
-          </div>
-
-          <p
-            className="text-xs font-medium uppercase tracking-[0.3em] text-amber-300/80"
-            style={{ fontFamily: "var(--font-jakarta)" }}
-          >
-            — Temple Wisdom
-          </p>
-        </div>
-      </section>
-
-      {/* ============ FAQ ============ */}
-      <section className="relative w-full overflow-hidden bg-gradient-to-b from-[#0a0503] via-black to-[#0a0503] py-24 md:py-32">
-        <div className="mx-auto max-w-4xl px-6 md:px-12">
-          <div className="mb-16 text-center">
-            <p
-              className="mb-4 text-xs font-medium uppercase tracking-[0.4em] text-amber-300/90"
-              style={{ fontFamily: "var(--font-jakarta)" }}
-            >
-              Before You Donate
-            </p>
-            <h2
-              className="mb-6 text-3xl font-bold text-amber-50 md:text-5xl"
-              style={{ fontFamily: "var(--font-cinzel)" }}
-            >
-              Common <span className="text-amber-300">Questions</span>
-            </h2>
-            <div className="mx-auto flex items-center justify-center gap-3">
-              <span className="h-[1px] w-16 bg-gradient-to-r from-transparent to-amber-400/70" />
-              <span className="text-amber-400">✦</span>
-              <span className="h-[1px] w-16 bg-gradient-to-l from-transparent to-amber-400/70" />
-            </div>
-          </div>
-
-          <div className="space-y-3">
-            {faqs.map((faq, i) => (
-              <div
-                key={faq.q}
-                className={`overflow-hidden rounded-2xl border backdrop-blur-sm transition-all duration-500 ${
-                  openFaq === i
-                    ? "border-amber-400/60 bg-gradient-to-br from-amber-400/[0.06] to-transparent"
-                    : "border-amber-400/20 bg-white/[0.02] hover:border-amber-400/40"
-                }`}
-              >
+          {/* ---------- Tiers ---------- */}
+          {/* Mobile: 2-col grid (kept tight) | Tablet+: 3-col grid, smaller card sizes */}
+          <div className="grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-4 lg:gap-5">
+            {donationTiers.map((tier) => {
+              const isSelected = selectedTier === tier.amount;
+              return (
                 <button
-                  onClick={() => setOpenFaq(openFaq === i ? null : i)}
-                  className="flex w-full items-center justify-between gap-4 px-6 py-5 text-left md:px-8"
-                >
-                  <h3
-                    className="text-sm font-semibold text-amber-50 md:text-base"
-                    style={{ fontFamily: "var(--font-cinzel)" }}
-                  >
-                    {faq.q}
-                  </h3>
-                  <span
-                    className={`flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full border border-amber-400/40 text-amber-300 transition-transform duration-500 ${
-                      openFaq === i ? "rotate-45" : ""
-                    }`}
-                  >
-                    +
-                  </span>
-                </button>
-
-                <div
-                  className={`grid transition-all duration-500 ease-in-out ${
-                    openFaq === i ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+                  key={tier.amount}
+                  onClick={() => handleTierClick(tier.amount)}
+                  className={`group relative flex flex-col overflow-hidden rounded-xl border p-3 text-left backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 md:p-4 md:hover:-translate-y-1 lg:p-5 ${
+                    isSelected
+                      ? "border-[#C2A95B] bg-[#800000] shadow-lg"
+                      : "border-[#C2A95B]/30 bg-white/80 hover:border-[#C2A95B] hover:shadow-md"
                   }`}
                 >
-                  <div className="overflow-hidden">
-                    <p
-                      className="px-6 pb-5 text-sm font-light leading-relaxed text-amber-100/75 md:px-8 md:pb-6"
+                  {tier.popular && (
+                    <span
+                      className={`absolute right-1.5 top-1.5 rounded-full px-1.5 py-[2px] text-[6.5px] font-bold uppercase tracking-[0.08em] md:right-2.5 md:top-2.5 md:px-2 md:py-[3px] md:text-[7.5px] md:tracking-[0.15em] ${
+                        isSelected
+                          ? "bg-[#C2A95B] text-[#800000]"
+                          : "bg-[#C2A95B]/20 text-[#C2A95B]"
+                      }`}
                       style={{ fontFamily: "var(--font-jakarta)" }}
                     >
-                      {faq.a}
-                    </p>
+                      Popular
+                    </span>
+                  )}
+
+                  <p
+                    className={`text-lg font-bold leading-none sm:text-xl md:text-2xl lg:text-3xl ${
+                      isSelected ? "text-[#C2A95B]" : "text-[#800000]"
+                    }`}
+                    style={{ fontFamily: "var(--font-cinzel)" }}
+                  >
+                    ₹{tier.amount}
+                  </p>
+
+                  <p
+                    className={`mt-1.5 text-[8px] uppercase tracking-[0.12em] md:mt-1 md:text-[9px] md:tracking-[0.18em] lg:text-[10px] ${
+                      isSelected ? "text-[#FFF8E7]/70" : "text-[#C2A95B]"
+                    }`}
+                    style={{ fontFamily: "var(--font-jakarta)" }}
+                  >
+                    {tier.label}
+                  </p>
+
+                  <div
+                    className={`my-2 h-px w-7 transition-all duration-500 group-hover:w-12 md:w-8 md:group-hover:w-14 lg:w-10 lg:group-hover:w-16 ${
+                      isSelected ? "bg-[#C2A95B]" : "bg-[#C2A95B]/50"
+                    }`}
+                  />
+
+                  <p
+                    className={`text-[10px] leading-snug md:text-[11px] lg:text-xs ${
+                      isSelected ? "text-[#FFF8E7]/80" : "text-[#800000]/70"
+                    }`}
+                    style={{ fontFamily: "var(--font-jakarta)" }}
+                  >
+                    {tier.text}
+                  </p>
+
+                  {/* Selection tick */}
+                  {isSelected && (
+                    <span className="absolute bottom-2 right-2 flex h-4.5 w-4.5 items-center justify-center rounded-full bg-[#C2A95B] text-[9px] text-[#800000] md:bottom-2.5 md:right-2.5 md:h-5 md:w-5 md:text-[11px]">
+                      ✓
+                    </span>
+                  )}
+                </button>
+              );
+            })}
+          </div>
+
+          {/* ---------- Custom amount ---------- */}
+          <div className="mx-auto mt-6 max-w-2xl md:mt-10">
+            <div className="rounded-xl border border-[#C2A95B]/30 bg-white/80 p-4 backdrop-blur-sm md:rounded-2xl md:p-8">
+              <label
+                htmlFor="custom"
+                className="mb-2 block text-[9px] uppercase tracking-[0.2em] text-[#C2A95B] md:mb-3 md:text-xs md:tracking-[0.3em]"
+                style={{ fontFamily: "var(--font-jakarta)" }}
+              >
+                Or Enter Your Desired Amount
+              </label>
+
+              <div className="flex items-center gap-2 md:gap-3">
+                <span
+                  className="text-xl font-bold text-[#800000] md:text-3xl"
+                  style={{ fontFamily: "var(--font-cinzel)" }}
+                >
+                  ₹
+                </span>
+                <input
+                  id="custom"
+                  type="text"
+                  inputMode="numeric"
+                  value={customAmount}
+                  onChange={handleCustomChange}
+                  placeholder="Enter amount"
+                  className="w-full rounded-lg border border-[#C2A95B]/30 bg-white px-3 py-2.5 text-base font-bold text-[#800000] placeholder-[#800000]/25 outline-none transition-all duration-300 focus:border-[#C2A95B] focus:ring-2 focus:ring-[#C2A95B]/20 md:rounded-xl md:px-4 md:py-3 md:text-xl"
+                  style={{ fontFamily: "var(--font-cinzel)" }}
+                />
+              </div>
+
+              <p
+                className="mt-2 text-[9px] text-[#800000]/50 md:mt-3 md:text-xs"
+                style={{ fontFamily: "var(--font-jakarta)" }}
+              >
+                Any amount is welcome. All donations are eligible for a receipt.
+              </p>
+            </div>
+          </div>
+
+          {/* ---------- Selected amount + CTA (desktop / tablet) ---------- */}
+          {activeAmount && (
+            <div className="mx-auto mt-6 hidden max-w-2xl md:mt-8 md:block">
+              <div className="rounded-2xl border border-[#C2A95B] bg-[#800000] p-6 text-center md:p-8">
+                <p
+                  className="mb-2 text-[10px] uppercase tracking-[0.3em] text-[#C2A95B] md:text-xs"
+                  style={{ fontFamily: "var(--font-jakarta)" }}
+                >
+                  Your Offering
+                </p>
+
+                <p
+                  className="mb-5 text-4xl font-bold text-[#FFF8E7] md:text-5xl"
+                  style={{ fontFamily: "var(--font-cinzel)" }}
+                >
+                  ₹{activeAmount}
+                </p>
+
+                <div className="mx-auto mb-6 flex items-center justify-center gap-3">
+                  <span className="h-px w-10 bg-[#C2A95B]/50" />
+                  <span className="text-xs text-[#C2A95B]">✦</span>
+                  <span className="h-px w-10 bg-[#C2A95B]/50" />
+                </div>
+
+                <a
+                  href="#payment-methods"
+                  className="inline-block w-full rounded-full bg-[#C2A95B] px-8 py-3.5 text-xs font-medium uppercase tracking-[0.2em] text-[#800000] shadow-md transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#d4bc74] hover:shadow-lg md:w-auto md:text-sm"
+                  style={{ fontFamily: "var(--font-jakarta)" }}
+                >
+                  Proceed to Payment
+                </a>
+
+                <p
+                  className="mt-4 text-[10px] text-[#FFF8E7]/60 md:text-xs"
+                  style={{ fontFamily: "var(--font-jakarta)" }}
+                >
+                  You will receive a receipt within 3–5 working days.
+                </p>
+              </div>
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* ============================================================
+          SECTION 5 — TRANSPARENCY (horizontal scroll on mobile)
+      ============================================================ */}
+      <section className="relative w-full overflow-hidden bg-[#FFF8E7] py-12 md:py-24">
+        <div
+          className="pointer-events-none absolute inset-0 opacity-[0.07]"
+          style={{
+            backgroundImage:
+              "radial-gradient(circle at center, #C2A95B 1px, transparent 1.5px)",
+            backgroundSize: "30px 30px",
+          }}
+        />
+
+        <div className="relative z-10">
+          {/* Header (still contained) */}
+          <div className="mx-auto max-w-7xl px-4 md:px-10">
+            <div className="mb-8 text-center md:mb-14">
+              <p
+                className="mb-2 text-[10px] font-medium uppercase tracking-[0.3em] text-[#C2A95B] md:mb-3 md:text-xs md:tracking-[0.4em]"
+                style={{ fontFamily: "var(--font-jakarta)" }}
+              >
+                Trust &amp; Transparency
+              </p>
+
+              <h2
+                className="text-2xl font-bold leading-tight text-[#800000] sm:text-4xl md:text-5xl"
+                style={{ fontFamily: "var(--font-cinzel)" }}
+              >
+                Your Offering, <span className="text-[#C2A95B]">Honoured</span>
+              </h2>
+
+              <div className="mt-4 flex items-center justify-center gap-3 md:mt-6">
+                <span className="h-px w-10 bg-[#C2A95B] md:w-12" />
+                <span className="text-sm text-[#C2A95B] md:text-base">✦</span>
+                <span className="h-px w-10 bg-[#C2A95B] md:w-12" />
+              </div>
+            </div>
+          </div>
+
+          {/* MOBILE: horizontal snap scroll */}
+          <div className="md:hidden">
+            <div
+              className="flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-4"
+              style={{
+                scrollbarWidth: "none",
+                msOverflowStyle: "none",
+                WebkitOverflowScrolling: "touch",
+              }}
+            >
+              {transparency.map((item) => (
+                <div
+                  key={item.title}
+                  className="w-[72vw] max-w-[260px] shrink-0 snap-start rounded-xl border border-[#C2A95B]/30 bg-white/80 p-4 backdrop-blur-sm"
+                >
+                  <div className="mb-2.5 flex h-7 w-7 items-center justify-center rounded-full border border-[#C2A95B]/50 text-xs text-[#C2A95B]">
+                    ✦
+                  </div>
+
+                  <h3
+                    className="mb-2 text-sm font-bold leading-snug text-[#800000]"
+                    style={{ fontFamily: "var(--font-cinzel)" }}
+                  >
+                    {item.title}
+                  </h3>
+
+                  <div className="mb-2 h-px w-8 bg-[#C2A95B]/50" />
+
+                  <p
+                    className="text-[10px] leading-snug text-[#800000]/70"
+                    style={{ fontFamily: "var(--font-jakarta)" }}
+                  >
+                    {item.text}
+                  </p>
+                </div>
+              ))}
+            </div>
+
+            {/* Scroll hint */}
+            <div className="mt-1 flex items-center justify-center gap-2 px-4">
+              <span
+                className="text-[9px] uppercase tracking-[0.25em] text-[#C2A95B]/80"
+                style={{ fontFamily: "var(--font-jakarta)" }}
+              >
+                Swipe →
+              </span>
+            </div>
+          </div>
+
+          {/* DESKTOP: grid (smaller cards) */}
+          <div className="mx-auto hidden max-w-7xl px-10 md:block">
+            <div className="grid grid-cols-2 gap-4 lg:grid-cols-4 lg:gap-5">
+              {transparency.map((item) => (
+                <div
+                  key={item.title}
+                  className="rounded-xl border border-[#C2A95B]/30 bg-white/80 p-5 backdrop-blur-sm transition-all duration-300 hover:border-[#C2A95B] hover:shadow-md"
+                >
+                  <div className="mb-3 flex h-8 w-8 items-center justify-center rounded-full border border-[#C2A95B]/50 text-sm text-[#C2A95B]">
+                    ✦
+                  </div>
+
+                  <h3
+                    className="mb-2.5 text-base font-bold leading-snug text-[#800000]"
+                    style={{ fontFamily: "var(--font-cinzel)" }}
+                  >
+                    {item.title}
+                  </h3>
+
+                  <div className="mb-2.5 h-px w-8 bg-[#C2A95B]/50" />
+
+                  <p
+                    className="text-xs leading-relaxed text-[#800000]/70"
+                    style={{ fontFamily: "var(--font-jakarta)" }}
+                  >
+                    {item.text}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ============================================================
+          SECTION 6 — FAQ
+      ============================================================ */}
+      <section className="relative w-full overflow-hidden bg-white py-12 md:py-24">
+        <div
+          className="pointer-events-none absolute inset-0 opacity-[0.055]"
+          style={{
+            backgroundImage: `
+              radial-gradient(circle at center, #C2A95B 1px, transparent 1.5px),
+              linear-gradient(45deg, transparent 48%, #C2A95B 49%, #C2A95B 51%, transparent 52%),
+              linear-gradient(-45deg, transparent 48%, #C2A95B 49%, #C2A95B 51%, transparent 52%)
+            `,
+            backgroundSize: "36px 36px",
+          }}
+        />
+        <div className="pointer-events-none absolute -left-40 bottom-0 h-[400px] w-[400px] rounded-full bg-[#C2A95B]/5 blur-3xl md:h-[500px] md:w-[500px]" />
+
+        <div className="relative z-10 mx-auto max-w-4xl px-4 md:px-10">
+          <div className="mb-8 text-center md:mb-14">
+            <p
+              className="mb-2 text-[10px] font-medium uppercase tracking-[0.3em] text-[#C2A95B] md:mb-3 md:text-xs md:tracking-[0.4em]"
+              style={{ fontFamily: "var(--font-jakarta)" }}
+            >
+              Questions About Donating
+            </p>
+
+            <h2
+              className="text-2xl font-bold leading-tight text-[#800000] sm:text-4xl md:text-5xl"
+              style={{ fontFamily: "var(--font-cinzel)" }}
+            >
+              Donation <span className="text-[#C2A95B]">FAQ</span>
+            </h2>
+
+            <div className="mt-4 flex items-center justify-center gap-3 md:mt-6">
+              <span className="h-px w-10 bg-[#C2A95B] md:w-12" />
+              <span className="text-sm text-[#C2A95B] md:text-base">✦</span>
+              <span className="h-px w-10 bg-[#C2A95B] md:w-12" />
+            </div>
+          </div>
+
+          <div className="space-y-2.5 md:space-y-3">
+            {faqs.map((faq, i) => {
+              const isOpen = openFaq === i;
+              return (
+                <div
+                  key={faq.q}
+                  className={`overflow-hidden rounded-xl border bg-white/80 backdrop-blur-sm transition-all duration-300 md:rounded-2xl ${
+                    isOpen
+                      ? "border-[#C2A95B] shadow-md"
+                      : "border-[#C2A95B]/30 hover:border-[#C2A95B]/60"
+                  }`}
+                >
+                  <button
+                    onClick={() => setOpenFaq(isOpen ? null : i)}
+                    aria-expanded={isOpen}
+                    className="flex w-full items-center justify-between gap-3 px-4 py-3.5 text-left md:gap-4 md:px-7 md:py-5"
+                  >
+                    <h3
+                      className="text-sm font-bold leading-snug text-[#800000] md:text-lg"
+                      style={{ fontFamily: "var(--font-cinzel)" }}
+                    >
+                      {faq.q}
+                    </h3>
+                    <span
+                      className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full border text-sm transition-all duration-300 md:h-8 md:w-8 md:text-lg ${
+                        isOpen
+                          ? "rotate-45 border-[#C2A95B] bg-[#C2A95B] text-white"
+                          : "border-[#C2A95B]/50 text-[#C2A95B]"
+                      }`}
+                    >
+                      +
+                    </span>
+                  </button>
+
+                  <div
+                    className={`grid transition-all duration-500 ease-in-out ${
+                      isOpen
+                        ? "grid-rows-[1fr] opacity-100"
+                        : "grid-rows-[0fr] opacity-0"
+                    }`}
+                  >
+                    <div className="overflow-hidden">
+                      <div className="px-4 pb-4 md:px-7 md:pb-6">
+                        <div className="mb-3 h-px w-full bg-[#C2A95B]/20 md:mb-4" />
+                        <p
+                          className="text-[11px] leading-relaxed text-[#800000]/75 md:text-sm"
+                          style={{ fontFamily: "var(--font-jakarta)" }}
+                        >
+                          {faq.a}
+                        </p>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
 
-      {/* ============ CTA ============ */}
-      <section className="relative w-full overflow-hidden bg-[#0a0503] py-24 md:py-32">
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(251,191,36,0.12),_transparent_60%)]" />
+      {/* ============================================================
+          STICKY MOBILE CTA BAR
+      ============================================================ */}
+      {activeAmount && (
+        <div className="fixed inset-x-0 bottom-0 z-50 border-t border-[#C2A95B]/40 bg-[#800000] px-4 py-3 shadow-[0_-4px_20px_rgba(0,0,0,0.15)] md:hidden">
+          <div className="flex items-center justify-between gap-3">
+            <div className="min-w-0">
+              <p
+                className="text-[8px] uppercase tracking-[0.25em] text-[#C2A95B]"
+                style={{ fontFamily: "var(--font-jakarta)" }}
+              >
+                Your Offering
+              </p>
+              <p
+                className="truncate text-xl font-bold leading-tight text-[#FFF8E7]"
+                style={{ fontFamily: "var(--font-cinzel)" }}
+              >
+                ₹{activeAmount}
+              </p>
+            </div>
 
-        <div className="relative mx-auto max-w-3xl px-6 text-center md:px-12">
-          <div className="mb-6 flex justify-center">
-            <span className="text-5xl text-amber-300/90">🙏</span>
-          </div>
-
-          <h2
-            className="mb-6 text-3xl font-bold leading-tight text-amber-50 md:text-5xl"
-            style={{ fontFamily: "var(--font-cinzel)" }}
-          >
-            Become a Part of <span className="text-amber-300">the Seva</span>
-          </h2>
-
-          <div className="mx-auto mb-6 flex items-center justify-center gap-3">
-            <span className="h-[1px] w-16 bg-gradient-to-r from-transparent to-amber-400/70" />
-            <span className="text-amber-400">✦</span>
-            <span className="h-[1px] w-16 bg-gradient-to-l from-transparent to-amber-400/70" />
-          </div>
-
-          <p
-            className="mx-auto mb-10 max-w-xl text-sm font-light leading-relaxed text-amber-50/70 md:text-base"
-            style={{ fontFamily: "var(--font-jakarta)" }}
-          >
-            Every rupee you give flows into a life touched, a soul nourished, a
-            heart healed. Join thousands of devotees worldwide in keeping the
-            light of Madan Mohan Mandir burning bright.
-          </p>
-
-          <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
             <a
-              href="#checkout"
-              className="rounded-full bg-gradient-to-r from-amber-400 to-amber-500 px-8 py-3.5 text-sm font-bold tracking-wider text-black shadow-lg shadow-amber-500/40 transition-all duration-300 hover:shadow-amber-400/60 hover:brightness-110"
+              href="#payment-methods"
+              className="shrink-0 rounded-full bg-[#C2A95B] px-5 py-2.5 text-[10px] font-semibold uppercase tracking-[0.15em] text-[#800000] shadow-sm transition-colors active:bg-[#d4bc74]"
               style={{ fontFamily: "var(--font-jakarta)" }}
             >
-              🙏 Donate Now
-            </a>
-            <a
-              href="#contact"
-              className="rounded-full border border-amber-300/60 bg-white/5 px-8 py-3.5 text-sm font-semibold tracking-wide text-amber-100 backdrop-blur-sm transition-all duration-300 hover:border-amber-300 hover:bg-white/10"
-              style={{ fontFamily: "var(--font-jakarta)" }}
-            >
-              Contact Seva Desk
+              Proceed
             </a>
           </div>
         </div>
-      </section>
+      )}
     </main>
   );
 }

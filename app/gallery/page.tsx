@@ -1,9 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Cinzel_Decorative, Plus_Jakarta_Sans } from "next/font/google";
 import Image from "next/image";
-import NavBar from "@/app/components/NavBar";
 
 const cinzel = Cinzel_Decorative({
   subsets: ["latin"],
@@ -17,255 +16,671 @@ const jakarta = Plus_Jakarta_Sans({
   variable: "--font-jakarta",
 });
 
-const categories = ["All", "Temple", "Deity", "Festivals", "Aarti", "Devotees"];
+/* ============================================================
+   DATA
+============================================================ */
 
-type GalleryItem = {
-  id: number;
+type Category =
+  | "All"
+  | "Temple"
+  | "Deity"
+  | "Festivals"
+  | "Architecture"
+  | "Aarti";
+
+type GalleryImage = {
   src: string;
-  category: string;
-  title: string;
-  span: string;
+  alt: string;
+  caption: string;
+  category: Exclude<Category, "All">;
+  tall?: boolean;
 };
 
-const galleryItems: GalleryItem[] = [
-  { id: 1, src: "/gallery/image.png", category: "Temple", title: "Temple Exterior", span: "md:col-span-2 md:row-span-2" },
-  { id: 2, src: "/gallery/image.png", category: "Deity", title: "Madan Mohan Shringar", span: "" },
-  { id: 3, src: "/gallery/image.png", category: "Aarti", title: "Evening Aarti", span: "" },
-  { id: 4, src: "/gallery/image.png", category: "Festivals", title: "Janmashtami Utsav", span: "md:col-span-2" },
-  { id: 5, src: "/gallery/image.png", category: "Devotees", title: "Devotees in Prayer", span: "" },
-  { id: 6, src: "/gallery/image.png", category: "Temple", title: "Golden Spire", span: "" },
-  { id: 7, src: "/gallery/image.png", category: "Festivals", title: "Radhashtami Celebration", span: "md:col-span-2 md:row-span-2" },
-  { id: 8, src: "/gallery/image.png", category: "Deity", title: "Divine Darshan", span: "" },
-  { id: 9, src: "/gallery/image.png", category: "Aarti", title: "Mangala Aarti", span: "" },
-  { id: 10, src: "/gallery/image.png", category: "Temple", title: "Temple Courtyard", span: "" },
-  { id: 11, src: "/gallery/image.png", category: "Devotees", title: "Kirtan Sandhya", span: "" },
-  { id: 12, src: "/gallery/image.png", category: "Festivals", title: "Holi Utsav", span: "md:col-span-2" },
+const categories: Category[] = [
+  "All",
+  "Temple",
+  "Deity",
+  "Festivals",
+  "Architecture",
+  "Aarti",
 ];
 
-export default function GalleryPage() {
-  const [activeCategory, setActiveCategory] = useState("All");
-  const [selectedImage, setSelectedImage] = useState<GalleryItem | null>(null);
+const galleryImages: GalleryImage[] = [
+  {
+    src: "/gallery/temple-1.png",
+    alt: "Madan Mohan Temple exterior",
+    caption: "The temple facade at golden hour",
+    category: "Temple",
+    tall: true,
+  },
+  {
+    src: "/events/ekadashi.png",
+    alt: "Shri Madan Mohan deity",
+    caption: "Shri Madan Mohan — the enchanting form",
+    category: "Deity",
+  },
+  {
+    src: "/gallery/temple-2.png",
+    alt: "Temple courtyard",
+    caption: "The quiet courtyard within the boundary wall",
+    category: "Architecture",
+  },
+  {
+    src: "/gallery/aarti-1.png",
+    alt: "Evening aarti",
+    caption: "Sandhya Aarti — the evening lamp offering",
+    category: "Aarti",
+    tall: true,
+  },
+  {
+    src: "/gallery/festival-1.png",
+    alt: "Janmashtami celebration",
+    caption: "Janmashtami — the celebration of Krishna's birth",
+    category: "Festivals",
+  },
+  {
+    src: "/gallery/deity-1.png",
+    alt: "Temple shikhara",
+    caption: "The shikhara rising above Boreya",
+    category: "Architecture",
+  },
+  {
+    src: "/images/10.png",
+    alt: "Radha Krishna shrine",
+    caption: "Radha and Krishna together in the sanctum",
+    category: "Deity",
+  },
+  {
+    src: "/events/radhashtami.png",
+    alt: "Radhashtami",
+    caption: "Radhashtami — the appearance of Shri Radha",
+    category: "Festivals",
+    tall: true,
+  },
+  {
+    src: "/gallery/devotees-1.png",
+    alt: "Mangala aarti",
+    caption: "Mangala Aarti — the first awakening of the Lord",
+    category: "Aarti",
+  },
+  {
+    src: "/images/5.png",
+    alt: "Temple entrance gate",
+    caption: "The entrance gate, founded in 1668",
+    category: "Architecture",
+  },
+  {
+    src: "/events/holi.png",
+    alt: "Holi celebration",
+    caption: "Holi — the festival of colours and joy",
+    category: "Festivals",
+  },
+  {
+    src: "/events/janmashtami.png",
+    alt: "Deity shringar",
+    caption: "Shringar — the deity adorned with fresh flowers",
+    category: "Deity",
+  },
+];
 
-  const filteredItems =
-    activeCategory === "All"
-      ? galleryItems
-      : galleryItems.filter((item) => item.category === activeCategory);
+const featuredCollections = [
+  {
+    title: "The Living Temple",
+    subtitle: "Temple & Architecture",
+    text: "Walls, courtyards and shikharas that have stood for over three centuries — the physical home of an unbroken devotion.",
+    image: "/gallery/temple-2.png",
+  },
+  {
+    title: "The Enchanting Form",
+    subtitle: "Deity Darshan",
+    text: "Glimpses of the beloved — adorned, offered and loved by generations of devotees who come to behold Madan Mohan.",
+    image: "/events/ekadashi.png",
+  },
+  {
+    title: "Celebrations of Joy",
+    subtitle: "Festivals & Aarti",
+    text: "The rhythm of the year — lamps, colours, songs and sweets offered in loving remembrance of the Lord.",
+    image: "/gallery/festival-1.png",
+  },
+];
 
-  const openLightbox = (item: GalleryItem) => setSelectedImage(item);
-  const closeLightbox = () => setSelectedImage(null);
+/* ============================================================
+   LIGHTBOX
+============================================================ */
 
-  const showNext = () => {
-    if (!selectedImage) return;
-    const currentIndex = filteredItems.findIndex((i) => i.id === selectedImage.id);
-    const nextIndex = (currentIndex + 1) % filteredItems.length;
-    setSelectedImage(filteredItems[nextIndex]);
-  };
+function Lightbox({
+  images,
+  index,
+  onClose,
+  onPrev,
+  onNext,
+}: {
+  images: GalleryImage[];
+  index: number;
+  onClose: () => void;
+  onPrev: () => void;
+  onNext: () => void;
+}) {
+  const image = images[index];
 
-  const showPrev = () => {
-    if (!selectedImage) return;
-    const currentIndex = filteredItems.findIndex((i) => i.id === selectedImage.id);
-    const prevIndex = (currentIndex - 1 + filteredItems.length) % filteredItems.length;
-    setSelectedImage(filteredItems[prevIndex]);
-  };
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+      if (e.key === "ArrowLeft") onPrev();
+      if (e.key === "ArrowRight") onNext();
+    };
+    document.addEventListener("keydown", onKey);
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = "";
+    };
+  }, [onClose, onPrev, onNext]);
+
+  if (!image) return null;
 
   return (
-    <main className={`${cinzel.variable} ${jakarta.variable} min-h-screen bg-black`}>
-      <NavBar />
+    <div
+      className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 backdrop-blur-md"
+      role="dialog"
+      aria-modal="true"
+      onClick={onClose}
+    >
+      {/* Close */}
+      <button
+        onClick={onClose}
+        aria-label="Close"
+        className="absolute right-5 top-5 z-10 flex h-11 w-11 items-center justify-center rounded-full border border-[#C2A95B]/50 text-2xl text-[#C2A95B] transition-colors hover:bg-[#C2A95B] hover:text-[#800000] md:right-8 md:top-8"
+      >
+        ×
+      </button>
 
-      {/* Page Header */}
-      <section className="relative w-full overflow-hidden bg-gradient-to-b from-black via-[#0a0503] to-black pt-[140px] pb-16 md:pt-[180px] md:pb-24">
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,_rgba(251,191,36,0.12),_transparent_60%)]" />
+      {/* Counter */}
+      <div
+        className="absolute left-5 top-6 text-xs uppercase tracking-[0.3em] text-[#C2A95B] md:left-8 md:top-8"
+        style={{ fontFamily: "var(--font-jakarta)" }}
+      >
+        {index + 1} / {images.length}
+      </div>
 
-        <div className="relative mx-auto max-w-4xl px-6 text-center md:px-12">
+      {/* Prev */}
+      <button
+        onClick={(e) => {
+          e.stopPropagation();
+          onPrev();
+        }}
+        aria-label="Previous"
+        className="absolute left-3 z-10 flex h-12 w-12 items-center justify-center rounded-full border border-[#C2A95B]/40 text-xl text-[#C2A95B] transition-colors hover:bg-[#C2A95B] hover:text-[#800000] md:left-8 max-sm:left-25 max-sm:top-155"
+      >
+        ‹
+      </button>
+
+      {/* Next */}
+      <button
+        onClick={(e) => {
+          e.stopPropagation();
+          onNext();
+        }}
+        aria-label="Next"
+        className="absolute right-3 z-10 flex h-12 w-12 items-center justify-center rounded-full border border-[#C2A95B]/40 text-xl text-[#C2A95B] transition-colors hover:bg-[#C2A95B] hover:text-[#800000] md:right-8 max-sm:right-25 max-sm:top-155"
+      >
+        ›
+      </button>
+
+      {/* Image */}
+      <div
+        className="relative mx-4 w-full max-w-5xl"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl border border-[#C2A95B]/30">
+          <Image
+            src={image.src}
+            alt={image.alt}
+            fill
+            sizes="100vw"
+            className="object-contain"
+            priority
+          />
+        </div>
+
+        <div className="mt-5 text-center">
           <p
-            className="mb-4 text-xs font-medium uppercase tracking-[0.4em] text-amber-300/90"
+            className="text-[10px] uppercase tracking-[0.3em] text-[#C2A95B]"
             style={{ fontFamily: "var(--font-jakarta)" }}
           >
-            Darshan of the Divine
+            {image.category}
           </p>
-          <h1
-            className="mb-6 text-4xl font-bold leading-tight text-amber-50 md:text-6xl"
+          <p
+            className="mt-2 text-base text-[#FFF8E7] md:text-lg"
             style={{ fontFamily: "var(--font-cinzel)" }}
           >
-            Temple <span className="text-amber-300">Gallery</span>
-          </h1>
-
-          <div className="mx-auto mb-6 flex items-center justify-center gap-3">
-            <span className="h-[1px] w-16 bg-gradient-to-r from-transparent to-amber-400/70" />
-            <span className="text-amber-400">✦</span>
-            <span className="h-[1px] w-16 bg-gradient-to-l from-transparent to-amber-400/70" />
-          </div>
-
-          <p
-            className="mx-auto max-w-2xl text-sm font-light leading-relaxed text-amber-50/70 md:text-base"
-            style={{ fontFamily: "var(--font-jakarta)" }}
-          >
-            Glimpses of devotion, celebration, and divine grace captured at
-            Madan Mohan Mandir. Each frame carries the fragrance of bhakti and
-            the blessings of the Lord.
+            {image.caption}
           </p>
         </div>
-      </section>
+      </div>
+    </div>
+  );
+}
 
-      {/* Filter Tabs */}
-      <section className="relative w-full bg-[#0a0503] pb-12">
-        <div className="mx-auto max-w-7xl px-6 md:px-12">
-          <div className="flex flex-wrap items-center justify-center gap-3">
-            {categories.map((cat) => (
-              <button
-                key={cat}
-                onClick={() => setActiveCategory(cat)}
-                className={`rounded-full border px-5 py-2 text-xs font-medium uppercase tracking-widest transition-all duration-300 md:text-sm ${
-                  activeCategory === cat
-                    ? "border-amber-400 bg-amber-400 text-black shadow-lg shadow-amber-500/30"
-                    : "border-amber-400/30 bg-white/[0.02] text-amber-200/80 hover:border-amber-400/60 hover:bg-white/[0.05]"
-                }`}
-                style={{ fontFamily: "var(--font-jakarta)" }}
-              >
-                {cat}
-              </button>
-            ))}
+/* ============================================================
+   PAGE
+============================================================ */
+
+export default function GalleryPage() {
+  const [active, setActive] = useState<Category>("All");
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+
+  const filtered = useMemo(() => {
+    if (active === "All") return galleryImages;
+    return galleryImages.filter((img) => img.category === active);
+  }, [active]);
+
+  const openLightbox = useCallback((i: number) => setLightboxIndex(i), []);
+  const closeLightbox = useCallback(() => setLightboxIndex(null), []);
+  const prevImage = useCallback(
+    () =>
+      setLightboxIndex((i) =>
+        i === null ? i : (i - 1 + filtered.length) % filtered.length
+      ),
+    [filtered.length]
+  );
+  const nextImage = useCallback(
+    () =>
+      setLightboxIndex((i) => (i === null ? i : (i + 1) % filtered.length)),
+    [filtered.length]
+  );
+
+  return (
+    <main className={`${cinzel.variable} ${jakarta.variable} w-full`}>
+      {/* ============================================================
+          SECTION 1 — HERO
+      ============================================================ */}
+      <section className="relative w-full overflow-hidden bg-white py-20 md:py-28 max-sm:pt-30">
+        <div
+          className="pointer-events-none absolute inset-0 opacity-[0.055]"
+          style={{
+            backgroundImage: `
+              radial-gradient(circle at center, #C2A95B 1px, transparent 1.5px),
+              linear-gradient(45deg, transparent 48%, #C2A95B 49%, #C2A95B 51%, transparent 52%),
+              linear-gradient(-45deg, transparent 48%, #C2A95B 49%, #C2A95B 51%, transparent 52%)
+            `,
+            backgroundSize: "36px 36px",
+          }}
+        />
+        <div className="pointer-events-none absolute -left-40 -top-40 h-[500px] w-[500px] rounded-full bg-[#C2A95B]/5 blur-3xl" />
+        <div className="pointer-events-none absolute -bottom-40 -right-40 h-[500px] w-[500px] rounded-full bg-[#800000]/5 blur-3xl" />
+
+        <div className="relative z-10 mx-auto max-w-7xl px-6 md:px-10">
+          <div className="text-center">
+            <h1
+              className="text-3xl font-bold leading-tight text-[#800000] md:text-5xl"
+              style={{ fontFamily: "var(--font-cinzel)" }}
+            >
+              The Temple in <span className="text-[#C2A95B]">Pictures</span>
+            </h1>
+
+            <div className="mt-6 flex items-center justify-center gap-3">
+              <span className="h-px w-12 bg-[#C2A95B]" />
+              <span className="text-[#C2A95B]">✦</span>
+              <span className="h-px w-12 bg-[#C2A95B]" />
+            </div>
+
+            <p
+              className="mx-auto mt-6 max-w-2xl text-sm font-light leading-relaxed text-[#800000]/70 md:text-base"
+              style={{ fontFamily: "var(--font-jakarta)" }}
+            >
+              A quiet collection of moments from the Madan Mohan Mandir — its
+              stone, its light, its festivals and the daily offerings of love
+              made to the Lord.
+            </p>
           </div>
         </div>
       </section>
 
-      {/* Masonry Grid */}
-      <section className="relative w-full bg-[#0a0503] pb-24 md:pb-32">
-        <div className="mx-auto max-w-7xl px-6 md:px-12">
-          <div className="grid auto-rows-[220px] grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-4 md:gap-5">
-            {filteredItems.map((item) => (
-              <button
-                key={item.id}
-                onClick={() => openLightbox(item)}
-                className={`group relative overflow-hidden rounded-2xl border hover:cursor-pointer border-amber-400/15 bg-white/[0.02] text-left transition-all duration-500 hover:-translate-y-1 hover:border-amber-400/60 hover:shadow-xl hover:shadow-amber-500/20 ${item.span}`}
-              >
-                <Image
-                  src={item.src}
-                  alt={item.title}
-                  fill
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                  className="object-cover transition-transform duration-700 group-hover:scale-110"
-                />
+      {/* ============================================================
+          SECTION 2 — FILTERS + GRID
+      ============================================================ */}
+      <section className="relative w-full overflow-hidden bg-[#FFF8E7] py-16 md:py-24">
+        <div
+          className="pointer-events-none absolute inset-0 opacity-[0.07]"
+          style={{
+            backgroundImage:
+              "radial-gradient(circle at center, #C2A95B 1px, transparent 1.5px)",
+            backgroundSize: "30px 30px",
+          }}
+        />
 
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-70 transition-opacity duration-500 group-hover:opacity-90" />
-
-                <span
-                  className="absolute top-4 left-4 rounded-full border border-amber-400/40 bg-black/60 px-3 py-1 text-[10px] font-medium uppercase tracking-widest text-amber-200 backdrop-blur-sm"
+        <div className="relative z-10 mx-auto max-w-7xl px-6 md:px-10">
+          {/* ---------- Filters ---------- */}
+          <div className="mb-12 flex flex-wrap items-center justify-center gap-2 md:gap-3">
+            {categories.map((cat) => {
+              const isActive = active === cat;
+              return (
+                <button
+                  key={cat}
+                  onClick={() => {
+                    setActive(cat);
+                    setLightboxIndex(null);
+                  }}
+                  className={`rounded-full border px-4 py-2 text-[10px] uppercase tracking-[0.2em] transition-all duration-300 md:px-5 md:text-xs ${
+                    isActive
+                      ? "border-[#C2A95B] bg-[#800000] text-[#FFF8E7] shadow-md"
+                      : "border-[#C2A95B]/40 bg-white/60 text-[#800000]/70 hover:border-[#C2A95B] hover:text-[#800000]"
+                  }`}
                   style={{ fontFamily: "var(--font-jakarta)" }}
                 >
-                  {item.category}
-                </span>
-
-                <div className="absolute bottom-0 left-0 right-0 p-4 md:p-5">
-                  <h3
-                    className="text-base font-semibold text-amber-50 md:text-lg"
-                    style={{ fontFamily: "var(--font-cinzel)" }}
-                  >
-                    {item.title}
-                  </h3>
-                  <div className="mt-2 flex items-center gap-2 opacity-0 transition-all duration-500 group-hover:opacity-100">
-                    <span className="h-[1px] w-6 bg-amber-400" />
-                    <span
-                      className="text-[10px] uppercase tracking-[0.25em] text-amber-300"
-                      style={{ fontFamily: "var(--font-jakarta)" }}
-                    >
-                      View
-                    </span>
-                  </div>
-                </div>
-              </button>
-            ))}
+                  {cat}
+                </button>
+              );
+            })}
           </div>
 
-          {filteredItems.length === 0 && (
+          {/* ---------- Grid ---------- */}
+          {filtered.length === 0 ? (
             <p
-              className="py-20 text-center text-sm text-amber-200/60"
+              className="py-20 text-center text-sm text-[#800000]/60"
               style={{ fontFamily: "var(--font-jakarta)" }}
             >
-              No images in this category yet.
+              No images in this collection yet.
             </p>
+          ) : (
+            <div className="columns-2 gap-3 sm:gap-5 lg:columns-3 [&>*]:mb-3 sm:[&>*]:mb-5">
+              {filtered.map((image, i) => (
+                <button
+                  key={`${image.src}-${i}`}
+                  onClick={() => openLightbox(i)}
+                  className="group relative block w-full break-inside-avoid overflow-hidden rounded-xl border border-[#C2A95B]/30 text-left shadow-sm transition-all duration-500 hover:-translate-y-1 hover:border-[#C2A95B] hover:shadow-xl sm:rounded-2xl"
+                >
+                  <div
+                    className={`relative w-full ${
+                      image.tall ? "aspect-[3/4]" : "aspect-[4/3]"
+                    }`}
+                  >
+                    <Image
+                      src={image.src}
+                      alt={image.alt}
+                      fill
+                      sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 33vw"
+                      className="object-cover transition-transform duration-[900ms] ease-out group-hover:scale-105"
+                    />
+                  </div>
+
+                  {/* Base gradient */}
+                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
+
+                  {/* Maroon + gold wash on hover */}
+                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#800000]/85 via-[#800000]/15 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+
+                  {/* Content */}
+                  <div className="absolute bottom-0 left-0 right-0 p-3 md:p-6">
+                    <div className="mb-1.5 h-px w-6 bg-[#C2A95B] transition-all duration-500 group-hover:w-16 md:mb-3 md:w-10 md:group-hover:w-20" />
+
+                    <p
+                      className="mb-0.5 text-[7px] uppercase tracking-[0.2em] text-[#C2A95B] md:mb-1 md:text-[10px] md:tracking-[0.3em]"
+                      style={{ fontFamily: "var(--font-jakarta)" }}
+                    >
+                      {image.category}
+                    </p>
+
+                    <p
+                      className="text-[10px] font-bold leading-tight text-white md:text-base md:leading-snug"
+                      style={{ fontFamily: "var(--font-cinzel)" }}
+                    >
+                      {image.caption}
+                    </p>
+                  </div>
+
+                  {/* Gold ring on hover */}
+                  <div className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-inset ring-transparent transition-all duration-500 group-hover:ring-[#C2A95B]/60 sm:rounded-2xl" />
+
+                  {/* Expand hint — hidden on mobile to avoid clutter */}
+                  <div className="pointer-events-none absolute right-2 top-2 hidden h-9 w-9 items-center justify-center rounded-full border border-white/30 bg-black/30 text-white opacity-0 backdrop-blur-sm transition-all duration-500 group-hover:opacity-100 md:flex md:right-4 md:top-4">
+                    <span className="text-sm">⤢</span>
+                  </div>
+                </button>
+              ))}
+            </div>
           )}
         </div>
       </section>
 
-      {/* Lightbox */}
-      {selectedImage && (
+      {/* ============================================================
+          SECTION 3 — FEATURED COLLECTIONS
+      ============================================================ */}
+      <section className="relative w-full overflow-hidden bg-[#800000] py-16 md:py-24">
         <div
-          className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-black/95 p-4 backdrop-blur-md md:p-8"
-          onClick={closeLightbox}
-        >
-          {/* Close button */}
-          <button
-            onClick={closeLightbox}
-            className="absolute right-4 top-4 z-10 flex h-10 w-10 items-center justify-center rounded-full border border-amber-400/40 text-amber-200 transition-colors hover:border-amber-400 hover:bg-amber-400/10 md:right-6 md:top-6"
-            aria-label="Close"
-          >
-            ✕
-          </button>
+          className="pointer-events-none absolute inset-0 opacity-[0.18]"
+          style={{
+            backgroundImage:
+              "radial-gradient(#C2A95B 1.2px, transparent 1.2px)",
+            backgroundSize: "28px 28px",
+          }}
+        />
+        <div className="pointer-events-none absolute left-1/2 top-0 h-[700px] w-[700px] -translate-x-1/2 rounded-full bg-[#C2A95B]/20 blur-[130px]" />
 
-          {/* Prev button */}
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              showPrev();
-            }}
-            className="absolute left-2 z-10 flex h-10 w-10 items-center justify-center rounded-full border border-amber-400/40 text-xl text-amber-200 transition-colors hover:border-amber-400 hover:bg-amber-400/10 md:left-6 md:h-12 md:w-12"
-            aria-label="Previous"
-          >
-            ‹
-          </button>
-
-          {/* Next button */}
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              showNext();
-            }}
-            className="absolute right-2 z-10 flex h-10 w-10 items-center justify-center rounded-full border border-amber-400/40 text-xl text-amber-200 transition-colors hover:border-amber-400 hover:bg-amber-400/10 md:right-6 md:h-12 md:w-12"
-            aria-label="Next"
-          >
-            ›
-          </button>
-
-          {/* Image + Caption wrapper */}
-          <div
-            className="flex w-full max-w-5xl flex-col items-center"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* Image container — capped so caption always fits */}
-            <div className="relative h-[70vh] w-full overflow-hidden rounded-2xl border border-amber-400/30 shadow-2xl shadow-amber-500/20 md:h-[75vh]">
-              <Image
-                src={selectedImage.src}
-                alt={selectedImage.title}
-                fill
-                sizes="90vw"
-                className="object-contain"
-              />
-            </div>
-
-            {/* Caption */}
-            <div className="mt-4 text-center">
+        <div className="relative z-10">
+          <div className="mx-auto max-w-7xl px-6 md:px-10">
+            <div className="mb-10 text-center md:mb-14">
               <p
-                className="text-[10px] font-medium uppercase tracking-[0.3em] text-amber-300/80"
+                className="mb-3 text-xs font-medium uppercase tracking-[0.4em] text-[#C2A95B]"
                 style={{ fontFamily: "var(--font-jakarta)" }}
               >
-                {selectedImage.category}
+                Collections
               </p>
-              <h3
-                className="mt-1 text-lg font-semibold text-amber-50 md:text-xl"
+
+              <h2
+                className="text-3xl font-bold leading-tight text-[#FFF8E7] md:text-5xl"
                 style={{ fontFamily: "var(--font-cinzel)" }}
               >
-                {selectedImage.title}
-              </h3>
+                Featured <span className="text-[#C2A95B]">Stories</span>
+              </h2>
+
+              <div className="mt-6 flex items-center justify-center gap-3">
+                <span className="h-px w-12 bg-[#C2A95B]" />
+                <span className="text-[#C2A95B]">✦</span>
+                <span className="h-px w-12 bg-[#C2A95B]" />
+              </div>
+
+              <p
+                className="mx-auto mt-6 max-w-2xl text-sm font-light leading-relaxed text-[#FFF8E7]/80 md:text-base"
+                style={{ fontFamily: "var(--font-jakarta)" }}
+              >
+                Every photograph holds a story. Here are three threads that run
+                through the life of the temple.
+              </p>
+            </div>
+          </div>
+
+          {/* MOBILE: horizontal snap scroll */}
+          <div className="md:hidden">
+            <div
+              className="flex snap-x snap-mandatory gap-3 overflow-x-auto px-6 pb-4"
+              style={{
+                scrollbarWidth: "none",
+                msOverflowStyle: "none",
+                WebkitOverflowScrolling: "touch",
+              }}
+            >
+              {featuredCollections.map((item) => (
+                <div
+                  key={item.title}
+                  className="group relative h-[340px] w-[72vw] max-w-[260px] shrink-0 snap-start overflow-hidden rounded-xl border border-[#C2A95B]/30 shadow-sm"
+                >
+                  <Image
+                    src={item.image}
+                    alt={item.title}
+                    fill
+                    sizes="72vw"
+                    className="object-cover"
+                  />
+
+                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-black/10" />
+
+                  <div className="absolute bottom-0 left-0 right-0 p-4">
+                    <div className="mb-2.5 h-px w-8 bg-[#C2A95B]" />
+
+                    <p
+                      className="mb-1.5 text-[9px] uppercase tracking-[0.2em] text-[#C2A95B]"
+                      style={{ fontFamily: "var(--font-jakarta)" }}
+                    >
+                      {item.subtitle}
+                    </p>
+
+                    <h3
+                      className="mb-2 text-lg font-bold leading-tight text-white"
+                      style={{ fontFamily: "var(--font-cinzel)" }}
+                    >
+                      {item.title}
+                    </h3>
+
+                    <p
+                      className="text-[11px] leading-relaxed text-white/80"
+                      style={{ fontFamily: "var(--font-jakarta)" }}
+                    >
+                      {item.text}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Scroll hint */}
+            <div className="mt-1 flex items-center justify-center gap-2 px-6">
+              <span
+                className="text-[9px] uppercase tracking-[0.25em] text-[#C2A95B]/80"
+                style={{ fontFamily: "var(--font-jakarta)" }}
+              >
+                Swipe →
+              </span>
+            </div>
+          </div>
+
+          {/* DESKTOP: compact grid */}
+          <div className="mx-auto hidden max-w-7xl px-10 md:block">
+            <div className="grid gap-5 md:grid-cols-3">
+              {featuredCollections.map((item) => (
+                <div
+                  key={item.title}
+                  className="group relative h-[400px] overflow-hidden rounded-2xl border border-[#C2A95B]/30 shadow-sm transition-all duration-500 hover:-translate-y-1.5 hover:border-[#C2A95B] hover:shadow-xl lg:h-[440px]"
+                >
+                  <Image
+                    src={item.image}
+                    alt={item.title}
+                    fill
+                    sizes="33vw"
+                    className="object-cover transition-transform duration-[900ms] ease-out group-hover:scale-105"
+                  />
+
+                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-black/10" />
+                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#800000]/80 via-[#800000]/10 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+
+                  <div className="absolute bottom-0 left-0 right-0 p-5 md:p-6">
+                    <div className="mb-3 h-px w-10 bg-[#C2A95B] transition-all duration-500 group-hover:w-20" />
+
+                    <p
+                      className="mb-2 text-[10px] uppercase tracking-[0.25em] text-[#C2A95B] md:text-xs"
+                      style={{ fontFamily: "var(--font-jakarta)" }}
+                    >
+                      {item.subtitle}
+                    </p>
+
+                    <h3
+                      className="mb-2.5 text-xl font-bold text-white md:text-2xl"
+                      style={{ fontFamily: "var(--font-cinzel)" }}
+                    >
+                      {item.title}
+                    </h3>
+
+                    <p
+                      className="text-[11px] leading-relaxed text-white/80 md:text-xs"
+                      style={{ fontFamily: "var(--font-jakarta)" }}
+                    >
+                      {item.text}
+                    </p>
+                  </div>
+
+                  <div className="pointer-events-none absolute inset-0 rounded-2xl ring-1 ring-inset ring-transparent transition-all duration-500 group-hover:ring-[#C2A95B]/60" />
+                </div>
+              ))}
             </div>
           </div>
         </div>
-      )}
+      </section>
 
-      {/* Bottom ornament */}
-      <div className="flex justify-center bg-[#0a0503] pb-16">
-        <span className="text-2xl text-amber-400/60">✦</span>
-      </div>
+      {/* ============================================================
+          SECTION 4 — SUBMIT / CLOSING
+      ============================================================ */}
+      <section className="relative w-full overflow-hidden bg-white py-20 md:py-28">
+        <div
+          className="pointer-events-none absolute inset-0 opacity-[0.055]"
+          style={{
+            backgroundImage: `
+              radial-gradient(circle at center, #C2A95B 1px, transparent 1.5px),
+              linear-gradient(45deg, transparent 48%, #C2A95B 49%, #C2A95B 51%, transparent 52%),
+              linear-gradient(-45deg, transparent 48%, #C2A95B 49%, #C2A95B 51%, transparent 52%)
+            `,
+            backgroundSize: "36px 36px",
+          }}
+        />
+        <div className="pointer-events-none absolute -right-40 top-0 h-[500px] w-[500px] rounded-full bg-[#C2A95B]/5 blur-3xl" />
+
+        <div className="relative z-10 mx-auto max-w-4xl px-6 text-center md:px-10">
+          <span className="text-lg text-[#C2A95B]">✦</span>
+
+          <h2
+            className="mt-6 text-2xl font-bold leading-tight text-[#800000] md:text-4xl"
+            style={{ fontFamily: "var(--font-cinzel)" }}
+          >
+            Share a <span className="text-[#C2A95B]">Memory</span>
+          </h2>
+
+          <p
+            className="mx-auto mt-5 max-w-2xl text-sm font-light leading-relaxed text-[#800000]/70 md:text-base"
+            style={{ fontFamily: "var(--font-jakarta)" }}
+          >
+            Have you visited the Madan Mohan Mandir and captured a moment of
+            beauty, devotion or celebration? We would be honoured to include
+            your photograph in this living archive of the temple.
+          </p>
+
+          <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
+            <a
+              href="mailto:gallery@madanmohanboreya.org"
+              className="rounded-full bg-[#800000] px-7 py-3 text-xs font-medium uppercase tracking-[0.2em] text-[#FFF8E7] shadow-md transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#660000] hover:shadow-lg md:text-sm"
+              style={{ fontFamily: "var(--font-jakarta)" }}
+            >
+              Send Your Photos
+            </a>
+
+            <a
+              href="/darshan"
+              className="rounded-full border border-[#C2A95B] px-7 py-3 text-xs font-medium uppercase tracking-[0.2em] text-[#800000] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#C2A95B] hover:text-white md:text-sm"
+              style={{ fontFamily: "var(--font-jakarta)" }}
+            >
+              Plan a Darshan
+            </a>
+          </div>
+
+          <div className="mt-14 flex items-center justify-center gap-3">
+            <span className="h-px w-16 bg-[#C2A95B]/30" />
+            <span className="text-[#C2A95B]">✦</span>
+            <span className="h-px w-16 bg-[#C2A95B]/30" />
+          </div>
+        </div>
+      </section>
+
+      {/* ============================================================
+          LIGHTBOX
+      ============================================================ */}
+      {lightboxIndex !== null && (
+        <Lightbox
+          images={filtered}
+          index={lightboxIndex}
+          onClose={closeLightbox}
+          onPrev={prevImage}
+          onNext={nextImage}
+        />
+      )}
     </main>
   );
 }

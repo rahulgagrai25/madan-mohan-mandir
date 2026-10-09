@@ -1,6 +1,3 @@
-"use client";
-
-import { useState } from "react";
 import { Cinzel_Decorative, Plus_Jakarta_Sans } from "next/font/google";
 import Image from "next/image";
 
@@ -16,577 +13,750 @@ const jakarta = Plus_Jakarta_Sans({
   variable: "--font-jakarta",
 });
 
-/* ---------------- Data ---------------- */
+/* ============================================================
+   DATA
+============================================================ */
 
-const featuredEvent = {
-  name: "Janmashtami Mahotsav",
-  date: "16 August 2025",
-  time: "6:00 PM – 12:30 AM",
-  venue: "Main Temple Courtyard",
-  desc: "The grandest celebration of the year — the midnight appearance of Lord Krishna. Join thousands of devotees for continuous kirtan, abhishek of the deity, cultural performances, and the sacred midnight aarti followed by mahaprasad.",
-  image: "/events/featured-janmashtami.jpg",
-  tag: "Featured Festival",
-};
+const upcomingFestivals = [
+  {
+    name: "Sharad Purnima",
+    tag: "Autumn Full Moon",
+    date: "October 2026",
+    lunar: "Ashwin Purnima",
+    text: "The night of the autumn full moon, when Krishna performed the Rasa Lila with the gopis of Vrindavan. The temple stays open late with kirtan and a moonlit aarti.",
+    image: "/gallery/festival-1.png",
+    highlight: true,
+  },
+  {
+    name: "Annakut & Govardhan Puja",
+    tag: "The Mountain of Food",
+    date: "November 2026",
+    lunar: "Kartik Shukla Pratipada",
+    text: "Hundreds of food offerings are arranged in a great mountain before the Lord, remembering Krishna lifting Govardhan hill to shelter the people of Braj.",
+    image: "/events/govardhan.png",
+  },
+  {
+    name: "Kartik Purnima",
+    tag: "The Holiest Month Ends",
+    date: "November 2026",
+    lunar: "Kartik Purnima",
+    text: "The closing of the sacred month of Kartik. Devotees gather for a full day of bathing, lamp offering and evening kirtan on the temple steps.",
+    image: "/gallery/aarti-1.png",
+  },
+  {
+    name: "Vaikuntha Ekadashi",
+    tag: "The Gate to Heaven",
+    date: "December 2026",
+    lunar: "Margashirsha Shukla Ekadashi",
+    text: "The day the gates of Vaikuntha are said to open. A special darshan is offered and devotees keep a fast and stay awake in kirtan through the night.",
+    image: "/events/ekadashi.png",
+  },
+];
 
-const upcomingEvents = [
+const calendar = [
   {
-    name: "Radhashtami Utsav",
-    date: "1 September 2025",
-    time: "5:00 AM – 11:00 PM",
-    venue: "Main Sanctum",
-    desc: "Celebrating the appearance day of Radha Rani with special shringar darshan, kirtan, and a grand abhishek ceremony.",
-    image: "/events/radhashtami.jpg",
-    tag: "Festival",
-    icon: "🌺",
+    month: "January",
+    events: [
+      { date: "14 Jan", name: "Makar Sankranti", note: "Sun enters Capricorn — special aarti" },
+      { date: "26 Jan", name: "Republic Day Kirtan", note: "Morning bhajan & flag offering" },
+    ],
   },
   {
-    name: "Sharad Purnima Raas",
-    date: "6 October 2025",
-    time: "7:00 PM – 1:00 AM",
-    venue: "Natya Mandap",
-    desc: "The divine Raas Leela of Radha and Krishna under the full moon, performed by temple artists and local devotees.",
-    image: "/events/sharad-purnima.jpg",
-    tag: "Cultural",
-    icon: "🌕",
+    month: "February",
+    events: [
+      { date: "02 Feb", name: "Vasant Panchami", note: "Saraswati puja and yellow shringar" },
+      { date: "12 Feb", name: "Magha Purnima", note: "Full-moon lamp offering" },
+    ],
   },
   {
-    name: "Diwali Annakut",
-    date: "20 October 2025",
-    time: "5:30 PM – 10:00 PM",
-    venue: "Temple Courtyard",
-    desc: "Hundreds of food offerings to the Lord arranged in a grand mountain, followed by lamp lighting and fireworks.",
-    image: "/events/diwali.jpg",
-    tag: "Festival",
-    icon: "🪔",
+    month: "March",
+    events: [
+      { date: "04 Mar", name: "Holi", note: "Festival of colours — temple courtyard celebration" },
+      { date: "26 Mar", name: "Ram Navami", note: "Birth of Lord Rama — day-long kirtan" },
+    ],
   },
   {
-    name: "Govardhan Puja",
-    date: "22 October 2025",
-    time: "7:00 AM – 12:00 PM",
-    venue: "Temple Gardens",
-    desc: "Commemorating Lord Krishna lifting Govardhan Hill, with a mini Govardhan built from prasad and worshipped.",
-    image: "/events/govardhan.jpg",
-    tag: "Puja",
-    icon: "⛰️",
+    month: "April",
+    events: [
+      { date: "08 Apr", name: "Chaitra Navratri", note: "Nine nights of Devi bhajan" },
+      { date: "16 Apr", name: "Ram Navami Aarti", note: "Special evening aarti" },
+    ],
   },
   {
-    name: "Kartik Purnima Deepotsav",
-    date: "5 November 2025",
-    time: "5:00 PM – 9:00 PM",
-    venue: "Ghat & Courtyard",
-    desc: "Thousands of lamps illuminate the temple and riverbank in a breathtaking festival of light.",
-    image: "/events/kartik.jpg",
-    tag: "Festival",
-    icon: "🪔",
+    month: "May",
+    events: [
+      { date: "10 May", name: "Akshaya Tritiya", note: "Auspicious day of eternal prosperity" },
+      { date: "21 May", name: "Narasimha Jayanti", note: "Evening kirtan" },
+    ],
   },
   {
-    name: "Holi Utsav",
-    date: "14 March 2026",
-    time: "8:00 AM – 2:00 PM",
-    venue: "Temple Grounds",
-    desc: "The joyous festival of colours celebrated with devotional songs, abeer, and special sweets.",
-    image: "/events/holi.jpg",
-    tag: "Utsav",
-    icon: "🎨",
+    month: "June",
+    events: [
+      { date: "05 Jun", name: "Ganga Dussehra", note: "River offering ceremony" },
+      { date: "28 Jun", name: "Snan Yatra", note: "The Lord's ceremonial bath" },
+    ],
+  },
+  {
+    month: "July",
+    events: [
+      { date: "10 Jul", name: "Guru Purnima", note: "Honouring the spiritual lineage" },
+      { date: "16 Jul", name: "Rath Yatra", note: "Chariot procession through Boreya" },
+    ],
+  },
+  {
+    month: "August",
+    events: [
+      { date: "05 Aug", name: "Jhulan Yatra", note: "The Lord swings on a flower-decorated swing" },
+      { date: "09 Aug", name: "Raksha Bandhan", note: "Sacred thread offering" },
+    ],
+  },
+  {
+    month: "September",
+    events: [
+      { date: "04 Sep", name: "Janmashtami", note: "Krishna's birth — night-long celebration" },
+      { date: "16 Sep", name: "Radhashtami", note: "Appearance of Shri Radha" },
+    ],
+  },
+  {
+    month: "October",
+    events: [
+      { date: "25 Oct", name: "Sharad Purnima", note: "Rasa Lila night under the full moon" },
+      { date: "29 Oct", name: "Karwa Chauth", note: "Evening aarti for married couples" },
+    ],
+  },
+  {
+    month: "November",
+    events: [
+      { date: "08 Nov", name: "Annakut", note: "The great mountain of food offering" },
+      { date: "09 Nov", name: "Govardhan Puja", note: "Remembrance of the lifting of the hill" },
+      { date: "11 Nov", name: "Bhai Dooj", note: "Sisters offer prayers for brothers" },
+    ],
+  },
+  {
+    month: "December",
+    events: [
+      { date: "20 Dec", name: "Vaikuntha Ekadashi", note: "Night-long kirtan and fast" },
+      { date: "30 Dec", name: "Gita Jayanti", note: "Reading of the Bhagavad Gita" },
+    ],
   },
 ];
 
 const weeklySchedule = [
-  { day: "Monday", event: "Rudrabhishek", time: "6:00 AM" },
-  { day: "Tuesday", event: "Hanuman Chalisa Path", time: "7:00 AM" },
-  { day: "Wednesday", event: "Gau Seva & Bhog", time: "11:00 AM" },
-  { day: "Thursday", event: "Bhagavat Katha", time: "6:00 PM" },
-  { day: "Friday", event: "Kirtan Sandhya", time: "7:00 PM" },
-  { day: "Saturday", event: "Cultural Program", time: "6:30 PM" },
-  { day: "Sunday", event: "Bal Sabha & Satsang", time: "10:00 AM" },
+  {
+    day: "Every Morning",
+    name: "Mangala Aarti & Shringar",
+    time: "5:00 AM — 7:00 AM",
+    text: "The Lord is awakened and adorned. Devotees may join the early darshan.",
+  },
+  {
+    day: "Every Evening",
+    name: "Sandhya Aarti & Kirtan",
+    time: "6:30 PM — 7:30 PM",
+    text: "The evening lamp offering followed by bhajan and kirtan in the temple hall.",
+  },
+  {
+    day: "Every Saturday",
+    name: "Bhajan Sandhya",
+    time: "7:00 PM — 8:30 PM",
+    text: "An extended evening of devotional singing open to all — visiting singers and local devotees.",
+  },
+  {
+    day: "Every Ekadashi",
+    name: "Ekadashi Vrat & Kirtan",
+    time: "All Day",
+    text: "A day of fasting and remembrance. The temple stays open late for night kirtan.",
+  },
+  {
+    day: "Every Purnima",
+    name: "Full Moon Lamp Offering",
+    time: "6:30 PM",
+    text: "On every full moon night, devotees offer ghee lamps on the temple steps.",
+  },
+  {
+    day: "Every Amavasya",
+    name: "New Moon Prayer",
+    time: "6:30 PM",
+    text: "A quiet evening of prayer and remembrance for ancestors and loved ones.",
+  },
 ];
 
-const pastEvents = [
-  { src: "/events/past-1.jpg", title: "Janmashtami 2024" },
-  { src: "/events/past-2.jpg", title: "Radhashtami 2024" },
-  { src: "/events/past-3.jpg", title: "Diwali Annakut 2024" },
-  { src: "/events/past-4.jpg", title: "Kartik Deepotsav 2024" },
-  { src: "/events/past-5.jpg", title: "Holi Utsav 2024" },
-  { src: "/events/past-6.jpg", title: "Gau Puja 2024" },
-];
-
-/* ---------------- Component ---------------- */
+/* ============================================================
+   PAGE
+============================================================ */
 
 export default function EventsPage() {
-  const [filter, setFilter] = useState("All");
-  const filters = ["All", "Festival", "Cultural", "Puja", "Utsav"];
-
-  const filteredEvents =
-    filter === "All"
-      ? upcomingEvents
-      : upcomingEvents.filter((e) => e.tag === filter);
-
   return (
-    <main className={`${cinzel.variable} ${jakarta.variable} min-h-screen bg-black`}>
+    <main className={`${cinzel.variable} ${jakarta.variable} w-full`}>
+      {/* ============================================================
+          SECTION 1 — HERO
+      ============================================================ */}
+      <section className="relative w-full overflow-hidden bg-white py-20 md:py-28 max-sm:pt-30">
+        <div
+          className="pointer-events-none absolute inset-0 opacity-[0.055]"
+          style={{
+            backgroundImage: `
+              radial-gradient(circle at center, #C2A95B 1px, transparent 1.5px),
+              linear-gradient(45deg, transparent 48%, #C2A95B 49%, #C2A95B 51%, transparent 52%),
+              linear-gradient(-45deg, transparent 48%, #C2A95B 49%, #C2A95B 51%, transparent 52%)
+            `,
+            backgroundSize: "36px 36px",
+          }}
+        />
+        <div className="pointer-events-none absolute -left-40 -top-40 h-[500px] w-[500px] rounded-full bg-[#C2A95B]/5 blur-3xl" />
+        <div className="pointer-events-none absolute -bottom-40 -right-40 h-[500px] w-[500px] rounded-full bg-[#800000]/5 blur-3xl" />
 
+        <div className="relative z-10 mx-auto max-w-7xl px-6 md:px-10">
+          <div className="mb-14 text-center">
+            <p
+              className="mb-3 text-xs font-medium uppercase tracking-[0.4em] text-[#C2A95B]"
+              style={{ fontFamily: "var(--font-jakarta)" }}
+            >
+              Celebrations at Boreya
+            </p>
 
-      {/* ============ PAGE HEADER ============ */}
-      <section className="relative w-full overflow-hidden bg-gradient-to-b from-black via-[#0a0503] to-black pt-[140px] pb-16 md:pt-[180px] md:pb-24">
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,_rgba(251,191,36,0.12),_transparent_60%)]" />
+            <h1
+              className="text-3xl font-bold leading-tight text-[#800000] md:text-5xl"
+              style={{ fontFamily: "var(--font-cinzel)" }}
+            >
+              Festivals &amp; <span className="text-[#C2A95B]">Events</span>
+            </h1>
 
-        <div className="relative mx-auto max-w-4xl px-6 text-center md:px-12">
-          <p
-            className="mb-4 text-xs font-medium uppercase tracking-[0.4em] text-amber-300/90"
-            style={{ fontFamily: "var(--font-jakarta)" }}
-          >
-            Celebrations & Utsavs
-          </p>
-          <h1
-            className="mb-6 text-4xl font-bold leading-tight text-amber-50 md:text-6xl"
-            style={{ fontFamily: "var(--font-cinzel)" }}
-          >
-            Temple <span className="text-amber-300">Events</span>
-          </h1>
+            <div className="mt-6 flex items-center justify-center gap-3">
+              <span className="h-px w-12 bg-[#C2A95B]" />
+              <span className="text-[#C2A95B]">✦</span>
+              <span className="h-px w-12 bg-[#C2A95B]" />
+            </div>
 
-          <div className="mx-auto mb-6 flex items-center justify-center gap-3">
-            <span className="h-[1px] w-16 bg-gradient-to-r from-transparent to-amber-400/70" />
-            <span className="text-amber-400">✦</span>
-            <span className="h-[1px] w-16 bg-gradient-to-l from-transparent to-amber-400/70" />
+            <p
+              className="mx-auto mt-6 max-w-2xl text-sm font-light leading-relaxed text-[#800000]/70 md:text-base"
+              style={{ fontFamily: "var(--font-jakarta)" }}
+            >
+              For over three centuries, the Madan Mohan Mandir has kept time
+              not by the calendar of the world, but by the rhythm of devotion —
+              the songs, lamps and offerings that mark the year.
+            </p>
           </div>
 
-          <p
-            className="mx-auto max-w-2xl text-sm font-light leading-relaxed text-amber-50/70 md:text-base"
-            style={{ fontFamily: "var(--font-jakarta)" }}
-          >
-            From the midnight joy of Janmashtami to the thousand lamps of
-            Kartik, every festival at Madan Mohan Mandir is a doorway to the
-            Divine. Come, celebrate with us.
-          </p>
-        </div>
-      </section>
+          {/* ---------- Featured image ---------- */}
+          <div className="relative mx-auto max-w-4xl">
+            <div className="absolute -inset-3 rounded-[2rem] border border-[#C2A95B]/30" />
+            <div className="absolute -inset-6 rounded-[2.5rem] border border-[#C2A95B]/10" />
 
-      {/* ============ FEATURED EVENT ============ */}
-      <section className="relative w-full bg-[#0a0503] pb-16 md:pb-24">
-        <div className="mx-auto max-w-7xl px-6 md:px-12">
-          <div className="group relative overflow-hidden rounded-3xl border border-amber-400/25 bg-white/[0.02]">
-            <div className="grid grid-cols-1 md:grid-cols-2">
-              {/* Image */}
-              <div className="relative aspect-[4/3] overflow-hidden md:aspect-auto md:min-h-[500px]">
-                <Image
-                  src={featuredEvent.image}
-                  alt={featuredEvent.name}
-                  fill
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                  className="object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent md:bg-gradient-to-r md:from-transparent md:via-black/20 md:to-black/80" />
+            <div className="relative h-[320px] w-full overflow-hidden rounded-[1.75rem] bg-[#800000] md:h-[460px]">
+              <Image
+                src="/gallery/festival-1.png"
+                alt="Festival celebration at Madan Mohan Temple"
+                fill
+                priority
+                sizes="(max-width: 1024px) 100vw, 80vw"
+                className="object-cover"
+              />
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#800000]/85 via-transparent to-transparent" />
 
-                {/* Featured badge */}
-                <span
-                  className="absolute top-5 left-5 rounded-full border border-amber-400/60 bg-black/70 px-4 py-1.5 text-[10px] font-semibold uppercase tracking-widest text-amber-200 backdrop-blur-sm"
-                  style={{ fontFamily: "var(--font-jakarta)" }}
-                >
-                  ✦ {featuredEvent.tag}
-                </span>
-              </div>
-
-              {/* Content */}
-              <div className="relative flex flex-col justify-center p-8 md:p-12">
-                <div className="pointer-events-none absolute -top-16 -right-16 h-48 w-48 rounded-full bg-amber-400/10 blur-3xl" />
-
+              <div className="absolute bottom-0 left-0 right-0 p-6 text-center md:p-10">
                 <p
-                  className="mb-3 text-xs font-medium uppercase tracking-[0.35em] text-amber-300/90"
+                  className="mb-2 text-[10px] uppercase tracking-[0.3em] text-[#C2A95B] md:text-xs"
                   style={{ fontFamily: "var(--font-jakarta)" }}
                 >
-                  {featuredEvent.date}
+                  A Living Calendar of Devotion
                 </p>
-
                 <h2
-                  className="mb-5 text-3xl font-bold leading-tight text-amber-50 md:text-4xl"
+                  className="text-2xl font-bold text-white md:text-4xl"
                   style={{ fontFamily: "var(--font-cinzel)" }}
                 >
-                  {featuredEvent.name}
+                  The Year in Celebration
                 </h2>
-
-                <div className="mb-6 flex items-center gap-3">
-                  <span className="h-[1px] w-12 bg-amber-400/70" />
-                  <span className="text-amber-400">✦</span>
-                </div>
-
-                <p
-                  className="mb-8 text-sm font-light leading-relaxed text-amber-50/75 md:text-base"
-                  style={{ fontFamily: "var(--font-jakarta)" }}
-                >
-                  {featuredEvent.desc}
-                </p>
-
-                {/* Meta info */}
-                <div className="mb-8 grid grid-cols-2 gap-4">
-                  <div className="rounded-xl border border-amber-400/20 bg-white/[0.03] p-3">
-                    <p
-                      className="mb-1 text-[10px] uppercase tracking-widest text-amber-300/70"
-                      style={{ fontFamily: "var(--font-jakarta)" }}
-                    >
-                      Time
-                    </p>
-                    <p
-                      className="text-xs font-medium text-amber-100"
-                      style={{ fontFamily: "var(--font-jakarta)" }}
-                    >
-                      {featuredEvent.time}
-                    </p>
-                  </div>
-                  <div className="rounded-xl border border-amber-400/20 bg-white/[0.03] p-3">
-                    <p
-                      className="mb-1 text-[10px] uppercase tracking-widest text-amber-300/70"
-                      style={{ fontFamily: "var(--font-jakarta)" }}
-                    >
-                      Venue
-                    </p>
-                    <p
-                      className="text-xs font-medium text-amber-100"
-                      style={{ fontFamily: "var(--font-jakarta)" }}
-                    >
-                      {featuredEvent.venue}
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex flex-wrap gap-3">
-                  <a
-                    href="#register"
-                    className="rounded-full bg-gradient-to-r from-amber-400 to-amber-500 px-7 py-3 text-sm font-semibold tracking-wide text-black shadow-lg shadow-amber-500/30 transition-all duration-300 hover:shadow-amber-400/50 hover:brightness-110"
-                    style={{ fontFamily: "var(--font-jakarta)" }}
-                  >
-                    Register Now
-                  </a>
-                  <a
-                    href="#details"
-                    className="rounded-full border border-amber-300/60 bg-white/5 px-7 py-3 text-sm font-semibold tracking-wide text-amber-100 backdrop-blur-sm transition-all duration-300 hover:border-amber-300 hover:bg-white/10"
-                    style={{ fontFamily: "var(--font-jakarta)" }}
-                  >
-                    Learn More
-                  </a>
-                </div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ============ UPCOMING EVENTS ============ */}
-      <section className="relative w-full overflow-hidden bg-gradient-to-b from-[#0a0503] via-black to-[#0a0503] py-24 md:py-32">
-        {/* Background dots */}
+      {/* ============================================================
+          SECTION 2 — UPCOMING FESTIVALS
+      ============================================================ */}
+      <section className="relative w-full overflow-hidden bg-[#FFF8E7] py-20 md:py-28">
         <div
-          className="pointer-events-none absolute inset-0 opacity-[0.03]"
+          className="pointer-events-none absolute inset-0 opacity-[0.07]"
           style={{
-            backgroundImage: "radial-gradient(circle, rgba(251,191,36,1) 1px, transparent 1px)",
-            backgroundSize: "32px 32px",
+            backgroundImage:
+              "radial-gradient(circle at center, #C2A95B 1px, transparent 1.5px)",
+            backgroundSize: "30px 30px",
           }}
         />
 
-        <div className="relative mx-auto max-w-7xl px-6 md:px-12">
-          {/* Heading */}
-          <div className="mb-12 text-center">
-            <p
-              className="mb-4 text-xs font-medium uppercase tracking-[0.4em] text-amber-300/90"
-              style={{ fontFamily: "var(--font-jakarta)" }}
-            >
-              Mark Your Calendar
-            </p>
-            <h2
-              className="mb-6 text-3xl font-bold text-amber-50 md:text-5xl"
-              style={{ fontFamily: "var(--font-cinzel)" }}
-            >
-              Upcoming <span className="text-amber-300">Festivals</span>
-            </h2>
-            <div className="mx-auto flex items-center justify-center gap-3">
-              <span className="h-[1px] w-16 bg-gradient-to-r from-transparent to-amber-400/70" />
-              <span className="text-amber-400">✦</span>
-              <span className="h-[1px] w-16 bg-gradient-to-l from-transparent to-amber-400/70" />
-            </div>
-          </div>
-
-          {/* Filters */}
-          <div className="mb-10 flex flex-wrap items-center justify-center gap-3">
-            {filters.map((f) => (
-              <button
-                key={f}
-                onClick={() => setFilter(f)}
-                className={`rounded-full border px-5 py-2 text-xs font-medium uppercase tracking-widest transition-all duration-300 md:text-sm ${
-                  filter === f
-                    ? "border-amber-400 bg-amber-400 text-black shadow-lg shadow-amber-500/30"
-                    : "border-amber-400/30 bg-white/[0.02] text-amber-200/80 hover:border-amber-400/60 hover:bg-white/[0.05]"
-                }`}
+        <div className="relative z-10">
+          <div className="mx-auto max-w-7xl px-6 md:px-10">
+            <div className="mb-14 text-center">
+              <p
+                className="mb-3 text-xs font-medium uppercase tracking-[0.4em] text-[#C2A95B]"
                 style={{ fontFamily: "var(--font-jakarta)" }}
               >
-                {f}
-              </button>
-            ))}
-          </div>
+                Coming Soon
+              </p>
 
-          {/* Events grid */}
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {filteredEvents.map((e) => (
-              <article
-                key={e.name}
-                className="group relative overflow-hidden rounded-2xl border border-amber-400/15 bg-white/[0.02] transition-all duration-500 hover:-translate-y-2 hover:border-amber-400/50 hover:shadow-xl hover:shadow-amber-500/15"
+              <h2
+                className="text-3xl font-bold leading-tight text-[#800000] md:text-5xl"
+                style={{ fontFamily: "var(--font-cinzel)" }}
               >
-                {/* Image */}
-                <div className="relative aspect-[4/3] overflow-hidden">
-                  <Image
-                    src={e.image}
-                    alt={e.name}
-                    fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                    className="object-cover transition-transform duration-700 group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
+                Upcoming <span className="text-[#C2A95B]">Festivals</span>
+              </h2>
 
-                  {/* Tag */}
-                  <span
-                    className="absolute top-4 left-4 rounded-full border border-amber-400/50 bg-black/70 px-3 py-1 text-[10px] font-medium uppercase tracking-widest text-amber-200 backdrop-blur-sm"
-                    style={{ fontFamily: "var(--font-jakarta)" }}
-                  >
-                    {e.tag}
-                  </span>
+              <div className="mt-6 flex items-center justify-center gap-3">
+                <span className="h-px w-12 bg-[#C2A95B]" />
+                <span className="text-[#C2A95B]">✦</span>
+                <span className="h-px w-12 bg-[#C2A95B]" />
+              </div>
 
-                  {/* Icon */}
-                  <div className="absolute bottom-4 right-4 flex h-12 w-12 items-center justify-center rounded-full border border-amber-400/40 bg-black/70 text-xl backdrop-blur-sm">
-                    {e.icon}
-                  </div>
-                </div>
-
-                {/* Content */}
-                <div className="relative p-6">
-                  <p
-                    className="mb-2 text-xs font-medium uppercase tracking-widest text-amber-300/80"
-                    style={{ fontFamily: "var(--font-jakarta)" }}
-                  >
-                    {e.date}
-                  </p>
-                  <h3
-                    className="mb-3 text-xl font-bold text-amber-50"
-                    style={{ fontFamily: "var(--font-cinzel)" }}
-                  >
-                    {e.name}
-                  </h3>
-                  <p
-                    className="mb-4 text-sm font-light leading-relaxed text-amber-100/70"
-                    style={{ fontFamily: "var(--font-jakarta)" }}
-                  >
-                    {e.desc}
-                  </p>
-
-                  {/* Time + Venue */}
-                  <div className="mb-5 flex flex-wrap gap-x-4 gap-y-1 text-xs text-amber-200/60">
-                    <span style={{ fontFamily: "var(--font-jakarta)" }}>
-                      🕐 {e.time}
-                    </span>
-                    <span style={{ fontFamily: "var(--font-jakarta)" }}>
-                      📍 {e.venue}
-                    </span>
-                  </div>
-
-                  <a
-                    href={`#event-${e.name.toLowerCase().replace(/\s+/g, "-")}`}
-                    className="group/link inline-flex items-center gap-2 text-sm font-medium text-amber-300 transition-colors hover:text-amber-200"
-                    style={{ fontFamily: "var(--font-jakarta)" }}
-                  >
-                    Event Details
-                    <span className="transition-transform duration-300 group-hover/link:translate-x-1">
-                      →
-                    </span>
-                  </a>
-                </div>
-              </article>
-            ))}
-          </div>
-
-          {filteredEvents.length === 0 && (
-            <p
-              className="py-16 text-center text-sm text-amber-200/60"
-              style={{ fontFamily: "var(--font-jakarta)" }}
-            >
-              No events in this category right now.
-            </p>
-          )}
-        </div>
-      </section>
-
-      {/* ============ WEEKLY SCHEDULE ============ */}
-      <section className="relative w-full bg-[#0a0503] py-24 md:py-32">
-        <div className="mx-auto max-w-5xl px-6 md:px-12">
-          {/* Heading */}
-          <div className="mb-16 text-center">
-            <p
-              className="mb-4 text-xs font-medium uppercase tracking-[0.4em] text-amber-300/90"
-              style={{ fontFamily: "var(--font-jakarta)" }}
-            >
-              Every Week
-            </p>
-            <h2
-              className="mb-6 text-3xl font-bold text-amber-50 md:text-5xl"
-              style={{ fontFamily: "var(--font-cinzel)" }}
-            >
-              Weekly <span className="text-amber-300">Programs</span>
-            </h2>
-            <div className="mx-auto flex items-center justify-center gap-3">
-              <span className="h-[1px] w-16 bg-gradient-to-r from-transparent to-amber-400/70" />
-              <span className="text-amber-400">✦</span>
-              <span className="h-[1px] w-16 bg-gradient-to-l from-transparent to-amber-400/70" />
+              <p
+                className="mx-auto mt-6 max-w-2xl text-sm font-light leading-relaxed text-[#800000]/70 md:text-base"
+                style={{ fontFamily: "var(--font-jakarta)" }}
+              >
+                The four great celebrations of the coming season. Dates follow
+                the Hindu lunar calendar and may shift by a day or two — please
+                confirm with the temple before travelling.
+              </p>
             </div>
           </div>
 
-          {/* Schedule list */}
-          <div className="overflow-hidden rounded-2xl border border-amber-400/20 bg-white/[0.02] backdrop-blur-sm">
-            {weeklySchedule.map((item, i) => (
-              <div
-                key={item.day}
-                className={`group flex flex-col items-start justify-between gap-2 px-6 py-5 transition-colors duration-300 hover:bg-amber-400/[0.04] sm:flex-row sm:items-center md:px-8 ${
-                  i !== weeklySchedule.length - 1 ? "border-b border-amber-400/10" : ""
-                }`}
-              >
-                <div className="flex items-center gap-4">
-                  <span
-                    className="flex h-10 w-10 items-center justify-center rounded-full border border-amber-400/30 bg-amber-400/5 text-xs font-bold text-amber-300"
-                    style={{ fontFamily: "var(--font-cinzel)" }}
-                  >
-                    {item.day.slice(0, 3)}
-                  </span>
-                  <div>
-                    <h3
-                      className="text-base font-semibold text-amber-50 md:text-lg"
-                      style={{ fontFamily: "var(--font-cinzel)" }}
-                    >
-                      {item.event}
-                    </h3>
-                    <p
-                      className="text-xs text-amber-200/50"
+          {/* MOBILE: horizontal snap scroll with smaller cards */}
+          <div className="md:hidden">
+            <div
+              className="flex snap-x snap-mandatory gap-3 overflow-x-auto px-6 pb-4"
+              style={{
+                scrollbarWidth: "none",
+                msOverflowStyle: "none",
+                WebkitOverflowScrolling: "touch",
+              }}
+            >
+              {upcomingFestivals.map((festival) => (
+                <div
+                  key={festival.name}
+                  className={`group relative h-[340px] w-[72vw] max-w-[260px] shrink-0 snap-start overflow-hidden rounded-xl border shadow-sm ${
+                    festival.highlight
+                      ? "border-[#C2A95B]"
+                      : "border-[#C2A95B]/30"
+                  }`}
+                >
+                  <Image
+                    src={festival.image}
+                    alt={festival.name}
+                    fill
+                    sizes="72vw"
+                    className="object-cover"
+                  />
+
+                  {/* Base dark gradient */}
+                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/10" />
+
+                  {/* Top badges */}
+                  <div className="absolute left-3 right-3 top-3 flex items-start justify-between gap-2">
+                    <span
+                      className="rounded-full border border-[#C2A95B]/60 bg-black/40 px-2 py-[3px] text-[7px] uppercase tracking-[0.15em] text-[#C2A95B] backdrop-blur-sm"
                       style={{ fontFamily: "var(--font-jakarta)" }}
                     >
-                      {item.day}
+                      {festival.tag}
+                    </span>
+
+                    {festival.highlight && (
+                      <span
+                        className="rounded-full bg-[#C2A95B] px-2 py-[3px] text-[7px] font-bold uppercase tracking-[0.15em] text-[#800000]"
+                        style={{ fontFamily: "var(--font-jakarta)" }}
+                      >
+                        Featured
+                      </span>
+                    )}
+                  </div>
+
+                  {/* Content */}
+                  <div className="absolute bottom-0 left-0 right-0 p-4">
+                    <div className="mb-2 flex flex-wrap items-center gap-2">
+                      <span
+                        className="text-[8px] uppercase tracking-[0.2em] text-[#C2A95B]"
+                        style={{ fontFamily: "var(--font-jakarta)" }}
+                      >
+                        {festival.date}
+                      </span>
+                      <span className="h-2.5 w-px bg-[#C2A95B]/50" />
+                      <span
+                        className="text-[8px] uppercase tracking-[0.2em] text-white/60"
+                        style={{ fontFamily: "var(--font-jakarta)" }}
+                      >
+                        {festival.lunar}
+                      </span>
+                    </div>
+
+                    <div className="mb-2 h-px w-8 bg-[#C2A95B]" />
+
+                    <h3
+                      className="mb-2 text-base font-bold leading-tight text-white"
+                      style={{ fontFamily: "var(--font-cinzel)" }}
+                    >
+                      {festival.name}
+                    </h3>
+
+                    <p
+                      className="text-[10px] leading-snug text-white/80"
+                      style={{ fontFamily: "var(--font-jakarta)" }}
+                    >
+                      {festival.text}
                     </p>
                   </div>
                 </div>
-                <span
-                  className="text-sm font-medium tracking-wider text-amber-300/90"
-                  style={{ fontFamily: "var(--font-jakarta)" }}
-                >
-                  {item.time}
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+              ))}
+            </div>
 
-      {/* ============ PAST EVENTS GALLERY ============ */}
-      <section className="relative w-full overflow-hidden bg-gradient-to-b from-[#0a0503] via-black to-[#0a0503] py-24 md:py-32">
-        <div className="mx-auto max-w-7xl px-6 md:px-12">
-          {/* Heading */}
-          <div className="mb-16 text-center">
-            <p
-              className="mb-4 text-xs font-medium uppercase tracking-[0.4em] text-amber-300/90"
-              style={{ fontFamily: "var(--font-jakarta)" }}
-            >
-              Memories
-            </p>
-            <h2
-              className="mb-6 text-3xl font-bold text-amber-50 md:text-5xl"
-              style={{ fontFamily: "var(--font-cinzel)" }}
-            >
-              Past <span className="text-amber-300">Celebrations</span>
-            </h2>
-            <div className="mx-auto flex items-center justify-center gap-3">
-              <span className="h-[1px] w-16 bg-gradient-to-r from-transparent to-amber-400/70" />
-              <span className="text-amber-400">✦</span>
-              <span className="h-[1px] w-16 bg-gradient-to-l from-transparent to-amber-400/70" />
+            {/* Scroll hint */}
+            <div className="mt-1 flex items-center justify-center gap-2 px-6">
+              <span
+                className="text-[9px] uppercase tracking-[0.25em] text-[#C2A95B]/80"
+                style={{ fontFamily: "var(--font-jakarta)" }}
+              >
+                Swipe →
+              </span>
             </div>
           </div>
 
-          {/* Grid */}
-          <div className="grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-5">
-            {pastEvents.map((p) => (
+          {/* DESKTOP: 2-col grid (unchanged) */}
+          <div className="mx-auto hidden max-w-7xl px-10 md:grid md:grid-cols-2 md:gap-6">
+            {upcomingFestivals.map((festival) => (
               <div
-                key={p.title}
-                className="group relative aspect-square overflow-hidden rounded-2xl border border-amber-400/15"
+                key={festival.name}
+                className={`group relative h-[480px] overflow-hidden rounded-2xl border shadow-sm transition-all duration-500 hover:-translate-y-1.5 hover:shadow-xl ${
+                  festival.highlight
+                    ? "border-[#C2A95B]"
+                    : "border-[#C2A95B]/30 hover:border-[#C2A95B]"
+                }`}
               >
                 <Image
-                  src={p.src}
-                  alt={p.title}
+                  src={festival.image}
+                  alt={festival.name}
                   fill
-                  sizes="(max-width: 768px) 50vw, 33vw"
-                  className="object-cover transition-transform duration-700 group-hover:scale-110"
+                  sizes="50vw"
+                  className="object-cover transition-transform duration-[900ms] ease-out group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80 transition-opacity duration-500 group-hover:opacity-100" />
 
-                <div className="absolute bottom-0 left-0 right-0 p-4 md:p-5">
-                  <p
-                    className="text-sm font-semibold text-amber-50 md:text-base"
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/10" />
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#800000]/85 via-[#800000]/15 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+
+                <div className="absolute left-6 right-6 top-6 flex items-start justify-between gap-3">
+                  <span
+                    className="rounded-full border border-[#C2A95B]/60 bg-black/40 px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-[#C2A95B] backdrop-blur-sm"
+                    style={{ fontFamily: "var(--font-jakarta)" }}
+                  >
+                    {festival.tag}
+                  </span>
+
+                  {festival.highlight && (
+                    <span
+                      className="rounded-full bg-[#C2A95B] px-3 py-1 text-[10px] font-bold uppercase tracking-[0.2em] text-[#800000]"
+                      style={{ fontFamily: "var(--font-jakarta)" }}
+                    >
+                      Featured
+                    </span>
+                  )}
+                </div>
+
+                <div className="absolute bottom-0 left-0 right-0 p-8">
+                  <div className="mb-3 flex flex-wrap items-center gap-3">
+                    <span
+                      className="text-xs uppercase tracking-[0.3em] text-[#C2A95B]"
+                      style={{ fontFamily: "var(--font-jakarta)" }}
+                    >
+                      {festival.date}
+                    </span>
+                    <span className="h-3 w-px bg-[#C2A95B]/50" />
+                    <span
+                      className="text-xs uppercase tracking-[0.3em] text-white/60"
+                      style={{ fontFamily: "var(--font-jakarta)" }}
+                    >
+                      {festival.lunar}
+                    </span>
+                  </div>
+
+                  <div className="mb-4 h-px w-12 bg-[#C2A95B] transition-all duration-500 group-hover:w-20" />
+
+                  <h3
+                    className="mb-3 text-3xl font-bold text-white"
                     style={{ fontFamily: "var(--font-cinzel)" }}
                   >
-                    {p.title}
+                    {festival.name}
+                  </h3>
+
+                  <p
+                    className="text-sm leading-relaxed text-white/80"
+                    style={{ fontFamily: "var(--font-jakarta)" }}
+                  >
+                    {festival.text}
                   </p>
-                  <div className="mt-1 h-[1px] w-0 bg-amber-400 transition-all duration-500 group-hover:w-12" />
                 </div>
+
+                <div className="pointer-events-none absolute inset-0 rounded-2xl ring-1 ring-inset ring-transparent transition-all duration-500 group-hover:ring-[#C2A95B]/60" />
               </div>
             ))}
-          </div>
-
-          <div className="mt-12 text-center">
-            <a
-              href="/gallery"
-              className="inline-flex items-center gap-2 rounded-full border border-amber-400/40 px-7 py-3 text-sm font-medium text-amber-200 transition-all duration-300 hover:border-amber-400 hover:bg-amber-400/10"
-              style={{ fontFamily: "var(--font-jakarta)" }}
-            >
-              View Full Gallery →
-            </a>
           </div>
         </div>
       </section>
 
-      {/* ============ CTA ============ */}
-      <section className="relative w-full overflow-hidden bg-[#0a0503] py-24 md:py-32">
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(251,191,36,0.1),_transparent_60%)]" />
+      {/* ============================================================
+          SECTION 3 — ANNUAL CALENDAR (2-col on mobile)
+      ============================================================ */}
+      <section className="relative w-full overflow-hidden bg-[#800000] py-20 md:py-28">
+        <div
+          className="pointer-events-none absolute inset-0 opacity-[0.18]"
+          style={{
+            backgroundImage:
+              "radial-gradient(#C2A95B 1.2px, transparent 1.2px)",
+            backgroundSize: "28px 28px",
+          }}
+        />
+        <div className="pointer-events-none absolute left-1/2 top-0 h-[700px] w-[700px] -translate-x-1/2 rounded-full bg-[#C2A95B]/20 blur-[130px]" />
 
-        <div className="relative mx-auto max-w-3xl px-6 text-center md:px-12">
-          <div className="mb-6 flex justify-center">
-            <span className="text-4xl text-amber-300/90 md:text-5xl">🎉</span>
+        <div className="relative z-10 mx-auto max-w-7xl px-4 md:px-10">
+          <div className="mb-14 text-center">
+            <p
+              className="mb-3 text-xs font-medium uppercase tracking-[0.4em] text-[#C2A95B]"
+              style={{ fontFamily: "var(--font-jakarta)" }}
+            >
+              Through the Year
+            </p>
+
+            <h2
+              className="text-3xl font-bold leading-tight text-[#FFF8E7] md:text-5xl"
+              style={{ fontFamily: "var(--font-cinzel)" }}
+            >
+              Annual <span className="text-[#C2A95B]">Calendar</span>
+            </h2>
+
+            <div className="mt-6 flex items-center justify-center gap-3">
+              <span className="h-px w-12 bg-[#C2A95B]" />
+              <span className="text-[#C2A95B]">✦</span>
+              <span className="h-px w-12 bg-[#C2A95B]" />
+            </div>
+
+            <p
+              className="mx-auto mt-6 max-w-2xl text-sm font-light leading-relaxed text-[#FFF8E7]/80 md:text-base"
+              style={{ fontFamily: "var(--font-jakarta)" }}
+            >
+              The temple follows the traditional Hindu lunar calendar. Below
+              are the major observances of each month with their dates.
+            </p>
           </div>
 
-          <h2
-            className="mb-6 text-3xl font-bold leading-tight text-amber-50 md:text-5xl"
-            style={{ fontFamily: "var(--font-cinzel)" }}
-          >
-            Celebrate with <span className="text-amber-300">the Lord</span>
-          </h2>
+          <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-3">
+            {calendar.map((month, i) => (
+              <div
+                key={month.month}
+                className="group rounded-xl border border-[#C2A95B]/25 bg-white/[0.04] p-3.5 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#C2A95B] sm:rounded-2xl sm:p-5 md:p-6"
+              >
+                <div className="mb-3 flex items-center justify-between gap-2 sm:mb-5">
+                  <h3
+                    className="text-sm font-bold leading-tight text-[#FFF8E7] sm:text-lg md:text-2xl"
+                    style={{ fontFamily: "var(--font-cinzel)" }}
+                  >
+                    {month.month}
+                  </h3>
+                  <span
+                    className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-[#C2A95B]/50 text-[9px] font-bold text-[#C2A95B] sm:h-8 sm:w-8 sm:text-xs md:h-9 md:w-9 md:text-sm"
+                    style={{ fontFamily: "var(--font-cinzel)" }}
+                  >
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                </div>
 
-          <div className="mx-auto mb-6 flex items-center justify-center gap-3">
-            <span className="h-[1px] w-16 bg-gradient-to-r from-transparent to-amber-400/70" />
-            <span className="text-amber-400">✦</span>
-            <span className="h-[1px] w-16 bg-gradient-to-l from-transparent to-amber-400/70" />
+                <div className="h-px w-full bg-[#C2A95B]/20" />
+
+                <ul className="mt-3 space-y-3 sm:mt-5 sm:space-y-4">
+                  {month.events.map((event) => (
+                    <li key={event.name}>
+                      <div className="mb-1 flex flex-wrap items-center gap-1.5 sm:gap-2">
+                        <span
+                          className="inline-flex shrink-0 items-center rounded-md border border-[#C2A95B]/40 bg-[#C2A95B]/10 px-1.5 py-0.5 text-[8px] font-bold uppercase tracking-[0.05em] text-[#C2A95B] sm:px-2 sm:text-[10px] sm:tracking-[0.1em] md:text-[11px]"
+                          style={{ fontFamily: "var(--font-jakarta)" }}
+                        >
+                          {event.date}
+                        </span>
+                      </div>
+                      <p
+                        className="text-[11px] font-bold leading-tight text-[#FFF8E7] sm:text-sm"
+                        style={{ fontFamily: "var(--font-cinzel)" }}
+                      >
+                        {event.name}
+                      </p>
+                      <p
+                        className="mt-0.5 text-[9px] leading-snug text-[#FFF8E7]/60 sm:text-[11px] md:text-xs"
+                        style={{ fontFamily: "var(--font-jakarta)" }}
+                      >
+                        {event.note}
+                      </p>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </div>
 
           <p
-            className="mx-auto mb-10 max-w-xl text-sm font-light leading-relaxed text-amber-50/70 md:text-base"
+            className="mx-auto mt-10 max-w-2xl text-center text-xs text-[#FFF8E7]/50 md:text-sm"
             style={{ fontFamily: "var(--font-jakarta)" }}
           >
-            Whether you wish to sponsor a festival, volunteer for seva, or
-            simply join in the celebration — there is a place for you at Madan
-            Mohan Mandir.
+            * Festival dates follow the lunar calendar and shift each year.
+            Please contact the temple for confirmed dates and timings.
+          </p>
+        </div>
+      </section>
+
+      {/* ============================================================
+          SECTION 4 — WEEKLY SCHEDULE (2-col on mobile)
+      ============================================================ */}
+      <section className="relative w-full overflow-hidden bg-white py-20 md:py-28">
+        <div
+          className="pointer-events-none absolute inset-0 opacity-[0.055]"
+          style={{
+            backgroundImage: `
+              radial-gradient(circle at center, #C2A95B 1px, transparent 1.5px),
+              linear-gradient(45deg, transparent 48%, #C2A95B 49%, #C2A95B 51%, transparent 52%),
+              linear-gradient(-45deg, transparent 48%, #C2A95B 49%, #C2A95B 51%, transparent 52%)
+            `,
+            backgroundSize: "36px 36px",
+          }}
+        />
+        <div className="pointer-events-none absolute -right-40 top-1/3 h-[500px] w-[500px] rounded-full bg-[#C2A95B]/5 blur-3xl" />
+
+        <div className="relative z-10 mx-auto max-w-7xl px-4 md:px-10">
+          <div className="mb-14 text-center">
+            <p
+              className="mb-3 text-xs font-medium uppercase tracking-[0.4em] text-[#C2A95B]"
+              style={{ fontFamily: "var(--font-jakarta)" }}
+            >
+              A Living Rhythm
+            </p>
+
+            <h2
+              className="text-3xl font-bold leading-tight text-[#800000] md:text-5xl"
+              style={{ fontFamily: "var(--font-cinzel)" }}
+            >
+              Regular <span className="text-[#C2A95B]">Satsang</span>
+            </h2>
+
+            <div className="mt-6 flex items-center justify-center gap-3">
+              <span className="h-px w-12 bg-[#C2A95B]" />
+              <span className="text-[#C2A95B]">✦</span>
+              <span className="h-px w-12 bg-[#C2A95B]" />
+            </div>
+
+            <p
+              className="mx-auto mt-6 max-w-2xl text-sm font-light leading-relaxed text-[#800000]/70 md:text-base"
+              style={{ fontFamily: "var(--font-jakarta)" }}
+            >
+              Beyond the great festivals, the temple keeps a weekly rhythm of
+              prayer and song that anyone may join.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-2 gap-3 md:grid-cols-2 md:gap-5 lg:grid-cols-3">
+            {weeklySchedule.map((item) => (
+              <div
+                key={item.name}
+                className="group rounded-xl border border-[#C2A95B]/30 bg-white/80 p-3.5 shadow-sm backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#C2A95B] hover:shadow-lg sm:rounded-2xl sm:p-5 md:p-7"
+              >
+                <p
+                  className="mb-1.5 text-[8px] uppercase tracking-[0.2em] text-[#C2A95B] sm:mb-2 sm:text-[10px] sm:tracking-[0.3em] md:text-xs"
+                  style={{ fontFamily: "var(--font-jakarta)" }}
+                >
+                  {item.day}
+                </p>
+
+                <h3
+                  className="mb-2 text-[13px] font-bold leading-snug text-[#800000] sm:mb-3 sm:text-base md:text-xl"
+                  style={{ fontFamily: "var(--font-cinzel)" }}
+                >
+                  {item.name}
+                </h3>
+
+                <div className="mb-2 flex items-center gap-1.5 sm:mb-3 sm:gap-2">
+                  <span className="text-[10px] text-[#C2A95B] sm:text-xs md:text-base">
+                    ✦
+                  </span>
+                  <span
+                    className="text-[9px] font-medium uppercase tracking-[0.1em] text-[#800000]/70 sm:text-[10px] sm:tracking-[0.15em] md:text-xs"
+                    style={{ fontFamily: "var(--font-jakarta)" }}
+                  >
+                    {item.time}
+                  </span>
+                </div>
+
+                <div className="mb-2.5 h-px w-8 bg-[#C2A95B]/50 transition-all duration-300 group-hover:w-14 sm:mb-4 sm:w-12 sm:group-hover:w-20" />
+
+                <p
+                  className="text-[10px] leading-snug text-[#800000]/70 sm:text-xs sm:leading-relaxed md:text-sm"
+                  style={{ fontFamily: "var(--font-jakarta)" }}
+                >
+                  {item.text}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ============================================================
+          SECTION 6 — CTA / CLOSING
+      ============================================================ */}
+      <section className="relative w-full overflow-hidden bg-[#800000] py-20 md:py-28">
+        <div
+          className="pointer-events-none absolute inset-0 opacity-[0.18]"
+          style={{
+            backgroundImage:
+              "radial-gradient(#C2A95B 1.2px, transparent 1.2px)",
+            backgroundSize: "28px 28px",
+          }}
+        />
+        <div className="pointer-events-none absolute left-1/2 top-1/2 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#C2A95B]/15 blur-[130px]" />
+
+        <div className="relative z-10 mx-auto max-w-4xl px-6 text-center md:px-10">
+          <span className="text-lg text-[#C2A95B]">✦</span>
+
+          <h2
+            className="mt-6 text-2xl font-bold leading-tight text-[#FFF8E7] md:text-4xl"
+            style={{ fontFamily: "var(--font-cinzel)" }}
+          >
+            Join Us at a{" "}
+            <span className="text-[#C2A95B]">Celebration</span>
+          </h2>
+
+          <p
+            className="mx-auto mt-5 max-w-2xl text-sm font-light leading-relaxed text-[#FFF8E7]/80 md:text-base"
+            style={{ fontFamily: "var(--font-jakarta)" }}
+          >
+            Whether you come for the great festivals or the quiet evening
+            aarti, you are always welcome at the Madan Mohan Mandir. To offer
+            seva, receive updates, or ask about a specific festival, please
+            write to us.
           </p>
 
-          <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
+          <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
             <a
-              href="#register"
-              className="rounded-full bg-gradient-to-r from-amber-400 to-amber-500 px-8 py-3 text-sm font-semibold tracking-wide text-black shadow-lg shadow-amber-500/30 transition-all duration-300 hover:shadow-amber-400/50 hover:brightness-110"
+              href="mailto:madanmohanmandir1665@gmail.com"
+              className="rounded-full bg-[#C2A95B] px-7 py-3 text-xs font-medium uppercase tracking-[0.2em] text-[#800000] shadow-md transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#d4bc74] hover:shadow-lg md:text-sm"
               style={{ fontFamily: "var(--font-jakarta)" }}
             >
-              Register for Event
+              Contact for Seva
             </a>
+
             <a
-              href="#contact"
-              className="rounded-full border border-amber-300/60 bg-white/5 px-8 py-3 text-sm font-semibold tracking-wide text-amber-100 backdrop-blur-sm transition-all duration-300 hover:border-amber-300 hover:bg-white/10"
+              href="/darshan"
+              className="rounded-full border border-[#C2A95B] px-7 py-3 text-xs font-medium uppercase tracking-[0.2em] text-[#FFF8E7] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#C2A95B] hover:text-[#800000] md:text-sm"
               style={{ fontFamily: "var(--font-jakarta)" }}
             >
-              Contact Us
+              Plan a Darshan
             </a>
+          </div>
+
+          <div className="mt-14 flex items-center justify-center gap-3">
+            <span className="h-px w-16 bg-[#C2A95B]/40" />
+            <span className="text-[#C2A95B]">✦</span>
+            <span className="h-px w-16 bg-[#C2A95B]/40" />
           </div>
         </div>
       </section>

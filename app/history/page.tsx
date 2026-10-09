@@ -13,663 +13,681 @@ const jakarta = Plus_Jakarta_Sans({
   variable: "--font-jakarta",
 });
 
+/* ============================================================
+   DATA
+============================================================ */
+
+const heroFacts = [
+  { value: "1665", label: "Foundation Laid" },
+  { value: "1682", label: "Completed" },
+  { value: "17", label: "Years of Building" },
+  { value: "₹14,001", label: "Recorded Cost" },
+];
+
+const keyFigures = [
+  {
+    role: "The Patron",
+    name: "Pandit Lakshmi Narayan Tiwari",
+    text: "Traditionally associated with the construction of the temple. He took the initiative to build the Madan Mohan Mandir at Boreya.",
+  },
+  {
+    role: "The Ruler",
+    name: "Raja Raghunath Shah",
+    text: "The Nagvanshi ruler during whose period the temple was built. Historical accounts state that he was present when the foundation was laid.",
+  },
+  {
+    role: "The Dynasty",
+    name: "The Nagvanshi Line",
+    text: "A ruling house with a long association with the Chotanagpur region, linking the temple to the political history of the 17th century.",
+  },
+];
+
 const timeline = [
   {
-    year: "1665 ई.",
-    samvat: "संवत 1722",
-    title: "नींव का शुभारंभ",
-    desc: "वैशाख शुक्ल पक्ष दशमी को राजा रघुनाथ शाही की उपस्थिति में लक्ष्मी नारायण तिवारी ने मंदिर की नींव रखी।",
+    year: "1665",
+    tag: "The Beginning",
+    title: "The Foundation Is Laid",
+    text: "In 1665 the foundation of the main temple was laid at Boreya. This marked the official beginning of the construction — and the starting point of the temple's recorded history.",
   },
   {
-    year: "1668 ई.",
-    samvat: "संवत 1725",
-    title: "चारदीवारी एवं द्वार",
-    desc: "श्रावण शुक्ल पक्ष दशमी को चारदीवारी एवं दरवाजों की नींव रखी गई — नींव से तीन वर्ष तीन माह पश्चात्।",
+    year: "1668",
+    tag: "The Complex Grows",
+    title: "Boundary Wall & Entrance Gate",
+    text: "Three years later, work on the boundary wall and the entrance gate was begun. The addition created a defined space around the temple and formed an important part of the overall complex.",
   },
   {
-    year: "1682 ई.",
-    samvat: "संवत 1739",
-    title: "मंदिर निर्माण पूर्ण",
-    desc: "कुल 17 वर्षों में मंदिर बनकर तैयार हुआ। कुल लागत ₹14,001 (चौदह हज़ार एक रुपये) रही।",
+    year: "1682",
+    tag: "After 17 Years",
+    title: "The Temple Is Completed",
+    text: "After years of sustained effort, the temple was finally completed in 1682. From the laying of the foundation to completion, the work had taken approximately seventeen years.",
   },
 ];
 
-const inscriptions = [
+const laterHistory = [
   {
-    label: "प्रथम शिलालेख (लघु)",
-    lines: [
-      "श्री राम राज्य।",
-      "संवत सत्रह सइ बाइस।",
-      "बैशाख सुदि दशमी रजनीश।।",
-      "श्री रघुनाथ नरेश विराज ।",
-      "लक्ष्मी नारायण ईश्वर माठसाज।",
-    ],
+    date: "5 September 1953",
+    title: "The Ashtadhatu Idol Theft",
+    text: "On 5 September 1953, the Ashtadhatu idol of Lord Krishna was reported to have been stolen from the temple. The original idol was made of Ashtadhatu — a traditional combination of eight metals used for religious idols.",
+    note: "A brass idol was installed in its place.",
   },
   {
-    label: "द्वितीय शिलालेख (विस्तृत)",
-    lines: [
-      "श्री मदन मोहन जी",
-      "शुभ संवत 1722 समय वैसाख सुदी दशमी 10 के श्री श्री मदन मोहनक शुभा दावा देयाल...",
-      "श्री संवत 1725 समय सावन सुदी दशमी 10 के दरवाजा और छरदेवाली दावा देल तैयार भेल...",
-      "संवत 1739 तेकर लगीत भेल रूपैया 14001 चौदह हजार एक रूपैया।",
-      "कारीगर अनिरूद्ध विनती साँच हय।",
-    ],
+    date: "In Later Years",
+    title: "The Loss of the Radha Idol",
+    text: "The Ashtadhatu idol associated with Radha was also stolen at a later time. These incidents resulted in changes to the original idols that had been associated with the temple.",
+    note: "Another brass idol was installed.",
   },
 ];
 
-const sources = [
-  "डिस्ट्रिक्ट गजेटियर",
-  "रांची मुण्डाज एण्ड देयर कन्ट्री",
-  "बिहार थ्रू एजेज",
-  "छोटानागपुर का इतिहास",
-  "लिस्ट ऑफ मोनुमेंटस इन द छोटानागपुर",
-  "छोटानागपुर के प्राचीन स्मारक",
-  "झारखण्ड की रूपरेखा",
-  "झारखण्ड का भूगोल",
-];
+/* ============================================================
+   PAGE
+============================================================ */
 
-const kings = [
-  { name: "दुर्जनशाल (45वें राजा)", period: "1550 – 1590 ई.", note: "डोइसा में राजधानी बसाई" },
-  { name: "रामशाह (48वें राजा)", period: "1646 – 1670 ई.", note: "मंदिर निर्माण आरम्भ (1665 ई.)" },
-  { name: "रघुनाथ शाही (49वें राजा)", period: "1671 – 1706 ई.", note: "मंदिर निर्माण पूर्ण (1682 ई.)" },
-];
-
-export default function TempleHistory() {
+export default function HistoryPage() {
   return (
-    <main
-      className={`${cinzel.variable} ${jakarta.variable} relative w-full overflow-hidden bg-[#FAF7F2]`}
-    >
-      {/* =====================================================
-          HERO SECTION
-      ====================================================== */}
-      <section className="relative z-10 px-5 pt-20 pb-12 md:px-12 md:pt-28 md:pb-16">
-        <div className="mx-auto max-w-5xl text-center">
-          <p
-            className="mb-4 text-[10px] font-medium uppercase tracking-[0.35em] text-[#C2A95B] md:text-xs md:tracking-[0.4em]"
-            style={{ fontFamily: "var(--font-jakarta)" }}
-          >
-            इतिहास एवं विरासत
-          </p>
+    <main className={`${cinzel.variable} ${jakarta.variable} w-full`}>
+      {/* ============================================================
+          SECTION 1 — HERO
+      ============================================================ */}
+      <section className="relative w-full overflow-hidden bg-white py-20 md:py-28 max-sm:pt-30">
+        {/* Mandala dot pattern */}
+        <div
+          className="pointer-events-none absolute inset-0 opacity-[0.055]"
+          style={{
+            backgroundImage: `
+              radial-gradient(circle at center, #C2A95B 1px, transparent 1.5px),
+              linear-gradient(45deg, transparent 48%, #C2A95B 49%, #C2A95B 51%, transparent 52%),
+              linear-gradient(-45deg, transparent 48%, #C2A95B 49%, #C2A95B 51%, transparent 52%)
+            `,
+            backgroundSize: "36px 36px",
+          }}
+        />
 
-          <h1
-            className="mb-5 text-3xl font-bold leading-tight text-[#800000] sm:text-4xl md:text-6xl"
-            style={{ fontFamily: "var(--font-cinzel)" }}
-          >
-            मदन मोहन मंदिर
-          </h1>
+        {/* Soft golden glows */}
+        <div className="pointer-events-none absolute -left-40 -top-40 h-[500px] w-[500px] rounded-full bg-[#C2A95B]/5 blur-3xl" />
+        <div className="pointer-events-none absolute -bottom-40 -right-40 h-[500px] w-[500px] rounded-full bg-[#800000]/5 blur-3xl" />
 
-          <div className="mb-6 flex items-center justify-center gap-3">
-            <span className="h-px w-12 bg-[#C2A95B] md:w-16" />
-            <span className="text-[#C2A95B]">✦</span>
-            <span className="h-px w-12 bg-[#C2A95B] md:w-16" />
+        <div className="relative z-10 mx-auto max-w-7xl px-6 md:px-10">
+          <div className="mb-14 text-center">
+            <p
+              className="mb-3 text-xs font-medium uppercase tracking-[0.4em] text-[#C2A95B]"
+              style={{ fontFamily: "var(--font-jakarta)" }}
+            >
+              Boreya · Chotanagpur · Since 1665
+            </p>
+
+            <h1
+              className="text-3xl font-bold leading-tight text-[#800000] md:text-5xl"
+              style={{ fontFamily: "var(--font-cinzel)" }}
+            >
+              The History of{" "}
+              <span className="text-[#C2A95B]">Madan Mohan</span>
+            </h1>
+
+            <div className="mt-6 flex items-center justify-center gap-3">
+              <span className="h-px w-12 bg-[#C2A95B]" />
+              <span className="text-[#C2A95B]">✦</span>
+              <span className="h-px w-12 bg-[#C2A95B]" />
+            </div>
+
+            <p
+              className="mx-auto mt-6 max-w-3xl text-sm font-light leading-relaxed text-[#800000]/70 md:text-base"
+              style={{ fontFamily: "var(--font-jakarta)" }}
+            >
+              The history of Madan Mohan Temple at Boreya reaches back to the
+              17th century — a period of important political and cultural
+              development in the Chotanagpur region. Its story is closely
+              connected with the Nagvanshi dynasty, Raja Raghunath Shah, and
+              Pandit Lakshmi Narayan Tiwari, who is traditionally associated
+              with the construction of the temple.
+            </p>
           </div>
 
-          <p
-            className="mx-auto max-w-2xl text-sm font-light leading-relaxed text-[#800000]/70 md:text-base"
-            style={{ fontFamily: "var(--font-jakarta)" }}
-          >
-            बोड़ेया, कांके, राँची (झारखंड) में स्थित यह मंदिर 17वीं शताब्दी की
-            भक्ति, संकल्प और स्थापत्य का जीवंत साक्ष्य है।
-          </p>
-        </div>
-
-        {/* HERO IMAGE SPACE */}
-        <div className="mx-auto mt-12 max-w-5xl md:mt-16">
-          <div className="relative aspect-[16/9] w-full overflow-hidden rounded-3xl border border-[#C2A95B]/25 bg-gradient-to-br from-[#C2A95B]/10 via-white to-[#800000]/5 shadow-sm">
-            <Image
-              src="/gallery/temple-1.png"
-              alt="मदन मोहन मंदिर"
-              fill
-              sizes="(max-width: 1024px) 100vw, 1024px"
-              className="object-cover"
-              priority
-            />
-            <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 text-center">
-              <span className="text-5xl text-[#C2A95B] md:text-6xl">🛕</span>
-              <p
-                className="text-xs uppercase tracking-[0.3em] text-[#800000]/50 md:text-sm"
-                style={{ fontFamily: "var(--font-jakarta)" }}
+          {/* ---------- Fact strip ---------- */}
+          <div className="mx-auto grid max-w-4xl grid-cols-2 gap-px overflow-hidden rounded-2xl border border-[#C2A95B]/25 bg-[#C2A95B]/25 md:grid-cols-4">
+            {heroFacts.map((fact) => (
+              <div
+                key={fact.label}
+                className="bg-white px-5 py-6 text-center md:py-7"
               >
-                Temple Hero Image
-              </p>
-            </div>
+                <p
+                  className="text-xl font-bold text-[#800000] md:text-2xl"
+                  style={{ fontFamily: "var(--font-cinzel)" }}
+                >
+                  {fact.value}
+                </p>
+                <p
+                  className="mt-1 text-[10px] uppercase tracking-[0.2em] text-[#800000]/60 md:text-xs"
+                  style={{ fontFamily: "var(--font-jakarta)" }}
+                >
+                  {fact.label}
+                </p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* =====================================================
-          INTRO — स्थापना काल
-      ====================================================== */}
-      <section className="relative z-10 px-5 py-12 md:px-12 md:py-16">
-        <div className="mx-auto max-w-5xl">
-          <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-[1.2fr_1fr] lg:gap-14">
-            {/* Text */}
-            <div>
-              <h2
-                className="mb-5 text-2xl font-bold text-[#800000] md:text-4xl"
-                style={{ fontFamily: "var(--font-cinzel)" }}
-              >
-                स्थापना काल एवं{" "}
-                <span className="text-[#C2A95B]">निर्माण अवधि</span>
-              </h2>
+      {/* ============================================================
+          SECTION 2 — 01 · THE BEGINNING OF THE TEMPLE
+      ============================================================ */}
+      <section className="relative w-full overflow-hidden bg-[#FFF8E7] py-20 md:py-28">
+        <div
+          className="pointer-events-none absolute inset-0 opacity-[0.07]"
+          style={{
+            backgroundImage:
+              "radial-gradient(circle at center, #C2A95B 1px, transparent 1.5px)",
+            backgroundSize: "30px 30px",
+          }}
+        />
 
-              <div className="mb-5 flex items-center gap-3">
-                <span className="h-px w-10 bg-[#C2A95B]" />
-                <span className="text-sm text-[#C2A95B]">✦</span>
-                <span className="h-px w-10 bg-[#C2A95B]" />
-              </div>
-
-              <div
-                className="space-y-4 text-sm font-light leading-relaxed text-[#800000]/80 md:text-base"
+        <div className="relative z-10 mx-auto max-w-7xl px-6 md:px-10">
+          {/* ---------- Heading ---------- */}
+          <div className="mb-14 text-center">
+            <div className="mb-4 flex items-center justify-center gap-3">
+              <span className="h-px w-10 bg-[#C2A95B]" />
+              <span
+                className="text-[10px] uppercase tracking-[0.4em] text-[#C2A95B] md:text-xs"
                 style={{ fontFamily: "var(--font-jakarta)" }}
               >
-                <p>
-                  <span className="mr-2 text-[#C2A95B]">•</span>
-                  मदन मोहन मंदिर की स्थापना काल तथा निर्माण अवधि की जानकारी मंदिर
-                  में रखे <strong className="font-medium text-[#800000]">शिलापट</strong> पर
-                  उत्कीर्ण शिलालेख से मिलती है।
+                01 — The Beginning
+              </span>
+              <span className="h-px w-10 bg-[#C2A95B]" />
+            </div>
+
+            <h2
+              className="text-3xl font-bold leading-tight text-[#800000] md:text-5xl"
+              style={{ fontFamily: "var(--font-cinzel)" }}
+            >
+              The Foundation at{" "}
+              <span className="text-[#C2A95B]">Boreya</span>
+            </h2>
+
+            <div className="mt-6 flex items-center justify-center gap-3">
+              <span className="h-px w-12 bg-[#C2A95B]" />
+              <span className="text-[#C2A95B]">✦</span>
+              <span className="h-px w-12 bg-[#C2A95B]" />
+            </div>
+          </div>
+
+          {/* ---------- Story grid ---------- */}
+          <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+            {/* Text */}
+            <div className="order-1">
+              <p
+                className="mb-5 text-sm font-light leading-relaxed text-[#800000]/80 md:text-base"
+                style={{ fontFamily: "var(--font-jakarta)" }}
+              >
+                The story begins in{" "}
+                <span className="font-medium text-[#C2A95B]">1665</span>, when
+                the foundation of the temple was laid at Boreya. According to
+                the historical records associated with the temple,{" "}
+                <span className="font-medium text-[#C2A95B]">
+                  Pandit Lakshmi Narayan Tiwari
+                </span>{" "}
+                took the initiative to construct it.
+              </p>
+
+              <p
+                className="mb-5 text-sm font-light leading-relaxed text-[#800000]/80 md:text-base"
+                style={{ fontFamily: "var(--font-jakarta)" }}
+              >
+                The construction took place during the period of{" "}
+                <span className="font-medium text-[#C2A95B]">
+                  Raja Raghunath Shah
+                </span>
+                , a ruler of the Nagvanshi dynasty, which had a long
+                association with the Chotanagpur region. Historical accounts
+                state that the Raja was present when the foundation was laid —
+                connecting the beginning of the construction with the ruling
+                house of that period.
+              </p>
+
+              <p
+                className="text-sm font-light leading-relaxed text-[#800000]/80 md:text-base"
+                style={{ fontFamily: "var(--font-jakarta)" }}
+              >
+                The year 1665 is particularly important because it marks the
+                starting point of the temple&apos;s recorded history. What
+                began as a foundation project would take many years to
+                complete.
+              </p>
+
+              {/* 17th century note */}
+              <div className="mt-8 rounded-2xl border border-[#C2A95B]/30 bg-white/70 p-5 backdrop-blur-sm md:p-6">
+                <p
+                  className="mb-2 text-[10px] uppercase tracking-[0.3em] text-[#C2A95B] md:text-xs"
+                  style={{ fontFamily: "var(--font-jakarta)" }}
+                >
+                  A Beginning in the 17th Century
                 </p>
-                <p>
-                  <span className="mr-2 text-[#C2A95B]">•</span>
-                  यह शिलालेख प्रवेश द्वार के ठीक सामने, मंदिर के चबूतरे पर, गर्भगृह की दीवाल के दक्षिणी भाग में
-                  स्थित है।
-                </p>
-                <p>
-                  <span className="mr-2 text-[#C2A95B]">•</span>
-                  दो शिलालेखों के अतिरिक्त, गर्भ-गृह के दरवाजे पर उत्कीर्ण
-                  दिन-तारीख तथा राजा द्वारा प्रदत्त{" "}
-                  <strong className="font-medium text-[#800000]">ताम्रपत्र</strong> भी
-                  साक्ष्य के रूप में उपलब्ध हैं।
-                </p>
-                <p>
-                  <span className="mr-2 text-[#C2A95B]">•</span>
-                  यह ताम्रपत्र लक्ष्मीनारायण तिवारी को प्राप्त हुआ था।
+                <p
+                  className="text-xs leading-relaxed text-[#800000]/75 md:text-sm"
+                  style={{ fontFamily: "var(--font-jakarta)" }}
+                >
+                  The 17th century was a period when religious and cultural
+                  traditions were developing across the region. The
+                  construction of the temple at Boreya became part of this
+                  wider historical setting, forming an important link between
+                  the temple and the political and social history of
+                  17th-century Chotanagpur.
                 </p>
               </div>
             </div>
 
-            {/* IMAGE SPACE — Shilalekh / inscription */}
-            <div className="relative">
-              <div className="relative aspect-[4/5] w-full overflow-hidden rounded-3xl border border-[#C2A95B]/25 bg-gradient-to-br from-[#800000]/5 via-white to-[#C2A95B]/10 shadow-sm">
+            {/* Image */}
+            <div className="relative order-2">
+              {/* <div className="absolute -inset-3 rounded-[2rem] border border-[#C2A95B]/30" />
+              <div className="absolute -inset-6 rounded-[2.5rem] border border-[#C2A95B]/10" /> */}
+
+              <div className="relative h-[420px] w-full overflow-hidden  md:h-[540px]">
                 <Image
-                  src="/history/shilalekh.jpg"
-                  alt="शिलालेख"
+                  src="/images/history/blueprint.png"
+                  alt="Boreya Madan Mohan Mandir"
                   fill
-                  sizes="(max-width: 1024px) 100vw, 40vw"
+                  priority
+                  sizes="(max-width: 1024px) 100vw, 50vw"
                   className="object-cover"
                 />
-                <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 text-center">
-                  <span className="text-4xl text-[#C2A95B]">📜</span>
-                  <p
-                    className="text-[10px] uppercase tracking-[0.3em] text-[#800000]/50"
-                    style={{ fontFamily: "var(--font-jakarta)" }}
+                <div className="pointer-events-none absolute inset-0 " />
+
+                <div className="absolute top  -0 left-0 right-0 p-6 md:p-8">
+                  <div className="mb-3 flex items-center gap-3">
+                    <span className="h-px w-10 bg-[#C2A95B]" />
+                    <span
+                      className="text-[10px] uppercase tracking-[0.3em] text-[#C2A95B] md:text-xs bg-[#800000]/80 p-2"
+                      style={{ fontFamily: "var(--font-jakarta)" }}
+                    >
+                      Boreya · 1665 CE
+                    </span>
+                  </div>
+                  {/* <h3
+                    className="text-2xl font-bold text-[#8000]] md:text-3xl text-shadow-2xs"
+                    style={{ fontFamily: "var(--font-cinzel)" }}
                   >
-                    Shilalekh
-                  </p>
+                    Where It All Began
+                  </h3> */}
                 </div>
               </div>
             </div>
           </div>
+
+          {/* ---------- Key figures ---------- */}
+          <div className="mt-24">
+            <div className="mb-10 text-center">
+              <h3
+                className="text-xl font-bold text-[#800000] md:text-3xl"
+                style={{ fontFamily: "var(--font-cinzel)" }}
+              >
+                The People Behind the{" "}
+                <span className="text-[#C2A95B]">Temple</span>
+              </h3>
+              <div className="mt-5 flex items-center justify-center gap-3">
+                <span className="h-px w-10 bg-[#C2A95B]" />
+                <span className="text-[#C2A95B]">✦</span>
+                <span className="h-px w-10 bg-[#C2A95B]" />
+              </div>
+            </div>
+
+            <div className="grid gap-5 md:grid-cols-3">
+              {keyFigures.map((figure) => (
+                <div
+                  key={figure.name}
+                  className="group rounded-2xl border border-[#C2A95B]/30 bg-white/80 p-6 shadow-sm backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#C2A95B] hover:shadow-lg md:p-7"
+                >
+                  <p
+                    className="mb-2 text-[10px] uppercase tracking-[0.3em] text-[#C2A95B] md:text-xs"
+                    style={{ fontFamily: "var(--font-jakarta)" }}
+                  >
+                    {figure.role}
+                  </p>
+
+                  <h4
+                    className="mb-3 text-lg font-bold leading-snug text-[#800000] md:text-xl"
+                    style={{ fontFamily: "var(--font-cinzel)" }}
+                  >
+                    {figure.name}
+                  </h4>
+
+                  <div className="mb-3 h-px w-12 bg-[#C2A95B]/50 transition-all duration-300 group-hover:w-20" />
+
+                  <p
+                    className="text-xs leading-relaxed text-[#800000]/70 md:text-sm"
+                    style={{ fontFamily: "var(--font-jakarta)" }}
+                  >
+                    {figure.text}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* =====================================================
-          TIMELINE — 3 key dates
-      ====================================================== */}
-      <section className="relative z-10 px-5 py-12 md:px-12 md:py-20">
-        <div className="mx-auto max-w-6xl">
-          <div className="mb-12 text-center">
-            <p
-              className="mb-3 text-[10px] font-medium uppercase tracking-[0.35em] text-[#C2A95B] md:text-xs"
-              style={{ fontFamily: "var(--font-jakarta)" }}
-            >
-              निर्माण यात्रा
-            </p>
+      {/* ============================================================
+          SECTION 3 — 02 · THE LONG CONSTRUCTION JOURNEY
+      ============================================================ */}
+      <section className="relative w-full overflow-hidden bg-[#800000] py-20 md:py-28">
+        {/* Golden dot pattern */}
+        <div
+          className="pointer-events-none absolute inset-0 opacity-[0.18]"
+          style={{
+            backgroundImage:
+              "radial-gradient(#C2A95B 1.2px, transparent 1.2px)",
+            backgroundSize: "28px 28px",
+          }}
+        />
+
+        {/* Soft golden glow */}
+        <div className="pointer-events-none absolute left-1/2 top-0 h-[700px] w-[700px] -translate-x-1/2 rounded-full bg-[#C2A95B]/20 blur-[130px]" />
+
+        <div className="relative z-10 mx-auto max-w-7xl px-6 md:px-10">
+          {/* ---------- Heading ---------- */}
+          <div className="mb-16 text-center">
+            <div className="mb-4 flex items-center justify-center gap-3">
+              <span className="h-px w-10 bg-[#C2A95B]" />
+              <span
+                className="text-[10px] uppercase tracking-[0.4em] text-[#C2A95B] md:text-xs"
+                style={{ fontFamily: "var(--font-jakarta)" }}
+              >
+                02 — The Construction Journey
+              </span>
+              <span className="h-px w-10 bg-[#C2A95B]" />
+            </div>
+
             <h2
-              className="text-2xl font-bold text-[#800000] md:text-4xl"
+              className="text-3xl font-bold leading-tight text-[#FFF8E7] md:text-5xl"
               style={{ fontFamily: "var(--font-cinzel)" }}
             >
-              17 वर्षों का <span className="text-[#C2A95B]">संकल्प</span>
+              Seventeen Years of{" "}
+              <span className="text-[#C2A95B]">Devotion</span>
             </h2>
+
+            <div className="mt-6 flex items-center justify-center gap-3">
+              <span className="h-px w-12 bg-[#C2A95B]" />
+              <span className="text-[#C2A95B]">✦</span>
+              <span className="h-px w-12 bg-[#C2A95B]" />
+            </div>
+
+            <p
+              className="mx-auto mt-6 max-w-2xl text-sm font-light leading-relaxed text-[#FFF8E7]/80 md:text-base"
+              style={{ fontFamily: "var(--font-jakarta)" }}
+            >
+              The construction of the temple was a long process rather than a
+              single event. Work continued for approximately seventeen years,
+              with different parts of the temple complex being developed over
+              time.
+            </p>
           </div>
 
-          <div className="relative">
-            {/* connecting line (desktop) */}
-            <div className="pointer-events-none absolute left-0 right-0 top-[68px] hidden h-px bg-gradient-to-r from-transparent via-[#C2A95B]/40 to-transparent md:block" />
+          {/* ---------- Timeline ---------- */}
+          <div className="relative mx-auto max-w-5xl">
+            {/* Vertical line */}
+            <span className="pointer-events-none absolute bottom-3 left-[19px] top-3 w-px bg-gradient-to-b from-[#C2A95B]/70 via-[#C2A95B]/35 to-[#C2A95B]/5 md:left-1/2 md:-translate-x-1/2" />
 
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-3 md:gap-8">
-              {timeline.map((t, i) => (
+            <div>
+              {timeline.map((item, i) => (
                 <div
-                  key={t.year}
-                  className="group relative overflow-hidden rounded-2xl border border-[#C2A95B]/25 bg-white p-6 shadow-sm transition-all duration-500 hover:-translate-y-1 hover:border-[#C2A95B] hover:shadow-md"
+                  key={item.year}
+                  className="relative md:grid md:grid-cols-2 md:gap-14 md:pb-16 md:last:pb-0"
                 >
-                  <div className="relative">
-                    <div className="mb-4 flex items-center gap-3">
-                      <span className="flex h-10 w-10 items-center justify-center rounded-full border border-[#C2A95B]/40 bg-[#C2A95B]/10 text-sm font-bold text-[#800000]">
-                        {i + 1}
-                      </span>
-                      <div>
-                        <p
-                          className="text-[10px] font-medium uppercase tracking-widest text-[#C2A95B]"
-                          style={{ fontFamily: "var(--font-jakarta)" }}
-                        >
-                          {t.samvat}
-                        </p>
-                        <p
-                          className="text-base font-bold text-[#800000]"
+                  {/* Node */}
+                  <span className="absolute left-[19px] top-4 z-10 h-3.5 w-3.5 -translate-x-1/2 rounded-full bg-[#C2A95B] ring-4 ring-[#800000] md:left-1/2" />
+
+                  {/* Card */}
+                  <div
+                    className={`relative pb-10 pl-12 md:pb-0 md:pl-0 ${
+                      i % 2 === 0
+                        ? "md:col-start-1 md:pr-14 md:text-right"
+                        : "md:col-start-2 md:pl-14"
+                    }`}
+                  >
+                    <div className="group rounded-2xl border border-[#C2A95B]/25 bg-white/[0.04] p-6 backdrop-blur-sm transition-all duration-300 hover:border-[#C2A95B] md:p-7">
+                      <div
+                        className={`mb-3 flex flex-wrap items-center gap-3 ${
+                          i % 2 === 0 ? "md:justify-end" : ""
+                        }`}
+                      >
+                        <span
+                          className="text-2xl font-bold text-[#C2A95B] md:text-3xl"
                           style={{ fontFamily: "var(--font-cinzel)" }}
                         >
-                          {t.year}
-                        </p>
+                          {item.year}
+                        </span>
+                        <span
+                          className="rounded-full border border-[#C2A95B]/40 px-3 py-1 text-[9px] uppercase tracking-[0.2em] text-[#C2A95B] md:text-[10px]"
+                          style={{ fontFamily: "var(--font-jakarta)" }}
+                        >
+                          {item.tag}
+                        </span>
                       </div>
+
+                      <h3
+                        className="mb-3 text-lg font-bold text-[#FFF8E7] md:text-2xl"
+                        style={{ fontFamily: "var(--font-cinzel)" }}
+                      >
+                        {item.title}
+                      </h3>
+
+                      <p
+                        className="text-xs leading-relaxed text-[#FFF8E7]/70 md:text-sm"
+                        style={{ fontFamily: "var(--font-jakarta)" }}
+                      >
+                        {item.text}
+                      </p>
                     </div>
-
-                    <h3
-                      className="mb-2 text-lg font-bold text-[#800000]"
-                      style={{ fontFamily: "var(--font-cinzel)" }}
-                    >
-                      {t.title}
-                    </h3>
-
-                    <p
-                      className="text-xs font-light leading-relaxed text-[#800000]/70 md:text-sm"
-                      style={{ fontFamily: "var(--font-jakarta)" }}
-                    >
-                      {t.desc}
-                    </p>
                   </div>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Cost highlight */}
-          <div className="mx-auto mt-10 max-w-md rounded-2xl border border-[#C2A95B]/30 bg-gradient-to-r from-[#C2A95B]/10 via-transparent to-[#800000]/5 p-5 text-center">
+          {/* ---------- Recorded cost ---------- */}
+          <div className="mx-auto mt-16 max-w-3xl rounded-2xl border border-[#C2A95B]/40 bg-[#C2A95B]/10 p-6 text-center backdrop-blur-sm md:mt-20 md:p-10">
             <p
-              className="mb-1 text-[10px] font-medium uppercase tracking-[0.3em] text-[#C2A95B]"
+              className="mb-3 text-[10px] uppercase tracking-[0.4em] text-[#C2A95B] md:text-xs"
               style={{ fontFamily: "var(--font-jakarta)" }}
             >
-              कुल निर्माण लागत
+              The Recorded Cost
             </p>
+
             <p
-              className="text-2xl font-bold text-[#800000] md:text-3xl"
+              className="text-4xl font-bold text-[#FFF8E7] md:text-6xl"
               style={{ fontFamily: "var(--font-cinzel)" }}
             >
               ₹14,001
             </p>
+
+            <div className="mx-auto mt-5 flex items-center justify-center gap-3">
+              <span className="h-px w-10 bg-[#C2A95B]/50" />
+              <span className="text-xs text-[#C2A95B]">✦</span>
+              <span className="h-px w-10 bg-[#C2A95B]/50" />
+            </div>
+
             <p
-              className="text-xs font-light text-[#800000]/60"
+              className="mx-auto mt-5 max-w-xl text-xs leading-relaxed text-[#FFF8E7]/70 md:text-sm"
               style={{ fontFamily: "var(--font-jakarta)" }}
             >
-              चौदह हज़ार एक रुपये
+              The historical inscription associated with the temple records the
+              construction cost as ₹14,001. Although the amount may appear
+              small when compared with modern currency, money had a very
+              different value in the 17th century. The figure is important
+              because it gives us a rare record of the estimated expenditure
+              connected with the construction.
             </p>
           </div>
         </div>
       </section>
 
-      {/* =====================================================
-          INSCRIPTIONS — two shilalekh texts
-      ====================================================== */}
-      <section className="relative z-10 px-5 py-12 md:px-12 md:py-20">
-        <div className="mx-auto max-w-6xl">
-          <div className="mb-10 text-center">
-            <p
-              className="mb-3 text-[10px] font-medium uppercase tracking-[0.35em] text-[#C2A95B] md:text-xs"
-              style={{ fontFamily: "var(--font-jakarta)" }}
-            >
-              शिलालेख
-            </p>
+      {/* ============================================================
+          SECTION 4 — 03 · LATER HISTORY
+      ============================================================ */}
+      <section className="relative w-full overflow-hidden bg-white py-20 md:py-28">
+        <div
+          className="pointer-events-none absolute inset-0 opacity-[0.055]"
+          style={{
+            backgroundImage: `
+              radial-gradient(circle at center, #C2A95B 1px, transparent 1.5px),
+              linear-gradient(45deg, transparent 48%, #C2A95B 49%, #C2A95B 51%, transparent 52%),
+              linear-gradient(-45deg, transparent 48%, #C2A95B 49%, #C2A95B 51%, transparent 52%)
+            `,
+            backgroundSize: "36px 36px",
+          }}
+        />
+        <div className="pointer-events-none absolute -left-40 top-1/3 h-[500px] w-[500px] rounded-full bg-[#C2A95B]/5 blur-3xl" />
+
+        <div className="relative z-10 mx-auto max-w-7xl px-6 md:px-10">
+          {/* ---------- Heading ---------- */}
+          <div className="mb-14 text-center">
+            <div className="mb-4 flex items-center justify-center gap-3">
+              <span className="h-px w-10 bg-[#C2A95B]" />
+              <span
+                className="text-[10px] uppercase tracking-[0.4em] text-[#C2A95B] md:text-xs"
+                style={{ fontFamily: "var(--font-jakarta)" }}
+              >
+                03 — Later History
+              </span>
+              <span className="h-px w-10 bg-[#C2A95B]" />
+            </div>
+
             <h2
-              className="text-2xl font-bold text-[#800000] md:text-4xl"
+              className="text-3xl font-bold leading-tight text-[#800000] md:text-5xl"
               style={{ fontFamily: "var(--font-cinzel)" }}
             >
-              प्रमाण एवं <span className="text-[#C2A95B]">अभिलेख</span>
+              After <span className="text-[#C2A95B]">1682</span>
             </h2>
+
+            <div className="mt-6 flex items-center justify-center gap-3">
+              <span className="h-px w-12 bg-[#C2A95B]" />
+              <span className="text-[#C2A95B]">✦</span>
+              <span className="h-px w-12 bg-[#C2A95B]" />
+            </div>
+
+            <p
+              className="mx-auto mt-6 max-w-2xl text-sm font-light leading-relaxed text-[#800000]/70 md:text-base"
+              style={{ fontFamily: "var(--font-jakarta)" }}
+            >
+              After the completion of construction in 1682, the temple
+              continued through successive generations. Over the centuries it
+              became part of the continuing history of Boreya — its story did
+              not end with the completion of the building.
+            </p>
           </div>
 
-          <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-8">
-            {inscriptions.map((ins) => (
+          {/* ---------- Later events ---------- */}
+          <div className="grid gap-6 md:grid-cols-2">
+            {laterHistory.map((event) => (
               <div
-                key={ins.label}
-                className="group relative overflow-hidden rounded-2xl border border-[#C2A95B]/25 bg-white p-6 shadow-sm transition-all duration-500 hover:border-[#C2A95B] hover:shadow-md md:p-8"
+                key={event.title}
+                className="group relative overflow-hidden rounded-2xl border border-[#C2A95B]/30 bg-white/80 p-6 shadow-sm backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#C2A95B] hover:shadow-xl md:p-8"
               >
-                <div className="relative">
-                  <div className="mb-5 flex items-center gap-3">
-                    <span className="flex h-10 w-10 items-center justify-center rounded-full border border-[#C2A95B]/40 bg-[#C2A95B]/10 text-lg text-[#800000]">
-                      📜
-                    </span>
-                    <h3
-                      className="text-base font-bold text-[#800000] md:text-lg"
-                      style={{ fontFamily: "var(--font-cinzel)" }}
-                    >
-                      {ins.label}
-                    </h3>
-                  </div>
-
-                  <div className="space-y-2 border-l-2 border-[#C2A95B]/40 pl-4">
-                    {ins.lines.map((line, idx) => (
-                      <p
-                        key={idx}
-                        className="text-xs font-light italic leading-relaxed text-[#800000]/80 md:text-sm"
-                        style={{ fontFamily: "var(--font-jakarta)" }}
-                      >
-                        {line}
-                      </p>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* =====================================================
-          IMAGE GALLERY STRIP — 3 spaces
-      ====================================================== */}
-      <section className="relative z-10 px-5 py-8 md:px-12 md:py-12">
-        <div className="mx-auto max-w-6xl">
-          <div className="grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-6">
-            {[
-              { label: "गर्भगृह", src: "/history/garbhagriha.jpg", icon: "🛕" },
-              { label: "प्रवेश द्वार", src: "/history/entrance.jpg", icon: "🚪" },
-              { label: "चारदीवारी", src: "/history/wall.jpg", icon: "🧱" },
-            ].map((img, i) => (
-              <div
-                key={img.label}
-                className={`relative aspect-square overflow-hidden rounded-2xl border border-[#C2A95B]/25 bg-white shadow-sm transition-all duration-500 hover:-translate-y-1 hover:shadow-md ${
-                  i === 2 ? "col-span-2 md:col-span-1" : ""
-                }`}
-              >
-                <Image
-                  src={img.src}
-                  alt={img.label}
-                  fill
-                  sizes="(max-width: 768px) 50vw, 33vw"
-                  className="object-cover"
-                />
-                <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 text-center">
-                  <span className="text-3xl text-[#C2A95B] md:text-4xl">
-                    {img.icon}
+                <div className="mb-5 flex items-center gap-3">
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[#C2A95B]/50 text-sm text-[#C2A95B]">
+                    ✦
                   </span>
-                  <p
-                    className="text-[10px] uppercase tracking-[0.25em] text-[#800000]/50 md:text-xs"
+                  <span
+                    className="text-[10px] uppercase tracking-[0.25em] text-[#C2A95B] md:text-xs"
                     style={{ fontFamily: "var(--font-jakarta)" }}
                   >
-                    {img.label}
+                    {event.date}
+                  </span>
+                </div>
+
+                <h3
+                  className="mb-3 text-xl font-bold leading-snug text-[#800000] md:text-2xl"
+                  style={{ fontFamily: "var(--font-cinzel)" }}
+                >
+                  {event.title}
+                </h3>
+
+                <div className="mb-4 h-px w-12 bg-[#C2A95B] transition-all duration-500 group-hover:w-20" />
+
+                <p
+                  className="text-xs leading-relaxed text-[#800000]/75 md:text-sm"
+                  style={{ fontFamily: "var(--font-jakarta)" }}
+                >
+                  {event.text}
+                </p>
+
+                <div className="mt-5 rounded-xl border border-[#C2A95B]/25 bg-[#C2A95B]/10 px-4 py-3">
+                  <p
+                    className="text-[11px] leading-relaxed text-[#800000]/80 md:text-xs"
+                    style={{ fontFamily: "var(--font-jakarta)" }}
+                  >
+                    {event.note}
                   </p>
                 </div>
               </div>
             ))}
           </div>
-        </div>
-      </section>
 
-      {/* =====================================================
-          HISTORICAL CONTEXT — Aurangzeb era & oath
-      ====================================================== */}
-      <section className="relative z-10 px-5 py-12 md:px-12 md:py-20">
-        <div className="mx-auto max-w-5xl">
-          <div className="rounded-3xl border border-[#C2A95B]/25 bg-white p-6 shadow-sm md:p-10">
-            <div className="mb-6 text-center">
+          {/* ---------- Through generations ---------- */}
+          {/* <div className="mt-16 rounded-2xl border border-[#C2A95B]/30 bg-[#FFF8E7] p-6 md:p-10">
+            <div className="mx-auto max-w-3xl text-center">
               <p
-                className="mb-3 text-[10px] font-medium uppercase tracking-[0.35em] text-[#C2A95B] md:text-xs"
+                className="mb-3 text-[10px] uppercase tracking-[0.4em] text-[#C2A95B] md:text-xs"
                 style={{ fontFamily: "var(--font-jakarta)" }}
               >
-                ऐतिहासिक पृष्ठभूमि
+                History Through Generations
               </p>
-              <h2
-                className="text-2xl font-bold text-[#800000] md:text-4xl"
+
+              <h3
+                className="mb-5 text-xl font-bold text-[#800000] md:text-3xl"
                 style={{ fontFamily: "var(--font-cinzel)" }}
               >
-                औरंगजेब काल में <span className="text-[#C2A95B]">निर्माण</span>
-              </h2>
-            </div>
+                The Story Continues
+              </h3>
 
-            <div
-              className="space-y-4 text-sm font-light leading-relaxed text-[#800000]/80 md:text-base"
-              style={{ fontFamily: "var(--font-jakarta)" }}
-            >
-              <p>
-                <span className="mr-2 text-[#C2A95B]">•</span>
-                शिलालेख में <strong className="font-medium text-[#800000]">"श्री राम राज्य"</strong>{" "}
-                लिखने का तात्पर्य आरंभिक संबोधन तो माना जा सकता है, लेकिन यह
-                संकेत भी मिलता है कि मंदिर का निर्माण औरंगजेब काल में भी निर्विघ्न
-                संपन्न हुआ।
-              </p>
-              <p>
-                <span className="mr-2 text-[#C2A95B]">•</span>
-                निश्चय ही बोड़ेया और आस-पास का वातावरण शांतिपूर्ण रहा होगा।
-              </p>
-              <p>
-                <span className="mr-2 text-[#C2A95B]">•</span>
-                नागवंशी राजा का काल मुगल सल्तनत के आतंक से दूर रहा होगा और यहाँ
-                मंदिर निर्माण में पंडित श्री लक्ष्मी नारायण तिवारी जी को
-                निष्कलंक, निष्कंटक, निश्शंक व विमल परिवेश मिला होगा।
+              <p
+                className="text-xs leading-relaxed text-[#800000]/75 md:text-sm"
+                style={{ fontFamily: "var(--font-jakarta)" }}
+              >
+                The centuries following the temple&apos;s construction brought
+                many changes, but the historical story of the site continued to
+                be passed from one generation to another. The dates recorded in
+                the historical inscription, the connection with the Nagvanshi
+                period, the long construction process, and the events recorded
+                in the 20th century together form an important timeline of its
+                past.
               </p>
             </div>
-
-            {/* Oath callout */}
-            <div className="mt-8 rounded-2xl border-l-4 border-[#C2A95B] bg-[#C2A95B]/[0.08] p-5 md:p-6">
-              <p
-                className="mb-2 text-[10px] font-medium uppercase tracking-[0.3em] text-[#C2A95B]"
-                style={{ fontFamily: "var(--font-jakarta)" }}
-              >
-                शिलालेख में अंकित शपथ
-              </p>
-              <p
-                className="text-sm font-light italic leading-relaxed text-[#800000]/80 md:text-base"
-                style={{ fontFamily: "var(--font-jakarta)" }}
-              >
-                जो कोई हिंदू मंदिर के दरवाजे और चारदीवारी को किसी भी प्रकार से
-                ढाहने का प्रयत्न करेगा, उसे गाय के रक्त पान का, ब्राह्मण हत्या
-                का और गुरू की हत्या का पाप लगेगा। जो कोई मुसलमान नुकसान पहुँचाने
-                का प्रयास करेगा, उसे सूअर खाने का, आखुर मारने का और किसी पीर की
-                थाली में सूअर माँस परोसने का घोर पाप लगेगा।
-              </p>
-              <p
-                className="mt-3 text-xs font-light text-[#800000]/60"
-                style={{ fontFamily: "var(--font-jakarta)" }}
-              >
-                — लक्ष्मीनारायण तिवारी द्वारा लिखवाया गया। कारीगर अनिरुद्ध ने
-                इसे सत्य कहा।
-              </p>
-            </div>
-          </div>
+          </div> */}
         </div>
       </section>
 
-      {/* =====================================================
-          TAMRAPATRA — copper plate grant
-      ====================================================== */}
-      <section className="relative z-10 px-5 py-12 md:px-12 md:py-20">
-        <div className="mx-auto max-w-5xl">
-          <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-[1fr_1.2fr] lg:gap-14">
-            {/* IMAGE SPACE — Tamrapatra */}
-            <div className="relative">
-              <div className="relative aspect-[4/3] w-full overflow-hidden rounded-3xl border border-[#C2A95B]/25 bg-white shadow-sm">
-                <Image
-                  src="/history/tamrapatra.jpg"
-                  alt="ताम्रपत्र"
-                  fill
-                  sizes="(max-width: 1024px) 100vw, 40vw"
-                  className="object-cover"
-                />
-                <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 text-center">
-                  <span className="text-4xl text-[#C2A95B]">🪙</span>
-                  <p
-                    className="text-[10px] uppercase tracking-[0.3em] text-[#800000]/50"
-                    style={{ fontFamily: "var(--font-jakarta)" }}
-                  >
-                    Tamrapatra
-                  </p>
-                </div>
-              </div>
-            </div>
+      {/* ============================================================
+          SECTION 5 — CLOSING
+      ============================================================ */}
+      <section className="relative w-full overflow-hidden bg-[#800000] py-16 md:py-24">
+        <div
+          className="pointer-events-none absolute inset-0 opacity-[0.18]"
+          style={{
+            backgroundImage:
+              "radial-gradient(#C2A95B 1.2px, transparent 1.2px)",
+            backgroundSize: "28px 28px",
+          }}
+        />
+        <div className="pointer-events-none absolute left-1/2 top-1/2 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#C2A95B]/15 blur-[130px]" />
 
-            {/* Text */}
-            <div>
-              <p
-                className="mb-3 text-[10px] font-medium uppercase tracking-[0.35em] text-[#C2A95B] md:text-xs"
-                style={{ fontFamily: "var(--font-jakarta)" }}
-              >
-                राजकीय दान
-              </p>
-
-              <h2
-                className="mb-5 text-2xl font-bold text-[#800000] md:text-4xl"
-                style={{ fontFamily: "var(--font-cinzel)" }}
-              >
-                ताम्रपत्र <span className="text-[#C2A95B]">(संवत 1733)</span>
-              </h2>
-
-              <div className="mb-5 flex items-center gap-3">
-                <span className="h-px w-10 bg-[#C2A95B]" />
-                <span className="text-sm text-[#C2A95B]">✦</span>
-                <span className="h-px w-10 bg-[#C2A95B]" />
-              </div>
-
-              <div
-                className="space-y-4 text-sm font-light leading-relaxed text-[#800000]/80 md:text-base"
-                style={{ fontFamily: "var(--font-jakarta)" }}
-              >
-                <p>
-                  <span className="mr-2 text-[#C2A95B]">•</span>
-                  लक्ष्मीनारायण तिवारी को राजा द्वारा प्रदत्त ताम्रपत्र अभी भी
-                  बोड़ेया के तिवारी परिवार में सुरक्षित है — दो टुकड़ों में।
-                </p>
-                <p>
-                  <span className="mr-2 text-[#C2A95B]">•</span>
-                  संवत 1733 (1682 ई.) के माघ शुक्ल पक्ष त्रयोदशी को महाराजा
-                  श्री रघुनाथ शाही ने लक्ष्मीनारायण तिवारी को बोड़ेया ग्राम
-                  देवोत्तर रूप में प्रदान किया — जल, वृक्ष, प्रजा सहित चारों
-                  सीमाओं तक।
-                </p>
-                <p className="text-xs text-[#800000]/60 md:text-sm">
-                  <span className="mr-2 text-[#C2A95B]">•</span>
-                  यह ताम्रपत्र उस समय सौंपा गया जब मंदिर निर्माण चल रहा था —
-                  प्राप्ति के छह वर्ष पश्चात्, 1682 ई. में मंदिर पूर्ण हुआ।
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* =====================================================
-          NAGVANSHI KINGS TIMELINE
-      ====================================================== */}
-      <section className="relative z-10 px-5 py-12 md:px-12 md:py-20">
-        <div className="mx-auto max-w-5xl">
-          <div className="mb-10 text-center">
-            <p
-              className="mb-3 text-[10px] font-medium uppercase tracking-[0.35em] text-[#C2A95B] md:text-xs"
-              style={{ fontFamily: "var(--font-jakarta)" }}
-            >
-              नागवंशी राजवंश
-            </p>
-            <h2
-              className="text-2xl font-bold text-[#800000] md:text-4xl"
-              style={{ fontFamily: "var(--font-cinzel)" }}
-            >
-              राजाओं का <span className="text-[#C2A95B]">कालक्रम</span>
-            </h2>
-          </div>
-
-          <div className="space-y-4">
-            {kings.map((k, i) => (
-              <div
-                key={k.name}
-                className="group flex flex-col gap-3 rounded-2xl border border-[#C2A95B]/25 bg-white p-5 shadow-sm transition-all duration-500 hover:border-[#C2A95B] hover:shadow-md sm:flex-row sm:items-center sm:gap-6 md:p-6"
-              >
-                <span className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full border border-[#C2A95B]/40 bg-[#C2A95B]/10 text-lg font-bold text-[#800000]">
-                  {i + 1}
-                </span>
-
-                <div className="flex-1">
-                  <h3
-                    className="mb-1 text-base font-bold text-[#800000] md:text-lg"
-                    style={{ fontFamily: "var(--font-cinzel)" }}
-                  >
-                    {k.name}
-                  </h3>
-                  <p
-                    className="text-xs font-light text-[#800000]/70 md:text-sm"
-                    style={{ fontFamily: "var(--font-jakarta)" }}
-                  >
-                    {k.note}
-                  </p>
-                </div>
-
-                <span
-                  className="self-start rounded-full border border-[#C2A95B]/40 bg-[#C2A95B]/5 px-3 py-1 text-[10px] font-medium uppercase tracking-widest text-[#800000] sm:self-center md:text-xs"
-                  style={{ fontFamily: "var(--font-jakarta)" }}
-                >
-                  {k.period}
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* =====================================================
-          SOURCES / REFERENCES
-      ====================================================== */}
-      <section className="relative z-10 px-5 py-12 md:px-12 md:py-20">
-        <div className="mx-auto max-w-5xl">
-          <div className="rounded-3xl border border-[#C2A95B]/25 bg-white p-6 md:p-10">
-            <div className="mb-6 text-center">
-              <h2
-                className="text-xl font-bold text-[#800000] md:text-3xl"
-                style={{ fontFamily: "var(--font-cinzel)" }}
-              >
-                संदर्भ <span className="text-[#C2A95B]">ग्रंथ</span>
-              </h2>
-            </div>
-
-            <div className="flex flex-wrap justify-center gap-3">
-              {sources.map((s) => (
-                <span
-                  key={s}
-                  className="rounded-full border border-[#C2A95B]/30 bg-white px-4 py-2 text-xs font-light text-[#800000]/80 transition-all duration-300 hover:border-[#C2A95B] hover:bg-[#C2A95B]/10 hover:text-[#800000] md:text-sm"
-                  style={{ fontFamily: "var(--font-jakarta)" }}
-                >
-                  {s}
-                </span>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* =====================================================
-          CLOSING BANNER
-      ====================================================== */}
-      <section className="relative z-10 px-5 pb-20 pt-8 md:px-12 md:pb-28">
-        <div className="mx-auto max-w-3xl text-center">
-          <div className="mb-6 flex items-center justify-center gap-3">
-            <span className="h-px w-16 bg-[#C2A95B]/60" />
-            <span className="text-[#C2A95B]">✦</span>
-            <span className="h-px w-16 bg-[#C2A95B]/60" />
-          </div>
+        <div className="relative z-10 mx-auto max-w-4xl px-6 text-center md:px-10">
+          <span className="text-lg text-[#C2A95B]">✦</span>
 
           <p
-            className="text-sm font-light italic leading-relaxed text-[#800000]/70 md:text-base"
-            style={{ fontFamily: "var(--font-jakarta)" }}
-          >
-            17वीं शताब्दी में औरंगजेब के शासनकाल में, छोटानागपुर के नागवंशी
-            राजाओं के संरक्षण में, लक्ष्मीनारायण तिवारी के संकल्प से यह मंदिर
-            बना — आज भी भक्तों को श्री मदन मोहन जी के दर्शन का पुण्य प्रदान करता
-            है।
-          </p>
-
-          <p
-            className="mt-6 text-lg font-bold text-[#800000] md:text-2xl"
+            className="mx-auto mt-6 text-base font-light leading-relaxed text-[#FFF8E7]/90 md:text-2xl md:leading-relaxed"
             style={{ fontFamily: "var(--font-cinzel)" }}
           >
-            श्री मदन मोहन जी
+            From the laying of its foundation in{" "}
+            <span className="text-[#C2A95B]">1665</span> to its completion in{" "}
+            <span className="text-[#C2A95B]">1682</span>, and through the
+            significant events of its later history, the story of Madan Mohan
+            Temple reflects more than three centuries of recorded history at
+            Boreya.
           </p>
+
+          <div className="mt-10 flex items-center justify-center gap-3">
+            <span className="h-px w-16 bg-[#C2A95B]/40" />
+            <span className="text-[#C2A95B]">✦</span>
+            <span className="h-px w-16 bg-[#C2A95B]/40" />
+          </div>
         </div>
       </section>
     </main>
