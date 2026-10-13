@@ -9,6 +9,7 @@ import Gallery from "./components/Gallery";
 import Contact from "./components/Contact";
 import About2 from "./components/About2";
 import KrishnaQuoteMarquee from "./components/Marquee";
+import NewsTicker from "./components/News";
 
 
 export default function Home() {
@@ -32,8 +33,9 @@ export default function Home() {
           </g>
         </svg>
 </a> */}
-   <SplashScreen></SplashScreen>
+   {/* <SplashScreen></SplashScreen> */}
    <Hero></Hero>
+   <NewsTicker></NewsTicker>
    <About2></About2>
    <KrishnaQuoteMarquee></KrishnaQuoteMarquee>
    <Timing></Timing>
