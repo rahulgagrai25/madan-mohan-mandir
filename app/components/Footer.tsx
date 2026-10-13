@@ -271,11 +271,11 @@ export default function Footer() {
         {/* Bottom bar */}
         <div className="flex flex-col items-center justify-center gap-2 md:flex-row md:gap-4">
           <p
-            className="text-center text-[10px] font-medium leading-relaxed text-white/70 md:text-left md:text-xs"
+            className="text-center text-[10px] font-medium leading-relaxed text-white/70 md:text-center md:text-xs"
             style={{ fontFamily: "var(--font-jakarta)" }}
           >
-            © {new Date().getFullYear()} Madan Mohan Mandir. All rights
-            reserved. Crafted with Devotion from Ranchi &nbsp;
+            © {new Date().getFullYear()} Madan Mohan Mandir - All rights
+            reserved. <br></br>Crafted with Devotion from Ranchi &nbsp;
             <span className="text-white">❤</span>
           </p>
         </div>
