@@ -186,7 +186,7 @@ export default function DarshanPage() {
                     className="rounded-full font-bold px-2.5 py-1 text-[9px] uppercase tracking-[0.18em] text-[#800000] bg-[#C2A95B] md:text-[10px]"
                     style={{ fontFamily: "var(--font-jakarta)" }}
                   >
-                    {item.time}
+                    {item.time} - Daily
                   </span>
                 </div>
 
