@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { Cinzel_Decorative, Plus_Jakarta_Sans } from "next/font/google";
@@ -18,6 +18,9 @@ const jakarta = Plus_Jakarta_Sans({
 });
 
 const NAV_HEIGHT = 80;
+
+/** Audio track — replace with your own file in /public */
+const AUDIO_SRC = "/audio/audio.mp3";
 
 /** Routes where the navbar should always be maroon */
 const MAROON_ROUTES = [
@@ -43,6 +46,11 @@ export default function NavBar() {
   const pathname = usePathname();
   const [pastAbout, setPastAbout] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+
+  /* ---------- Audio state ---------- */
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const [isMuted, setIsMuted] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(false);
 
   const isMaroonRoute = MAROON_ROUTES.some(
     (route) => pathname === route || pathname.startsWith(`${route}/`)
@@ -103,6 +111,46 @@ export default function NavBar() {
     return () => document.removeEventListener("keydown", onKey);
   }, []);
 
+  /* ---------- Start the song muted (browser autoplay rules) ---------- */
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    audio.volume = 0.55;
+    audio.muted = true;
+
+    const promise = audio.play();
+    if (promise && typeof promise.then === "function") {
+      promise
+        .then(() => setIsPlaying(true))
+        .catch(() => setIsPlaying(false)); // autoplay blocked — fine, user can click
+    }
+
+    return () => {
+      audio.pause();
+    };
+  }, []);
+
+  /* ---------- Toggle mute / unmute (and play if paused) ---------- */
+  const toggleAudio = () => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    if (isMuted) {
+      audio.muted = false;
+      const promise = audio.play();
+      if (promise && typeof promise.then === "function") {
+        promise
+          .then(() => setIsPlaying(true))
+          .catch(() => setIsPlaying(false));
+      }
+      setIsMuted(false);
+    } else {
+      audio.muted = true;
+      setIsMuted(true);
+    }
+  };
+
   const dark = isMaroonRoute || pastAbout;
 
   const t = dark
@@ -115,6 +163,8 @@ export default function NavBar() {
           "border-[#800000]/60 bg-[#800000]/5 text-[#800000] hover:bg-[#800000]/30 hover:text-white",
         burger: "text-[#800000]",
         burgerBorder: "border-[#800000]/30",
+        audio: "text-[#800000]",
+        audioBorder: "border-[#800000]/30",
       }
     : {
         nav: "bg-transparent backdrop-blur-sm",
@@ -125,10 +175,22 @@ export default function NavBar() {
           "border-amber-400/60 bg-amber-500/10 text-amber-200 hover:bg-amber-400 hover:text-black",
         burger: "text-amber-100",
         burgerBorder: "border-amber-300/40",
+        audio: "text-amber-100",
+        audioBorder: "border-amber-300/40",
       };
 
   return (
     <>
+      {/* Background audio element */}
+      <audio
+        ref={audioRef}
+        src={AUDIO_SRC}
+        loop
+        preload="auto"
+        onPlay={() => setIsPlaying(true)}
+        onPause={() => setIsPlaying(false)}
+      />
+
       <nav
         className={`${cinzel.variable} ${jakarta.variable} fixed top-0 left-0 z-50 h-[80px] w-full transition-colors duration-500 ${t.nav}`}
       >
@@ -166,7 +228,7 @@ export default function NavBar() {
             ))}
           </ul>
 
-          {/* Right side: Donate + Burger */}
+          {/* Right side: Donate + Burger + Audio */}
           <div className="flex items-center gap-2 sm:gap-3">
             <Link
               href="/donate"
@@ -200,6 +262,51 @@ export default function NavBar() {
                   }`}
                 />
               </span>
+            </button>
+
+            {/* Audio mute / unmute button — extreme right */}
+            <button
+              onClick={toggleAudio}
+              aria-label={isMuted ? "Unmute audio" : "Mute audio"}
+              aria-pressed={!isMuted}
+              title={isMuted ? "Unmute audio" : "Mute audio"}
+              className={`relative flex h-9 w-9 items-center justify-center rounded-full border backdrop-blur-sm transition-colors duration-300 ${t.audioBorder} ${t.audio} hover:bg-current/10`}
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth={1.8}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="h-4 w-4"
+                aria-hidden="true"
+              >
+                {/* Speaker body */}
+                <path d="M11 5 6 9H3v6h3l5 4V5z" />
+
+                {isMuted ? (
+                  <>
+                    {/* X — muted */}
+                    <line x1="16.5" y1="9" x2="21.5" y2="15" />
+                    <line x1="21.5" y1="9" x2="16.5" y2="15" />
+                  </>
+                ) : (
+                  <>
+                    {/* Sound waves — unmuted */}
+                    <path d="M15.5 8.5a5 5 0 0 1 0 7" />
+                    <path d="M18.5 5.5a9 9 0 0 1 0 13" />
+                  </>
+                )}
+              </svg>
+
+              {/* Small "playing" indicator dot */}
+              {!isMuted && isPlaying && (
+                <span className="absolute -right-0.5 -top-0.5 flex h-2 w-2">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#C2A95B] opacity-75" />
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-[#C2A95B]" />
+                </span>
+              )}
             </button>
           </div>
         </div>
