@@ -15,25 +15,25 @@ const jakarta = Plus_Jakarta_Sans({
 
 const events = [
   {
+    name: "Holi",
+    date: "Mar 14, 2025",
+    desc: "The Lord is bathed with abir-mixed water, then carried to the Dol Chabutara where every villager offers colours before turning to friends and family.",
+    image: "/events/holi.png",
+    tag: "Festival of Colours",
+  },
+  {
     name: "Janmashtami",
     date: "Aug 16, 2025",
-    desc: "Grand midnight celebration of Lord Krishna's birth with bhajans, abhishek, and prasad distribution.",
+    desc: "A midnight celebration of Shri Krishna's birth — marked with special worship, night-long bhajan and devotion at the Boreya Mandir.",
     image: "/events/janmashtami.png",
-    tag: "Major Festival",
+    tag: "Birth of Lord Krishna",
   },
   {
-    name: "Radhashtami",
-    date: "Sep 1, 2025",
-    desc: "Auspicious appearance day of Radha Rani, celebrated with kirtan and special shringar darshan.",
-    image: "/events/radhashtami.png",
-    tag: "Festival",
-  },
-  {
-    name: "Holi Utsav",
-    date: "Mar 14, 2025",
-    desc: "Joyous celebration of colours in the temple courtyard with devotional songs and sweets.",
-    image: "/events/holi.png",
-    tag: "Utsav",
+    name: "Diwali",
+    date: "Oct 20, 2025",
+    desc: "On Kartik Amavasya, the temple is lit entirely with lamps to welcome Lakshmi — its grandeur shining forth across Boreya.",
+    image: "/events/diwali.png",
+    tag: "Festival of Lights",
   },
 ];
 
