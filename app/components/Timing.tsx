@@ -1,7 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { Cinzel_Decorative, Plus_Jakarta_Sans } from "next/font/google";
+import {
+  Cinzel_Decorative,
+  Plus_Jakarta_Sans,
+  Tiro_Devanagari_Hindi,
+  Noto_Sans_Devanagari,
+} from "next/font/google";
 import Image from "next/image";
 
 const cinzel = Cinzel_Decorative({
@@ -16,41 +21,45 @@ const jakarta = Plus_Jakarta_Sans({
   variable: "--font-jakarta",
 });
 
+const tiro = Tiro_Devanagari_Hindi({
+  subsets: ["devanagari", "latin"],
+  weight: ["400"],
+  style: ["normal", "italic"],
+  variable: "--font-tiro",
+});
+
+const notoDevanagari = Noto_Sans_Devanagari({
+  subsets: ["devanagari", "latin"],
+  weight: ["200", "300", "400", "500", "600", "700"],
+  variable: "--font-noto-devanagari",
+});
+
 const timings = [
   {
-    name: "Mangala Aarti",
-    time: "5:00 AM – 5:30 AM",
-    description: "The first ritual of the day, awakening the deity with Vedic hymns and the gentle glow of dawn.",
+    name: "बाल भोग (प्रातःकाल)",
+    time: "9:00 AM - Daily",
+    description:
+      "विधिपूर्वक पूजन के पश्चात सूखे मेवे, मूँगफली, मिश्री, इलाइची दाना, फल, मिष्ठान्न एवं दूध निर्मित वस्तुएँ भोग के रूप में चढ़ाई जाती हैं। आरती एवं प्रार्थना के बाद भक्तों के बीच प्रसाद वितरित किया जाता है।",
     image: "/timing/mangala.png",
   },
   {
-    name: "Morning Darshan",
-    time: "5:30 AM – 12:00 PM",
-    description: "The main darshan hours when the temple is bathed in natural light, offering serene views of the sanctum.",
-    image: "/timing/morning.png",
-  },
-  {
-    name: "Bhog Aarti",
-    time: "12:00 PM – 12:30 PM",
-    description: "A midday offering of food and prayers, symbolizing gratitude and the sharing of divine prasad.",
+    name: "महाभोग (दोपहर)",
+    time: "1:00 PM - Daily",
+    description:
+      "पुजारी परिवार द्वारा पवित्र एवं प्रसन्न भाव से नैवेद्य तैयार किया जाता है — अरवा चावल का भात, दाल, सब्जियाँ और खीर आदि का नैवेध मदन मोहन स्वामी को अर्पित किया जाता है।",
     image: "/timing/bhog.png",
   },
   {
-    name: "Afternoon Darshan",
-    time: "12:30 PM – 4:30 PM",
-    description: "A quiet, contemplative period for devotees to sit in silence and absorb the temple's peaceful energy.",
-    image: "/timing/afternoon.png",
-  },
-  {
-    name: "Sandhya Aarti",
-    time: "6:30 PM – 7:00 PM",
-    description: "The evening aarti, where lamps are waved in a rhythmic dance of light, filling the air with devotion.",
+    name: "बाल भोग (सायंकाल)",
+    time: "7:00 PM - Daily",
+    description:
+      "सायंकालीन भोग में सूखे मेवे, मूँगफली, मिश्री, इलाइची दाना, फल, मिष्ठान्न एवं दूध निर्मित वस्तुएँ विधिपूर्वक पूजन के पश्चात अर्पित की जाती हैं और प्रसाद रूप में वितरित की जाती हैं।",
     image: "/timing/sandhya.png",
   },
   {
-    name: "Shayan Aarti",
-    time: "8:30 PM – 9:00 PM",
-    description: "The final ritual of the day, gently lulling the deity to rest with soft bhajans and closing prayers.",
+    name: "महाभोग (रात्रि)",
+    time: "9:00 PM - Daily",
+    description: "भगवान के शयन काल के पूर्व विविध प्रकार के पकवान — पुआ-पूड़ी, दूध-रोटी, खीर-रोटी आदि अंतिम भोग के रूप में अर्पित किए जाते हैं।",
     image: "/timing/shayan.png",
   },
 ];
@@ -66,7 +75,7 @@ export default function Timing() {
   return (
     <section
       id="darshan"
-      className={`${cinzel.variable} ${jakarta.variable} relative w-full overflow-hidden bg-[#0a0503]`}
+      className={`${cinzel.variable} ${jakarta.variable} ${tiro.variable} ${notoDevanagari.variable} relative w-full overflow-hidden bg-[#0a0503]`}
     >
       {/* =====================================================
           FULL BLEED BACKGROUND IMAGE
@@ -135,17 +144,19 @@ export default function Timing() {
 
             <h3
               className="mb-2 text-2xl font-bold text-white sm:text-3xl md:mb-4 md:text-5xl"
-              style={{ fontFamily: "var(--font-cinzel)" }}
+              style={{ fontFamily: "var(--font-tiro)" }}
             >
               {active.name}
             </h3>
 
-            <p
-              className="max-w-xl text-sm font-light leading-relaxed text-white/85 sm:text-base md:text-lg"
-              style={{ fontFamily: "var(--font-jakarta)" }}
-            >
-              {active.description}
-            </p>
+            {active.description && (
+              <p
+                className="max-w-xl text-sm font-light leading-relaxed text-white/85 sm:text-base md:text-lg"
+                style={{ fontFamily: "var(--font-noto-devanagari)" }}
+              >
+                {active.description}
+              </p>
+            )}
 
             {/* Mobile arrows */}
             <div className="mt-5 flex items-center gap-3 sm:mt-6 lg:hidden">
@@ -196,12 +207,12 @@ export default function Timing() {
                   {/* Text */}
                   <div className="min-w-0 flex-1">
                     <p
-                      className={`text-xl font-bold leading-tight transition-colors duration-300 md:text-2xl ${
+                      className={`text-xl font-bold leading-tight transition-colors duration-300 md:text-4xl ${
                         isActive
                           ? "text-[#C2A95B]"
                           : "text-white/60 group-hover:text-white/90"
                       }`}
-                      style={{ fontFamily: "var(--font-cinzel)" }}
+                      style={{ fontFamily: "var(--font-tiro)" }}
                     >
                       {t.name}
                     </p>
@@ -222,15 +233,6 @@ export default function Timing() {
           </div>
         </div>
 
-        {/* =================================================
-            NOTE
-        ================================================== */}
-        <p
-          className="mt-6 text-center text-[11px] font-light italic text-amber-100/60 sm:text-xs md:mt-10 md:text-base"
-          style={{ fontFamily: "var(--font-jakarta)" }}
-        >
-          * Timings may vary during festivals and special occasions.
-        </p>
 
         {/* =================================================
             BOTTOM DECORATION
