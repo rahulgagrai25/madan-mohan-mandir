@@ -111,7 +111,7 @@ export default function Events() {
           </div>
 
           <a
-            href="#all-events"
+            href="/events"
             className="rounded-full border border-[#C2A95B]/40 px-5 py-2 text-[10px] font-medium uppercase tracking-widest text-[#800000] transition-colors duration-300 hover:border-[#C2A95B] hover:bg-[#C2A95B]/10 sm:px-6 sm:text-xs"
             style={{ fontFamily: "var(--font-jakarta)" }}
           >
