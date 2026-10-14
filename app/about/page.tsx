@@ -1,16 +1,16 @@
-import { Cinzel_Decorative, Plus_Jakarta_Sans } from "next/font/google";
+import { Tiro_Devanagari_Hindi, Noto_Sans_Devanagari } from "next/font/google";
 import Image from "next/image";
 
-const cinzel = Cinzel_Decorative({
-  subsets: ["latin"],
-  weight: ["400", "700", "900"],
-  variable: "--font-cinzel",
+const tiro = Tiro_Devanagari_Hindi({
+  subsets: ["devanagari"],
+  weight: ["400"],
+  variable: "--font-tiro",
 });
 
-const jakarta = Plus_Jakarta_Sans({
-  subsets: ["latin"],
+const noto = Noto_Sans_Devanagari({
+  subsets: ["devanagari"],
   weight: ["200", "300", "400", "500", "600", "700", "800"],
-  variable: "--font-jakarta",
+  variable: "--font-noto",
 });
 
 /* ============================================================
@@ -19,80 +19,123 @@ const jakarta = Plus_Jakarta_Sans({
 
 const threeForms = [
   {
-    
-    title: "The Yogi",
-    subtitle: "Dharmatma · Gyan Roop",
-    text: "The wise teacher and philosopher. This form reaches its peak in the Bhagavad Gita, where Krishna guides Arjuna on the path of duty and knowledge.",
+    title: "योगी",
+    subtitle: "धर्मात्मा · ज्ञान रूप",
+    text: "बुद्धिमान शिक्षक और दार्शनिक। यह रूप भगवद गीता में अपने चरम पर पहुँचता है, जहाँ कृष्ण अर्जुन को कर्तव्य और ज्ञान के मार्ग पर मार्गदर्शन करते हैं।",
     image: "/images/about/yogi.png",
   },
   {
-    
-    title: "The Beloved",
-    subtitle: "Lalit · Madhur · Madan Mohan",
-    text: "The playful, sweet and enchanting Krishna of Vrindavan. This form shines in the Shrimad Bhagavat, Padma Purana and Brahmavaivarta Purana — the face of love and longing.",
+    title: "प्रियतम",
+    subtitle: "ललित · मधुर · मदन मोहन",
+    text: "वृंदावन के चंचल, मधुर और मंत्रमुग्ध करने वाले कृष्ण। यह रूप श्रीमद्भागवत, पद्म पुराण और ब्रह्मवैवर्त पुराण में चमकता है — प्रेम और विरह का चेहरा।",
     image: "/images/about/beloved.png",
   },
   {
-   
-    title: "The Statesman",
-    subtitle: "Rajanitik · Karma Roop",
-    text: "The king, diplomat and guide of the Mahabharata. This form represents action, duty and the ordering of the world.",
+    title: "राजनेता",
+    subtitle: "राजनीतिक · कर्म रूप",
+    text: "महाभारत के राजा, कूटनीतिज्ञ और मार्गदर्शक। यह रूप कर्म, कर्तव्य और दुनिया के क्रम का प्रतिनिधित्व करता है।",
     image: "/images/about/statesman.png",
   },
 ];
 
 const fiveTemples = [
   {
-    place: "Melok",
-    region: "Near Samta, West Bengal",
-    builder: "Mukand Prasad Raichaudhuri (Pahalwan)",
-    year: "1651 CE",
+    place: "मेलोक",
+    region: "सामता के निकट, पश्चिम बंगाल",
+    builder: "मुकंद प्रसाद रायचौधरी (पहलवान)",
+    year: "1651 ई.",
   },
   {
-    place: "Boreya",
-    region: "Kanke, Ranchi, Jharkhand",
-    builder: "Lakshmi Narayan Tiwari",
-    year: "1665 CE",
+    place: "बोड़ेया",
+    region: "कांके, राँची, झारखण्ड",
+    builder: "लक्ष्मी नारायण तिवारी",
+    year: "1665 ई.",
     highlight: true,
   },
   {
-    place: "Vishnupur",
-    region: "Bankura, West Bengal",
-    builder: "Raja Durjan Malldev",
-    year: "1694 CE",
+    place: "विष्णुपुर",
+    region: "बाँकुड़ा, पश्चिम बंगाल",
+    builder: "राजा दुर्जन मल्लदेव",
+    year: "1694 ई.",
   },
   {
-    place: "Vrindavan",
-    region: "Mathura, Uttar Pradesh",
-    builder: "Maharaja Vajranabh",
-    year: "1819 CE",
+    place: "वृंदावन",
+    region: "मथुरा, उत्तर प्रदेश",
+    builder: "महाराजा वज्रनाभ",
+    year: "1748 · 1819 ई.",
+    note: "1748 में स्थापना; मंदिर का निर्माण 1819 ई. में हुआ।",
   },
   {
-    place: "Kuch Bihar",
-    region: "West Bengal",
-    builder: "Maharaja Nripendra Narayan",
-    year: "1885–1889 CE",
+    place: "कूच विहार",
+    region: "पश्चिम बंगाल",
+    builder: "महाराजा नृपेन्द्र नारायण",
+    year: "1885–1889 ई.",
   },
 ];
 
 const chotanagpurTemples = [
   {
-    name: "Madan Mohan",
-    place: "Boreya",
-    year: "1665 CE",
-    text: "The sweet, enchanting form of Krishna — the abode of love and devotion.",
+    name: "मदन मोहन",
+    place: "बोड़ेया",
+    year: "1665 ई.",
+    text: "कृष्ण का मधुर, मंत्रमुग्ध करने वाला रूप — प्रेम और भक्ति का निवास।",
   },
   {
-    name: "Radhavallabh",
-    place: "Chutiya",
-    year: "1685 CE",
-    text: "Established with the support of Raja Raghunath Shah in the ancestral fort.",
+    name: "राधावल्लभ",
+    place: "चुटिया",
+    year: "1685 ई.",
+    text: "राजा रघुनाथ शाह के समर्थन से पैतृक किले में स्थापित।",
   },
   {
-    name: "Jagannath",
-    place: "Jagannathpur",
-    year: "1691 CE",
-    text: "Built by Thakur Ani Shah on a 250 ft hill, 10 km south of Ranchi.",
+    name: "जगन्नाथ",
+    place: "जगन्नाथपुर",
+    year: "1691 ई.",
+    text: "राँची से 10 किमी दक्षिण में 250 फीट की पहाड़ी पर ठाकुर अनि शाह द्वारा निर्मित।",
+  },
+];
+
+const committee = [
+  {
+    name: "सुधांशु नारायण तिवारी",
+    nameEn: "Sudhanshu Narayan Tiwari",
+    role: "अध्यक्ष",
+    roleEn: "President",
+    phone: "7488395587",
+  },
+  {
+    name: "मनोज नारायण तिवारी",
+    nameEn: "Manoj Narayan Tiwari",
+    role: "सचिव",
+    roleEn: "Secretary",
+    phone: "7488540905",
+  },
+  {
+    name: "गोपाल नारायण तिवारी",
+    nameEn: "Gopal Narayan Tiwari",
+    role: "कोषाध्यक्ष",
+    roleEn: "Treasurer",
+    phone: "7858091885",
+  },
+  {
+    name: "प्रमोहित पांडेय",
+    nameEn: "Pramohit Pandey",
+    role: "मुख्य पुजारी",
+    roleEn: "Head Priest",
+    phone: "",
+  },
+  {
+    name: "गोविन्द नारायण तिवारी",
+    nameEn: "Govind Narayan Tiwari",
+    role: "संरक्षक",
+    roleEn: "Patron",
+    phone: "9835917623",
+  },
+  {
+    name: "डॉ. रविभूषण तिवारी",
+    nameEn: "Dr. Ravibhushan Tiwari",
+    role: "संरक्षक",
+    roleEn: "Patron",
+    phone: "9931500930",
   },
 ];
 
@@ -102,7 +145,7 @@ const chotanagpurTemples = [
 
 export default function AboutPage() {
   return (
-    <main className={`${cinzel.variable} ${jakarta.variable} w-full`}>
+    <main className={`${tiro.variable} ${noto.variable} w-full`}>
       {/* ============================================================
           SECTION 1 — THE NAME & THE DIVINE FORM
       ============================================================ */}
@@ -129,17 +172,17 @@ export default function AboutPage() {
           <div className="mb-14 text-center">
             <p
               className="mb-3 text-xs font-medium uppercase tracking-[0.4em] text-[#C2A95B]"
-              style={{ fontFamily: "var(--font-jakarta)" }}
+              style={{ fontFamily: "var(--font-noto)" }}
             >
-              About the Temple
+              About the temple
             </p>
 
             <h1
               className="text-3xl font-bold leading-tight text-[#800000] md:text-5xl"
-              style={{ fontFamily: "var(--font-cinzel)" }}
+              style={{ fontFamily: "var(--font-tiro)" }}
             >
-              The Name —{" "}
-              <span className="text-[#C2A95B]">Madan Mohan</span>
+              नाम —{" "}
+              <span className="text-[#C2A95B]">मदन मोहन</span>
             </h1>
 
             <div className="mt-6 flex items-center justify-center gap-3">
@@ -149,12 +192,11 @@ export default function AboutPage() {
             </div>
 
             <p
-              className="mx-auto mt-6 max-w-2xl text-sm font-light leading-relaxed text-[#800000]/70 md:text-base"
-              style={{ fontFamily: "var(--font-jakarta)" }}
+              className="mx-auto mt-6 max-w-2xl text-sm font-light leading-relaxed text-[#800000]/70 md:text-lg"
+              style={{ fontFamily: "var(--font-noto)" }}
             >
-              Madan Mohan is one of the most beloved names of Lord Krishna — a
-              name that speaks of beauty, love and the power to enchant every
-              heart.
+              मदन मोहन भगवान श्री कृष्ण का एक अत्यंत प्रिय नाम है — एक ऐसा नाम
+              जो सौंदर्य, प्रेम और हर हृदय को मोहित करने की शक्ति की बात करता है।
             </p>
           </div>
 
@@ -181,16 +223,16 @@ export default function AboutPage() {
                     <span className="h-px w-10 bg-[#C2A95B]" />
                     <span
                       className="text-xs uppercase tracking-[0.3em] text-[#C2A95B]"
-                      style={{ fontFamily: "var(--font-jakarta)" }}
+                      style={{ fontFamily: "var(--font-noto)" }}
                     >
-                      The Divine Form
+                      दिव्य स्वरूप
                     </span>
                   </div>
                   <h3
                     className="text-2xl font-bold text-white md:text-3xl"
-                    style={{ fontFamily: "var(--font-cinzel)" }}
+                    style={{ fontFamily: "var(--font-tiro)" }}
                   >
-                    Madan Mohan
+                    मदन मोहन
                   </h3>
                 </div>
               </div>
@@ -199,64 +241,77 @@ export default function AboutPage() {
             {/* Text */}
             <div className="order-1 lg:order-2">
               <p
-                className="mb-6 text-sm font-light leading-relaxed text-[#800000]/80 md:text-base"
-                style={{ fontFamily: "var(--font-jakarta)" }}
+                className="mb-6 text-sm font-light leading-relaxed text-[#800000]/80 md:text-lg"
+                style={{ fontFamily: "var(--font-noto)" }}
               >
-                The name{" "}
+                नाम{" "}
                 <span className="font-medium text-[#C2A95B]">
-                  Madan Mohan
+                  मदन मोहन
                 </span>{" "}
-                is made of two beautiful words. Together they describe Krishna
-                as the one whose charm is so great that even the god of love is
-                moved by it.
+                दो सुंदर शब्दों से मिलकर बना है। ये दोनों मिलकर कृष्ण को उस रूप
+                में वर्णित करते हैं जिनका आकर्षण इतना महान है कि स्वयं प्रेम के
+                देवता भी उनसे प्रभावित होते हैं।
               </p>
 
               <div className="mb-6 grid gap-3 sm:grid-cols-2">
                 <div className="rounded-2xl border border-[#C2A95B]/25 bg-white/80 p-5 shadow-sm backdrop-blur-sm">
                   <p
                     className="mb-1 text-lg font-bold text-[#800000]"
-                    style={{ fontFamily: "var(--font-cinzel)" }}
+                    style={{ fontFamily: "var(--font-tiro)" }}
                   >
-                    मदन · Madan
+                    मदन
                   </p>
                   <p
                     className="text-xs leading-relaxed text-[#800000]/70 md:text-sm"
-                    style={{ fontFamily: "var(--font-jakarta)" }}
+                    style={{ fontFamily: "var(--font-noto)" }}
                   >
-                    Kamadeva — the god of love and desire.
+                    कामदेव — प्रेम और इच्छा के देवता।
                   </p>
                 </div>
 
                 <div className="rounded-2xl border border-[#C2A95B]/25 bg-white/80 p-5 shadow-sm backdrop-blur-sm">
                   <p
                     className="mb-1 text-lg font-bold text-[#800000]"
-                    style={{ fontFamily: "var(--font-cinzel)" }}
+                    style={{ fontFamily: "var(--font-tiro)" }}
                   >
-                    मोहन · Mohan
+                    मोहन
                   </p>
                   <p
                     className="text-xs leading-relaxed text-[#800000]/70 md:text-sm"
-                    style={{ fontFamily: "var(--font-jakarta)" }}
+                    style={{ fontFamily: "var(--font-noto)" }}
                   >
-                    The one who enchants, delights and captivates.
+                    जो मोहित करता है, आनंदित करता है और मंत्रमुग्ध करता है।
                   </p>
                 </div>
               </div>
 
               <p
-                className="text-sm font-light leading-relaxed text-[#800000]/80 md:text-base"
-                style={{ fontFamily: "var(--font-jakarta)" }}
+                className="mb-6 text-sm font-light leading-relaxed text-[#800000]/80 md:text-lg"
+                style={{ fontFamily: "var(--font-noto)" }}
               >
-                So{" "}
+                इसलिए{" "}
                 <span className="font-medium text-[#C2A95B]">
-                  Madan Mohan
+                  मदन मोहन
                 </span>{" "}
-                means the Lord who enchants even Kamadeva himself. He is also
-                revered as{" "}
-                <span className="font-medium text-[#C2A95B]">Pradumna</span>,
-                the father of Kamadeva — the very source of love in the
-                universe.
+                का अर्थ है वह भगवान जो स्वयं कामदेव को भी मोहित करते हैं। उन्हें{" "}
+                <span className="font-medium text-[#C2A95B]">प्रदुम्न</span> के
+                रूप में कामदेव के पिता के रूप में भी जाना जाता है — ब्रह्मांड
+                में प्रेम के मूल स्रोत।
               </p>
+
+              {/* Hindi verse */}
+              <div className="rounded-2xl border border-[#C2A95B]/25 bg-[#C2A95B]/5 p-5 md:p-6">
+                <p
+                  className="text-sm leading-loose text-[#800000]/90 md:text-base"
+                  style={{ fontFamily: "var(--font-noto)" }}
+                >
+                  मदन मोहन श्री कृष्ण का ही एक नाम है। इसका शाब्दिक अर्थ है मदन
+                  अर्थात् कामदेव और मोहन अर्थात मोहित करने वाला। श्री कृष्ण
+                  कामदेव को भी मोहित करने वाले गुणों से आपूरित हैं। इन्हें
+                  प्रदुम्न के रूप में कामदेव के पिता के रूप में भी जाना जाता
+                  है।
+                </p>
+              </div>
             </div>
           </div>
 
@@ -265,10 +320,10 @@ export default function AboutPage() {
             <div className="mb-10 text-center">
               <h2
                 className="text-2xl font-bold text-[#800000] md:text-4xl"
-                style={{ fontFamily: "var(--font-cinzel)" }}
+                style={{ fontFamily: "var(--font-tiro)" }}
               >
-                Three Forms of{" "}
-                <span className="text-[#C2A95B]">Krishna</span>
+                कृष्ण के{" "}
+                <span className="text-[#C2A95B]">तीन रूप</span>
               </h2>
               <div className="mt-5 flex items-center justify-center gap-3">
                 <span className="h-px w-10 bg-[#C2A95B]" />
@@ -276,12 +331,12 @@ export default function AboutPage() {
                 <span className="h-px w-10 bg-[#C2A95B]" />
               </div>
               <p
-                className="mx-auto mt-5 max-w-2xl text-sm font-light leading-relaxed text-[#800000]/70 md:text-base"
-                style={{ fontFamily: "var(--font-jakarta)" }}
+                className="mx-auto mt-5 max-w-2xl text-sm font-light leading-relaxed text-[#800000]/70 md:text-lg"
+                style={{ fontFamily: "var(--font-noto)" }}
               >
-                Across the scriptures, Krishna appears in three great forms.
-                Poets and saints, however, chose only one — the sweet, loving
-                Madan Mohan — as the heart of their songs.
+                शास्त्रों में कृष्ण तीन महान रूपों में प्रकट होते हैं। कवियों
+                और संतों ने, हालाँकि, केवल एक को चुना — मधुर, प्रेममय मदन मोहन
+                — अपने गीतों के हृदय के रूप में।
               </p>
             </div>
 
@@ -312,22 +367,22 @@ export default function AboutPage() {
                     <div className="mb-4 h-px w-12 bg-[#C2A95B] transition-all duration-500 group-hover:w-20" />
 
                     <p
-                      className="mb-2 text-[10px] uppercase tracking-[0.25em] text-[#C2A95B] md:text-xs"
-                      style={{ fontFamily: "var(--font-jakarta)" }}
+                      className="mb-2 text-[10px] uppercase text-[#C2A95B] md:text-lg bg-[#800000]/40 p-1"
+                      style={{ fontFamily: "var(--font-noto)" }}
                     >
                       {form.subtitle}
                     </p>
 
                     <h3
                       className="mb-3 text-2xl font-bold text-white md:text-3xl"
-                      style={{ fontFamily: "var(--font-cinzel)" }}
+                      style={{ fontFamily: "var(--font-tiro)" }}
                     >
                       {form.title}
                     </h3>
 
                     <p
                       className="text-xs leading-relaxed text-white/80 md:text-sm"
-                      style={{ fontFamily: "var(--font-jakarta)" }}
+                      style={{ fontFamily: "var(--font-noto)" }}
                     >
                       {form.text}
                     </p>
@@ -363,18 +418,18 @@ export default function AboutPage() {
           {/* ---------- Heading ---------- */}
           <div className="mb-14 text-center">
             <p
-              className="mb-3 text-xs font-medium uppercase tracking-[0.4em] text-[#C2A95B]"
-              style={{ fontFamily: "var(--font-jakarta)" }}
+              className="mb-3 text-xs font-medium uppercase text-[#C2A95B] md:text-lg"
+              style={{ fontFamily: "var(--font-noto)" }}
             >
-              The Temple &amp; Its Time
+              मंदिर और उसका समय
             </p>
 
             <h2
               className="text-3xl font-bold leading-tight text-[#FFF8E7] md:text-5xl"
-              style={{ fontFamily: "var(--font-cinzel)" }}
+              style={{ fontFamily: "var(--font-tiro)" }}
             >
-              A Sacred{" "}
-              <span className="text-[#C2A95B]">Heritage</span>
+              एक पवित्र{" "}
+              <span className="text-[#C2A95B]">विरासत</span>
             </h2>
 
             <div className="mt-6 flex items-center justify-center gap-3">
@@ -384,12 +439,12 @@ export default function AboutPage() {
             </div>
 
             <p
-              className="mx-auto mt-6 max-w-2xl text-sm font-light leading-relaxed text-[#FFF8E7]/80 md:text-base"
-              style={{ fontFamily: "var(--font-jakarta)" }}
+              className="mx-auto mt-6 max-w-2xl text-sm font-light leading-relaxed text-[#FFF8E7]/80 md:text-lg"
+              style={{ fontFamily: "var(--font-noto)" }}
             >
-              In the heart of Mughal India, when Aurangzeb sat on the throne of
-              Delhi, three Krishna temples quietly rose in Chotanagpur. Boreya
-              was one of them — a lamp of devotion that has never gone out.
+              मुगल भारत के हृदय में, जब औरंगज़ेब दिल्ली के सिंहासन पर बैठा था,
+              छोटानागपुर में तीन कृष्ण मंदिर चुपचाप उभरे। बोड़ेया उनमें से एक
+              था — भक्ति का एक दीप जो कभी बुझा नहीं।
             </p>
           </div>
 
@@ -398,19 +453,18 @@ export default function AboutPage() {
             <div className="mb-8 flex flex-col items-center gap-3 text-center">
               <h3
                 className="text-xl font-bold text-[#FFF8E7] md:text-3xl"
-                style={{ fontFamily: "var(--font-cinzel)" }}
+                style={{ fontFamily: "var(--font-tiro)" }}
               >
-                The Five{" "}
-                <span className="text-[#C2A95B]">Madan Mohan Temples</span>{" "}
-                of India
+                भारत के{" "}
+                <span className="text-[#C2A95B]">पाँच मदन मोहन मंदिर</span>
               </h3>
               <p
-                className="max-w-2xl text-xs font-light leading-relaxed text-[#FFF8E7]/60 md:text-sm"
-                style={{ fontFamily: "var(--font-jakarta)" }}
+                className="max-w-3xl text-xs font-light leading-relaxed text-[#FFF8E7]/60 md:text-lg"
+                style={{ fontFamily: "var(--font-noto)" }}
               >
-                While Radha–Krishna temples are found across India, the name
-                "Madan Mohan" is rare. Only five temples are known to carry
-                this sacred name.
+                जबकि राधा-कृष्ण मंदिर पूरे भारत में पाए जाते हैं, &ldquo;मदन
+                मोहन&rdquo; नाम दुर्लभ है। केवल पाँच मंदिर ही इस पवित्र नाम को
+                धारण करते हैं।
               </p>
             </div>
 
@@ -428,28 +482,28 @@ export default function AboutPage() {
                   <div className="mb-4 flex items-center gap-3">
                     <span
                       className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[#C2A95B]/50 text-xs font-bold text-[#C2A95B] md:text-sm"
-                      style={{ fontFamily: "var(--font-cinzel)" }}
+                      style={{ fontFamily: "var(--font-tiro)" }}
                     >
                       {i + 1}
                     </span>
                     <span
                       className="text-[10px] uppercase tracking-[0.25em] text-[#C2A95B] md:text-xs"
-                      style={{ fontFamily: "var(--font-jakarta)" }}
+                      style={{ fontFamily: "var(--font-noto)" }}
                     >
                       {temple.year}
                     </span>
                   </div>
 
                   <h4
-                    className="mb-1 text-lg font-bold text-[#FFF8E7] md:text-xl"
-                    style={{ fontFamily: "var(--font-cinzel)" }}
+                    className="mb-1 text-lg font-bold text-[#FFF8E7] md:text-3xl"
+                    style={{ fontFamily: "var(--font-tiro)" }}
                   >
                     {temple.place}
                   </h4>
 
                   <p
-                    className="mb-3 text-[11px] leading-relaxed text-[#FFF8E7]/70 md:text-xs"
-                    style={{ fontFamily: "var(--font-jakarta)" }}
+                    className="mb-3 text-[11px] leading-relaxed text-[#FFF8E7]/70 md:text-lg"
+                    style={{ fontFamily: "var(--font-noto)" }}
                   >
                     {temple.region}
                   </p>
@@ -458,13 +512,22 @@ export default function AboutPage() {
 
                   <p
                     className="mt-3 text-[11px] leading-relaxed text-[#FFF8E7]/60 md:text-xs"
-                    style={{ fontFamily: "var(--font-jakarta)" }}
+                    style={{ fontFamily: "var(--font-noto)" }}
                   >
-                    Built by{" "}
+                    निर्माता:{" "}
                     <span className="text-[#FFF8E7]/90">
                       {temple.builder}
                     </span>
                   </p>
+
+                  {temple.note && (
+                    <p
+                      className="mt-2 text-[10px] italic leading-relaxed text-[#C2A95B]/80 md:text-[11px]"
+                      style={{ fontFamily: "var(--font-noto)" }}
+                    >
+                      {temple.note}
+                    </p>
+                  )}
                 </div>
               ))}
             </div>
@@ -476,54 +539,53 @@ export default function AboutPage() {
             <div>
               <div className="mb-5 flex items-center gap-3">
                 <span className="h-px w-10 bg-[#C2A95B]" />
-                <span
+                {/* <span
                   className="text-[10px] uppercase tracking-[0.3em] text-[#C2A95B]"
-                  style={{ fontFamily: "var(--font-jakarta)" }}
+                  style={{ fontFamily: "var(--font-noto)" }}
                 >
-                  Boreya · 1665 CE
-                </span>
+                  बोड़ेया · 1665 ई.
+                </span> */}
               </div>
 
               <h3
                 className="mb-5 text-2xl font-bold leading-tight text-[#FFF8E7] md:text-4xl"
-                style={{ fontFamily: "var(--font-cinzel)" }}
+                style={{ fontFamily: "var(--font-tiro)" }}
               >
-                A Temple Born in{" "}
-                <span className="text-[#C2A95B]">Troubled Times</span>
+                संकट के समय में{" "}
+                <span className="text-[#C2A95B]">जन्मा मंदिर</span>
               </h3>
 
               <p
-                className="mb-4 text-sm font-light leading-relaxed text-[#FFF8E7]/80 md:text-base"
-                style={{ fontFamily: "var(--font-jakarta)" }}
+                className="mb-4 text-sm font-light leading-relaxed text-[#FFF8E7]/80 md:text-lg"
+                style={{ fontFamily: "var(--font-noto)" }}
               >
-                The years 1200–1857 CE were among the most difficult in Indian
-                history. After the fall of Hindu power in the north, the
-                Mughal rule spread across the land. Under Aurangzeb, temples
-                were at risk and devotion had to be practised quietly.
+                1200–1857 ई. के वर्ष भारतीय इतिहास के सबसे कठिन वर्षों में से
+                थे। उत्तर में हिंदू शक्ति के पतन के बाद, मुगल शासन पूरे देश में
+                फैल गया। औरंगज़ेब के अधीन, मंदिर खतरे में थे और भक्ति को चुपचाप
+                करना पड़ता था।
               </p>
 
               <p
-                className="mb-4 text-sm font-light leading-relaxed text-[#FFF8E7]/80 md:text-base"
-                style={{ fontFamily: "var(--font-jakarta)" }}
+                className="mb-4 text-sm font-light leading-relaxed text-[#FFF8E7]/80 md:text-lg"
+                style={{ fontFamily: "var(--font-noto)" }}
               >
-                It was in this very era that{" "}
+                यह इसी युग में था कि{" "}
                 <span className="font-medium text-[#C2A95B]">
-                  Lakshmi Narayan Tiwari
+                  लक्ष्मी नारायण तिवारी
                 </span>{" "}
-                built the Madan Mohan Mandir at Boreya in 1665 CE. He did not
-                build it for fame. He built it as a quiet act of faith — a
-                centre where people could come together and remember their
-                eternal values.
+                ने 1665 ई. में बोड़ेया में मदन मोहन मंदिर बनवाया। उन्होंने इसे
+                प्रसिद्धि के लिए नहीं बनवाया। उन्होंने इसे विश्वास के एक शांत
+                कार्य के रूप में बनवाया — एक ऐसा केंद्र जहाँ लोग एक साथ आ सकें
+                और अपने शाश्वत मूल्यों को याद कर सकें।
               </p>
 
               <p
-                className="text-sm font-light leading-relaxed text-[#FFF8E7]/80 md:text-base"
-                style={{ fontFamily: "var(--font-jakarta)" }}
+                className="text-sm font-light leading-relaxed text-[#FFF8E7]/80 md:text-lg"
+                style={{ fontFamily: "var(--font-noto)" }}
               >
-                This was the age of the Bhakti movement. Through devotion,
-                saints and householders alike kept alive the spirit of love,
-                dignity and community. The Boreya temple became one such
-                living centre — and it still is.
+                यह भक्ति आंदोलन का युग था। भक्ति के माध्यम से, संतों और
+                गृहस्थों ने समान रूप से प्रेम, गरिमा और समुदाय की भावना को जीवित
+                रखा। बोड़ेया मंदिर ऐसा ही एक जीवित केंद्र बन गया — और आज भी है।
               </p>
             </div>
 
@@ -545,15 +607,15 @@ export default function AboutPage() {
                 <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
                   <p
                     className="mb-1 text-[10px] uppercase tracking-[0.3em] text-[#C2A95B]"
-                    style={{ fontFamily: "var(--font-jakarta)" }}
+                    style={{ fontFamily: "var(--font-noto)" }}
                   >
-                    Since 1665 CE
+                    1665 ई. से
                   </p>
                   <h4
                     className="text-xl font-bold text-white md:text-2xl"
-                    style={{ fontFamily: "var(--font-cinzel)" }}
+                    style={{ fontFamily: "var(--font-tiro)" }}
                   >
-                    360+ Years of Devotion
+                    360+ वर्षों की भक्ति
                   </h4>
                 </div>
               </div>
@@ -564,11 +626,11 @@ export default function AboutPage() {
           <div className="mt-24">
             <div className="mb-10 text-center">
               <h3
-                className="text-xl font-bold text-[#FFF8E7] md:text-3xl"
-                style={{ fontFamily: "var(--font-cinzel)" }}
+                className="text-xl font-bold text-[#FFF8E7] md:text-4xl"
+                style={{ fontFamily: "var(--font-tiro)" }}
               >
-                Three Krishna Temples of{" "}
-                <span className="text-[#C2A95B]">Chotanagpur</span>
+                छोटानागपुर के{" "}
+                <span className="text-[#C2A95B]">तीन कृष्ण मंदिर</span>
               </h3>
               <div className="mt-5 flex items-center justify-center gap-3">
                 <span className="h-px w-10 bg-[#C2A95B]" />
@@ -576,11 +638,11 @@ export default function AboutPage() {
                 <span className="h-px w-10 bg-[#C2A95B]" />
               </div>
               <p
-                className="mx-auto mt-5 max-w-2xl text-xs font-light leading-relaxed text-[#FFF8E7]/60 md:text-sm"
-                style={{ fontFamily: "var(--font-jakarta)" }}
+                className="mx-auto mt-5 max-w-2xl text-xs font-light leading-relaxed text-[#FFF8E7]/60 md:text-lg"
+                style={{ fontFamily: "var(--font-noto)" }}
               >
-                Within a span of only 26 years, three great Krishna temples
-                rose near Ranchi — each in a different divine form.
+                केवल 26 वर्षों की अवधि में, राँची के पास तीन महान कृष्ण मंदिर
+                उभरे — प्रत्येक एक अलग दिव्य रूप में।
               </p>
             </div>
 
@@ -591,15 +653,15 @@ export default function AboutPage() {
                   className="group rounded-2xl border border-[#C2A95B]/25 bg-white/[0.04] p-6 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#C2A95B]"
                 >
                   <p
-                    className="mb-1 text-[10px] uppercase tracking-[0.25em] text-[#C2A95B]"
-                    style={{ fontFamily: "var(--font-jakarta)" }}
+                    className="mb-1 text-[10px] uppercase text-[#C2A95B] md:text-lg"
+                    style={{ fontFamily: "var(--font-noto)" }}
                   >
                     {t.place} · {t.year}
                   </p>
 
                   <h4
-                    className="mb-3 text-xl font-bold text-[#FFF8E7] md:text-2xl"
-                    style={{ fontFamily: "var(--font-cinzel)" }}
+                    className="mb-3 text-xl font-bold text-[#FFF8E7] md:text-3xl"
+                    style={{ fontFamily: "var(--font-tiro)" }}
                   >
                     {t.name}
                   </h4>
@@ -607,8 +669,8 @@ export default function AboutPage() {
                   <div className="mb-3 h-px w-12 bg-[#C2A95B]/50 transition-all duration-300 group-hover:w-20" />
 
                   <p
-                    className="text-xs leading-relaxed text-[#FFF8E7]/70 md:text-sm"
-                    style={{ fontFamily: "var(--font-jakarta)" }}
+                    className="text-xs leading-relaxed text-[#FFF8E7]/70 md:text-lg"
+                    style={{ fontFamily: "var(--font-noto)" }}
                   >
                     {t.text}
                   </p>
@@ -622,6 +684,129 @@ export default function AboutPage() {
             <span className="h-px w-20 bg-[#C2A95B]/30" />
             <span className="text-sm text-[#C2A95B]">✦</span>
             <span className="h-px w-20 bg-[#C2A95B]/30" />
+          </div>
+        </div>
+      </section>
+
+      {/* ============================================================
+          SECTION 3 — TEMPLE MANAGEMENT COMMITTEE
+      ============================================================ */}
+      <section className="relative w-full overflow-hidden bg-[#FFF8E7] py-20 md:py-28">
+        {/* Mandala dot pattern */}
+        <div
+          className="pointer-events-none absolute inset-0 opacity-[0.05]"
+          style={{
+            backgroundImage: `
+              radial-gradient(circle at center, #800000 1px, transparent 1.5px),
+              linear-gradient(45deg, transparent 48%, #C2A95B 49%, #C2A95B 51%, transparent 52%),
+              linear-gradient(-45deg, transparent 48%, #C2A95B 49%, #C2A95B 51%, transparent 52%)
+            `,
+            backgroundSize: "40px 40px",
+          }}
+        />
+
+        {/* Soft glows */}
+        <div className="pointer-events-none absolute -right-40 top-0 h-[500px] w-[500px] rounded-full bg-[#C2A95B]/10 blur-3xl" />
+        <div className="pointer-events-none absolute -left-40 bottom-0 h-[500px] w-[500px] rounded-full bg-[#800000]/5 blur-3xl" />
+
+        <div className="relative z-10 mx-auto max-w-7xl px-6 md:px-10">
+          {/* ---------- Heading ---------- */}
+          <div className="mb-14 text-center">
+            <p
+              className="mb-3 text-xs font-medium uppercase text-[#C2A95B] md:text-lg"
+              style={{ fontFamily: "var(--font-noto)" }}
+            >
+              सेवा और ट्रस्टी
+            </p>
+
+            <h2
+              className="text-3xl font-bold leading-tight text-[#800000] md:text-5xl"
+              style={{ fontFamily: "var(--font-tiro)" }}
+            >
+              मंदिर प्रबंधन{" "}
+              <span className="text-[#C2A95B]">समिति</span>
+            </h2>
+
+            <div className="mt-6 flex items-center justify-center gap-3">
+              <span className="h-px w-12 bg-[#C2A95B]" />
+              <span className="text-[#C2A95B]">✦</span>
+              <span className="h-px w-12 bg-[#C2A95B]" />
+            </div>
+
+            <p
+              className="mx-auto mt-6 max-w-2xl text-sm font-light leading-relaxed text-[#800000]/70 md:text-lg"
+              style={{ fontFamily: "var(--font-noto)" }}
+            >
+              मंदिर की देखभाल बोड़ेया के तिवारी परिवार द्वारा की जाती है, जो
+              पीढ़ियों से इसके संरक्षक के रूप में सेवा कर रहे हैं।
+            </p>
+            <p
+              className="mx-auto mt-3 text-sm font-normal leading-relaxed text-[#800000]/80 md:text-xl"
+              style={{ fontFamily: "var(--font-noto)" }}
+            >
+              श्री मदन मोहन मंदिर प्रबंध समिति
+            </p>
+          </div>
+
+          {/* ---------- Committee cards ---------- */}
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {committee.map((member) => (
+              <div
+                key={member.name}
+                className="group relative overflow-hidden rounded-2xl border border-[#C2A95B]/30 bg-white/70 p-6 shadow-sm backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#C2A95B] hover:shadow-xl"
+              >
+                {/* Gold corner accent */}
+                <div className="absolute right-0 top-0 h-16 w-16 translate-x-8 -translate-y-8 rotate-45 bg-[#C2A95B]/10 transition-colors duration-300 group-hover:bg-[#C2A95B]/20" />
+
+                <p
+                  className="mb-2 text-[10px] uppercase tracking-[0.3em] text-[#C2A95B]"
+                  style={{ fontFamily: "var(--font-noto)" }}
+                >
+                  {member.roleEn}
+                </p>
+
+                <h3
+                  className="text-lg font-bold leading-snug text-[#800000] md:text-xl"
+                  style={{ fontFamily: "var(--font-tiro)" }}
+                >
+                  {member.name}
+                </h3>
+
+                <p
+                  className="mt-1 text-xs font-light text-[#800000]/60"
+                  style={{ fontFamily: "var(--font-noto)" }}
+                >
+                  {member.nameEn}
+                </p>
+
+                <div className="my-4 h-px w-12 bg-[#C2A95B]/50 transition-all duration-300 group-hover:w-20" />
+
+                <p
+                  className="mb-2 text-sm font-medium text-[#800000]/80 md:text-lg"
+                  style={{ fontFamily: "var(--font-noto)" }}
+                >
+                  {member.role}
+                </p>
+
+                {member.phone && (
+                  <a
+                    href={`tel:${member.phone}`}
+                    className="inline-flex items-center gap-2 text-xs font-light text-[#800000]/70 transition-colors hover:text-[#C2A95B] md:text-sm"
+                    style={{ fontFamily: "var(--font-noto)" }}
+                  >
+                    <span className="text-[#C2A95B]">☎</span>
+                    {member.phone}
+                  </a>
+                )}
+              </div>
+            ))}
+          </div>
+
+          {/* ---------- Bottom decoration ---------- */}
+          <div className="mt-16 flex items-center justify-center gap-3">
+            <span className="h-px w-20 bg-[#C2A95B]/40" />
+            <span className="text-sm text-[#C2A95B]">✦</span>
+            <span className="h-px w-20 bg-[#C2A95B]/40" />
           </div>
         </div>
       </section>
