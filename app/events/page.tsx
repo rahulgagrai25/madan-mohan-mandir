@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import {
   Cinzel_Decorative,
   Plus_Jakarta_Sans,
@@ -189,6 +192,134 @@ const garbhagrihaRules = [
 ];
 
 /* ============================================================
+   FESTIVAL CARD (Accordion)
+============================================================ */
+
+type Festival = (typeof upcomingFestivals)[number];
+
+function FestivalCard({ festival }: { festival: Festival }) {
+  const [open, setOpen] = useState<boolean>(Boolean(festival.highlight));
+
+  const panelId = `festival-panel-${festival.nameEn
+    .replace(/\s+/g, "-")
+    .toLowerCase()}`;
+
+  return (
+    <div
+      role="button"
+      tabIndex={0}
+      aria-expanded={open}
+      aria-controls={panelId}
+      aria-label={`${festival.name} — ${open ? "विवरण बंद करें" : "विवरण देखें"}`}
+      onClick={() => setOpen((v) => !v)}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          setOpen((v) => !v);
+        }
+      }}
+      className={`group relative min-h-[250px] cursor-pointer overflow-hidden rounded-xl border shadow-sm transition-all duration-500 hover:-translate-y-1.5 hover:shadow-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-[#C2A95B] focus-visible:ring-offset-2 focus-visible:ring-offset-[#FFF8E7] sm:min-h-[400px] lg:min-h-[340px] sm:rounded-2xl ${
+        festival.highlight
+          ? "border-[#C2A95B]"
+          : "border-[#C2A95B]/30 hover:border-[#C2A95B]"
+      }`}
+    >
+      <Image
+        src={festival.image}
+        alt={festival.name}
+        fill
+        sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 33vw"
+        className="object-cover transition-transform duration-[900ms] ease-out group-hover:scale-105"
+      />
+
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transaprent" />
+      <div
+        className={`pointer-events-none absolute inset-0 bg-gradient-to-t from-[#800000]/90 via-[#800000]/30 to-transparent transition-opacity duration-500 ${
+          open ? "opacity-100" : "opacity-0 group-hover:opacity-100"
+        }`}
+      />
+
+      {/* Tag */}
+      <div className="absolute left-2 right-2 top-2 flex items-start justify-between gap-1 sm:left-4 sm:right-4 sm:top-4">
+        <span
+          className="rounded-full border border-[#C2A95B]/60 bg-black/40 px-2 py-[3px] text-[8px] tracking-[0.05em] text-[#C2A95B] backdrop-blur-sm sm:px-3 sm:py-1 sm:text-[11px] md:text-[12px]"
+          style={{ fontFamily: "var(--font-noto)" }}
+        >
+          {festival.tag}
+        </span>
+      </div>
+
+      {/* Content — flows naturally so card can grow when open */}
+      <div className="relative z-10 flex min-h-[250px] flex-col justify-end p-2.5 sm:min-h-[400px] sm:p-5 lg:min-h-[340px] md:p-5">
+        <div className="mb-1.5 h-px w-8 bg-[#C2A95B] transition-all duration-500 group-hover:w-16 sm:mb-3 sm:w-10" />
+
+        <div className="flex items-start justify-between gap-1.5 sm:gap-3">
+          <div className="min-w-0">
+            <h3
+              className="text-sm font-bold leading-tight text-white sm:text-2xl md:text-[22px] lg:text-2xl"
+              style={{ fontFamily: "var(--font-tiro)" }}
+            >
+              {festival.name}
+            </h3>
+
+            <p
+              className="mt-0.5 inline-block bg-[#800000]/60 px-1 py-[2px] text-[7px] tracking-[0.1em] text-[#C2A95B]/90 sm:mt-1 sm:px-1.5 sm:py-1 sm:text-[10px]"
+              style={{ fontFamily: "var(--font-noto)" }}
+            >
+              {festival.nameEn}
+            </p>
+          </div>
+
+          {/* Accordion indicator */}
+          <span
+            aria-hidden="true"
+            className={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full border transition-all duration-500 sm:h-7 sm:w-7 ${
+              open
+                ? "rotate-180 border-[#C2A95B] bg-[#C2A95B] text-[#800000]"
+                : "border-[#C2A95B]/60 bg-black/30 text-[#C2A95B] group-hover:border-[#C2A95B] group-hover:bg-[#C2A95B]/20"
+            }`}
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth={2.5}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="h-2.5 w-2.5 sm:h-3.5 sm:w-3.5"
+            >
+              <path d="m6 9 6 6 6-6" />
+            </svg>
+          </span>
+        </div>
+
+        {/* Collapsible panel — no scroll, expands freely */}
+        <div
+          id={panelId}
+          className={`grid transition-all duration-500 ease-out ${
+            open
+              ? "mt-2 grid-rows-[1fr] opacity-100 sm:mt-3"
+              : "mt-0 grid-rows-[0fr] opacity-0"
+          }`}
+          aria-hidden={!open}
+        >
+          <div className="overflow-hidden">
+            <p
+              className="text-[9px] leading-snug text-white/85 sm:text-[12.5px] sm:leading-relaxed md:text-[13px]"
+              style={{ fontFamily: "var(--font-noto)" }}
+            >
+              {festival.text}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-inset ring-transparent transition-all duration-500 group-hover:ring-[#C2A95B]/60 sm:rounded-2xl" />
+    </div>
+  );
+}
+
+/* ============================================================
    PAGE
 ============================================================ */
 
@@ -325,166 +456,19 @@ export default function EventsPage() {
               सम्पन्न होते हैं। यहाँ प्रत्येक पर्व भक्ति, परंपरा और समुदाय की
               भावना से जुड़ा हुआ है।
             </p>
+
+            <p
+              className="mt-2 text-[10px] tracking-wide text-[#C2A95B] md:mt-3 md:text-xs"
+              style={{ fontFamily: "var(--font-noto)" }}
+            >
+              विवरण देखने के लिए कार्ड पर क्लिक करें
+            </p>
           </div>
 
-          {/* ---------- Responsive grid: 2 cols mobile → 2 cols sm → 3 cols lg ---------- */}
-          <div className="grid grid-cols-2 gap-2 sm:gap-5 lg:grid-cols-3 md:gap-6">
+          {/* ---------- Responsive grid ---------- */}
+          <div className="grid grid-cols-2 gap-2 sm:gap-5 lg:grid-cols-4 md:gap-4">
             {upcomingFestivals.map((festival) => (
-              <div
-                key={festival.name}
-                className={`group relative h-[270px] overflow-hidden rounded-xl border shadow-sm transition-all duration-500 hover:-translate-y-1.5 hover:shadow-xl sm:h-[460px] sm:rounded-2xl ${
-                  festival.highlight
-                    ? "border-[#C2A95B]"
-                    : "border-[#C2A95B]/30 hover:border-[#C2A95B]"
-                }`}
-              >
-                <Image
-                  src={festival.image}
-                  alt={festival.name}
-                  fill
-                  sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 33vw"
-                  className="object-cover transition-transform duration-[900ms] ease-out group-hover:scale-105"
-                />
-
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/10" />
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#800000]/85 via-[#800000]/15 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-
-                <div className="absolute left-2 right-2 top-2 flex items-start justify-between gap-1 sm:left-4 sm:right-4 sm:top-4">
-                  <span
-                    className="rounded-full border border-[#C2A95B]/60 bg-black/40 px-2 py-[3px] text-[8px] tracking-[0.05em] text-[#C2A95B] backdrop-blur-sm sm:px-3 sm:py-1 sm:text-[11px] md:text-[12px]"
-                    style={{ fontFamily: "var(--font-noto)" }}
-                  >
-                    {festival.tag}
-                  </span>
-                </div>
-
-                <div className="absolute bottom-0 left-0 right-0 p-2.5 sm:p-5 md:p-6">
-                  <div className="mb-1.5 h-px w-8 bg-[#C2A95B] transition-all duration-500 group-hover:w-16 sm:mb-3 sm:w-10" />
-
-                  <h3
-                    className="mb-0.5 text-sm font-bold leading-tight text-white sm:mb-1 sm:text-2xl md:text-3xl"
-                    style={{ fontFamily: "var(--font-tiro)" }}
-                  >
-                    {festival.name}
-                  </h3>
-
-                  <p
-                    className="mb-1 inline-block bg-[#800000]/60 px-1 py-[2px] text-[7px] tracking-[0.1em] text-[#C2A95B]/90 sm:mb-2 sm:px-1 sm:py-1 sm:text-[10px]"
-                    style={{ fontFamily: "var(--font-noto)" }}
-                  >
-                    {festival.nameEn}
-                  </p>
-
-                  <p
-                    className="line-clamp-3 text-[9px] leading-snug text-white/85 sm:line-clamp-none sm:text-[13px] sm:leading-relaxed md:text-sm"
-                    style={{ fontFamily: "var(--font-noto)" }}
-                  >
-                    {festival.text}
-                  </p>
-                </div>
-
-                <div className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-inset ring-transparent transition-all duration-500 group-hover:ring-[#C2A95B]/60 sm:rounded-2xl" />
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ============================================================
-          SECTION 3 — ANNUAL CALENDAR
-      ============================================================ */}
-      <section className="relative w-full overflow-hidden bg-[#800000] py-20 md:py-28">
-        <div
-          className="pointer-events-none absolute inset-0 opacity-[0.18]"
-          style={{
-            backgroundImage:
-              "radial-gradient(#C2A95B 1.2px, transparent 1.2px)",
-            backgroundSize: "28px 28px",
-          }}
-        />
-        <div className="pointer-events-none absolute left-1/2 top-0 h-[700px] w-[700px] -translate-x-1/2 rounded-full bg-[#C2A95B]/20 blur-[130px]" />
-
-        <div className="relative z-10 mx-auto max-w-7xl px-4 md:px-10">
-          <div className="mb-14 text-center">
-            <p
-              className="mb-3 text-xs font-medium uppercase tracking-[0.4em] text-[#C2A95B]"
-              style={{ fontFamily: "var(--font-jakarta)" }}
-            >
-              Through the Year
-            </p>
-
-            <h2
-              className="text-3xl font-bold leading-tight text-[#FFF8E7] md:text-5xl"
-              style={{ fontFamily: "var(--font-cinzel)" }}
-            >
-              Annual <span className="text-[#C2A95B]">Calendar</span>
-            </h2>
-
-            <div className="mt-6 flex items-center justify-center gap-3">
-              <span className="h-px w-12 bg-[#C2A95B]" />
-              <span className="text-[#C2A95B]">✦</span>
-              <span className="h-px w-12 bg-[#C2A95B]" />
-            </div>
-
-            <p
-              className="mx-auto mt-6 max-w-2xl text-sm font-light leading-relaxed text-[#FFF8E7]/80 md:text-base"
-              style={{ fontFamily: "var(--font-jakarta)" }}
-            >
-              The temple follows the traditional Hindu lunar calendar. Below
-              are the major observances of each month with their dates.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-3">
-            {calendar.map((month, i) => (
-              <div
-                key={month.month}
-                className="group rounded-xl border border-[#C2A95B]/25 bg-white/[0.04] p-3.5 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#C2A95B] sm:rounded-2xl sm:p-5 md:p-6"
-              >
-                <div className="mb-3 flex items-center justify-between gap-2 sm:mb-5">
-                  <h3
-                    className="text-sm font-bold leading-tight text-[#FFF8E7] sm:text-lg md:text-2xl"
-                    style={{ fontFamily: "var(--font-cinzel)" }}
-                  >
-                    {month.month}
-                  </h3>
-                  <span
-                    className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-[#C2A95B]/50 text-[9px] font-bold text-[#C2A95B] sm:h-8 sm:w-8 sm:text-xs md:h-9 md:w-9 md:text-sm"
-                    style={{ fontFamily: "var(--font-cinzel)" }}
-                  >
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                </div>
-
-                <div className="h-px w-full bg-[#C2A95B]/20" />
-
-                <ul className="mt-3 space-y-3 sm:mt-5 sm:space-y-4">
-                  {month.events.map((event) => (
-                    <li key={event.name}>
-                      <div className="mb-1 flex flex-wrap items-center gap-1.5 sm:gap-2">
-                        <span
-                          className="inline-flex shrink-0 items-center rounded-md border border-[#C2A95B]/40 bg-[#C2A95B]/10 px-1.5 py-0.5 text-[8px] font-bold uppercase tracking-[0.05em] text-[#C2A95B] sm:px-2 sm:text-[10px] sm:tracking-[0.1em] md:text-[11px]"
-                          style={{ fontFamily: "var(--font-jakarta)" }}
-                        >
-                          {event.date}
-                        </span>
-                      </div>
-                      <p
-                        className="text-[11px] font-bold leading-tight text-[#FFF8E7] sm:text-sm"
-                        style={{ fontFamily: "var(--font-cinzel)" }}
-                      >
-                        {event.name}
-                      </p>
-                      <p
-                        className="mt-0.5 text-[9px] leading-snug text-[#FFF8E7]/60 sm:text-[11px] md:text-xs"
-                        style={{ fontFamily: "var(--font-jakarta)" }}
-                      >
-                        {event.note}
-                      </p>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              <FestivalCard key={festival.name} festival={festival} />
             ))}
           </div>
         </div>
