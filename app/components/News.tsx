@@ -127,7 +127,7 @@ export default function NewsTicker() {
             className="whitespace-nowrap text-[9px] font-bold uppercase tracking-[0.22em] text-[#3D2A00] sm:text-[10px] md:text-xs md:tracking-[0.28em]"
             style={{ fontFamily: "var(--font-jakarta)" }}
           >
-            Latest News
+            Temple News
           </span>
         </div>
 
