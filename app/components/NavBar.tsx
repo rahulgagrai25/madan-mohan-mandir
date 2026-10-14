@@ -196,19 +196,30 @@ export default function NavBar() {
       >
         <div className="mx-auto flex h-full max-w-7xl items-center justify-between px-4 sm:px-6 md:px-12">
           {/* Logo / Temple Name */}
-          <Link href="/" className="flex flex-col items-start">
-            <h1
-              className={`text-base font-bold tracking-wide transition-colors duration-500 sm:text-xl md:text-2xl ${t.logo}`}
-              style={{ fontFamily: "var(--font-cinzel)" }}
-            >
-              Madan Mohan Mandir
-            </h1>
-            <span
-              className={`text-[8px] tracking-[0.25em] transition-colors duration-500 sm:text-[10px] md:text-xs md:tracking-[0.3em] ${t.sub}`}
-              style={{ fontFamily: "var(--font-jakarta)" }}
-            >
-              श्री मदन मोहन मंदिर
-            </span>
+          <Link href="/" className="flex items-center gap-3">
+            {/* Logo — desktop only */}
+            <img
+              src="/elements/logo.png"
+              alt="Madan Mohan Mandir logo"
+              width={48}
+              height={48}
+              className="hidden h-12 w-12 shrink-0 object-contain md:block"
+            />
+
+            <div className="flex flex-col items-start">
+              <h1
+                className={`text-base font-bold tracking-wide transition-colors duration-500 sm:text-xl md:text-xl lg:text-2xl ${t.logo}`}
+                style={{ fontFamily: "var(--font-cinzel)" }}
+              >
+                Madan Mohan Mandir
+              </h1>
+              <span
+                className={`text-[8px] tracking-[0.25em] transition-colors duration-500 sm:text-[10px] md:text-xs md:tracking-[0.3em] ${t.sub}`}
+                style={{ fontFamily: "var(--font-jakarta)" }}
+              >
+                श्री मदन मोहन मंदिर
+              </span>
+            </div>
           </Link>
 
           {/* Desktop Navigation Links */}
