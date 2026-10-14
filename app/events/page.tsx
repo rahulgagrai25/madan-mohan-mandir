@@ -1,4 +1,9 @@
-import { Cinzel_Decorative, Plus_Jakarta_Sans } from "next/font/google";
+import {
+  Cinzel_Decorative,
+  Plus_Jakarta_Sans,
+  Tiro_Devanagari_Hindi,
+  Noto_Sans_Devanagari,
+} from "next/font/google";
 import Image from "next/image";
 
 const cinzel = Cinzel_Decorative({
@@ -13,43 +18,72 @@ const jakarta = Plus_Jakarta_Sans({
   variable: "--font-jakarta",
 });
 
+const tiro = Tiro_Devanagari_Hindi({
+  subsets: ["devanagari"],
+  weight: ["400"],
+  variable: "--font-tiro",
+});
+
+const noto = Noto_Sans_Devanagari({
+  subsets: ["devanagari"],
+  weight: ["200", "300", "400", "500", "600", "700", "800"],
+  variable: "--font-noto",
+});
+
 /* ============================================================
    DATA
 ============================================================ */
 
 const upcomingFestivals = [
   {
-    name: "Sharad Purnima",
-    tag: "Autumn Full Moon",
-    date: "October 2026",
-    lunar: "Ashwin Purnima",
-    text: "The night of the autumn full moon, when Krishna performed the Rasa Lila with the gopis of Vrindavan. The temple stays open late with kirtan and a moonlit aarti.",
-    image: "/gallery/festival-1.png",
+    name: "होली",
+    nameEn: "Holi",
+    tag: "रंगों का उत्सव",
+    text: "मदन मोहन मंदिर में भगवान को अबीर घुले जल से अभिषेक कराया जाता है। लक्ष्मी नारायण तिवारी के वंशज पहले मंदिर परिसर के भीतर मदन मोहन स्वामी पर अबीर चढ़ाते हैं, तत्पश्चात सिंहासन सहित भगवान को डोल चबूतरे पर ले जाया जाता है, जहाँ समस्त ग्रामवासी एवं अन्य श्रद्धालुगण सबसे पहले मदन मोहन पर अबीर अर्पित करते हैं। इसके बाद ही अपने मित्रों एवं परिजनों को अबीर लगाते हैं। इस दिन मदन मोहन परिसर बोड़ेया का प्रमुख सांस्कृतिक केन्द्र बन जाता है।",
+    image: "/events/holi.png",
     highlight: true,
   },
   {
-    name: "Annakut & Govardhan Puja",
-    tag: "The Mountain of Food",
-    date: "November 2026",
-    lunar: "Kartik Shukla Pratipada",
-    text: "Hundreds of food offerings are arranged in a great mountain before the Lord, remembering Krishna lifting Govardhan hill to shelter the people of Braj.",
-    image: "/events/govardhan.png",
+    name: "जन्माष्टमी",
+    nameEn: "Janmashtami",
+    tag: "श्री कृष्ण का जन्म",
+    text: "श्री कृष्ण अर्थात मदन मोहन स्वामी का जन्म भाद्रपद कृष्णपक्ष अष्टमी, बुधवार, रोहिणी नक्षत्र, वृष के चन्द्रमा में आधी रात को हुआ था। यह जन्म हुआ था मथुरा में, लेकिन सम्पूर्ण देश इस जन्माष्टमी को मनाता है। बोड़ेया मदन मोहन मंदिर में प्रत्येक भादो कृष्ण अष्टमी की रात्रि में भगवान की विशेष पूजा-अर्चना की जाती है। यह त्योहार प्रतिवर्ष सम्पन्न होता है।",
+    image: "/events/janmashtami.png",
   },
   {
-    name: "Kartik Purnima",
-    tag: "The Holiest Month Ends",
-    date: "November 2026",
-    lunar: "Kartik Purnima",
-    text: "The closing of the sacred month of Kartik. Devotees gather for a full day of bathing, lamp offering and evening kirtan on the temple steps.",
-    image: "/gallery/aarti-1.png",
+    name: "दीवाली",
+    nameEn: "Diwali",
+    tag: "दीपों का पर्व",
+    text: "सम्पूर्ण भारत में कार्तिक अमावश्या को दीवाली मनायी जाती है। यह लक्ष्मी पूजन का दिन होता है। इसमें दीप दान किया जाता है, अतः इसे दियेवाली अमावश्या भी कहते हैं। यह लक्ष्मी के आगमन का सूचक होता है। इस रात्रि में बोड़ेया के मदन मोहन मंदिर को दीपों से पूरी तरह सजाया जाता है। यह मंदिर देखने योग्य हो उठता है। इसकी भव्यता निखर आती है और लोग हर्षित हो उठते हैं।",
+    image: "/events/diwali.png",
   },
   {
-    name: "Vaikuntha Ekadashi",
-    tag: "The Gate to Heaven",
-    date: "December 2026",
-    lunar: "Margashirsha Shukla Ekadashi",
-    text: "The day the gates of Vaikuntha are said to open. A special darshan is offered and devotees keep a fast and stay awake in kirtan through the night.",
+    name: "देवोत्थान",
+    nameEn: "Devotthan",
+    tag: "प्रबोधिनी एकादशी",
+    text: "कहा गया है कार्तिक शुक्ल एकादशी के दिन विष्णु अपनी शेष शय्या पर से उठते हैं। इस दिन मंदिर प्रांगन में अनेक व्रती पूजा-पाठ के लिए आते हैं। इसी पूजा के बाद समस्त शुभ कार्यों की शुरूआत हो जाती है।",
     image: "/events/ekadashi.png",
+  },
+  {
+    name: "रास",
+    nameEn: "Raas",
+    tag: "रासलीला",
+    text: "अगहन मास की पूर्णिमा तिथि के दिन रास मनाया जाता है। रास का तात्पर्य है रस का बहुवचन। दूसरा अर्थ है 'ब्रह्म'। तीसरे अर्थ के रूप में गोपिकाओं और कृष्ण के सम्मिलित रूप को रास कहा जाता है। सोलहवीं शती में बल्लभाचार्य तथा हित हरिवंश ने इसी श्रंगार मूलक रास में धर्म के अंग के साथ नृत्य की पुनःस्थापना की तथा उसका नेता रासरसिक शिरोमणी श्री कृष्ण को बनाया। बोड़ेया में इस दिन मंदिर परिसर कृष्ण प्रधान लोक गीतों एवं वाद्यों से गूंज उठता है।",
+    image: "/events/raas.png",
+  },
+  {
+    name: "सत्यनारायण कथा",
+    nameEn: "Satyanarayan Katha",
+    tag: "प्रत्येक पूर्णिमा",
+    text: "मंदिर परिसर में प्रत्येक पूर्णिमा को सत्यनारायण कथा का आयोजन किया जाता है। श्रद्धालु, भक्त एवं प्रेमी लोग आरती प्रसाद के लिए पूरी कथा का श्रवण करते हैं, तत्पश्चात स्तुति कर ही प्रस्थान करते हैं। इसमें कोई भी व्यक्ति शामिल हो सकता है तथा व्यक्तिगत पूजा का आयोजन भी कर सकता है।",
+    image: "/events/satya.png",
+  },
+  {
+    name: "अन्नप्राशन",
+    nameEn: "Annaprashan",
+    tag: "संस्कार",
+    text: "मनुस्मृति के अनुसार मनुष्य के सोलह संस्कारों में एक यह भी है जिसमें बच्चे को सर्वप्रथम अन्न चटाया जाता है। यह संस्कार लड़के का छठे या आठवें महीने में तथा लड़की का पाँचवें या सातवें महीने में किया जाता है। लक्ष्मी नारायण तिवारी के वंशजों का अन्नप्राशन संस्कार इसी प्रांगण में सम्पन्न होता है। इसी परिसर में मुण्डन एवं विवाह संस्कार भी सम्पन्न होता रहा है।",
+    image: "/events/ann.png",
   },
 ];
 
@@ -141,42 +175,16 @@ const calendar = [
   },
 ];
 
-const weeklySchedule = [
+const garbhagrihaRules = [
   {
-    day: "Every Morning",
-    name: "Mangala Aarti & Shringar",
-    time: "5:00 AM — 7:00 AM",
-    text: "The Lord is awakened and adorned. Devotees may join the early darshan.",
+    title: "कन्या विवाह पर",
+    tag: "विदाई के पूर्व",
+    text: "परिवार में किसी कन्या के विवाह होने पर विदाई के पूर्व गर्भगृह में नव दम्पत्ति प्रवेश कर पूजन करते हैं जिसमें कन्या राधा रानी को सिंदूर अर्पित करती है। इसके बाद प्रवेश की मनाही है।",
   },
   {
-    day: "Every Evening",
-    name: "Sandhya Aarti & Kirtan",
-    time: "6:30 PM — 7:30 PM",
-    text: "The evening lamp offering followed by bhajan and kirtan in the temple hall.",
-  },
-  {
-    day: "Every Saturday",
-    name: "Bhajan Sandhya",
-    time: "7:00 PM — 8:30 PM",
-    text: "An extended evening of devotional singing open to all — visiting singers and local devotees.",
-  },
-  {
-    day: "Every Ekadashi",
-    name: "Ekadashi Vrat & Kirtan",
-    time: "All Day",
-    text: "A day of fasting and remembrance. The temple stays open late for night kirtan.",
-  },
-  {
-    day: "Every Purnima",
-    name: "Full Moon Lamp Offering",
-    time: "6:30 PM",
-    text: "On every full moon night, devotees offer ghee lamps on the temple steps.",
-  },
-  {
-    day: "Every Amavasya",
-    name: "New Moon Prayer",
-    time: "6:30 PM",
-    text: "A quiet evening of prayer and remembrance for ancestors and loved ones.",
+    title: "वर विवाह पर",
+    tag: "कुलदेवी पूजन के दिन",
+    text: "जब परिवार में किसी लड़के का विवाह होता है तो बारात लौटने पर कुलदेवी पूजन के दिन पूजा के पश्चात नवदम्पति गर्भ गृह प्रवेश कर पूजा करते हैं तथा राधारानी को सिंदूर अर्पित करते हैं। इसके बाद वह बहू फिर कभी गर्भगृह में कदम नहीं रखती है।",
   },
 ];
 
@@ -273,9 +281,11 @@ export default function EventsPage() {
       </section>
 
       {/* ============================================================
-          SECTION 2 — UPCOMING FESTIVALS
+          SECTION 2 — FESTIVALS & SANSKARS (Devanagari fonts)
       ============================================================ */}
-      <section className="relative w-full overflow-hidden bg-[#FFF8E7] py-20 md:py-28">
+      <section
+        className={`${tiro.variable} ${noto.variable} relative w-full overflow-hidden bg-[#FFF8E7] py-16 md:py-28`}
+      >
         <div
           className="pointer-events-none absolute inset-0 opacity-[0.07]"
           style={{
@@ -285,144 +295,44 @@ export default function EventsPage() {
           }}
         />
 
-        <div className="relative z-10">
-          <div className="mx-auto max-w-7xl px-6 md:px-10">
-            <div className="mb-14 text-center">
-              <p
-                className="mb-3 text-xs font-medium uppercase tracking-[0.4em] text-[#C2A95B]"
-                style={{ fontFamily: "var(--font-jakarta)" }}
-              >
-                Coming Soon
-              </p>
-
-              <h2
-                className="text-3xl font-bold leading-tight text-[#800000] md:text-5xl"
-                style={{ fontFamily: "var(--font-cinzel)" }}
-              >
-                Upcoming <span className="text-[#C2A95B]">Festivals</span>
-              </h2>
-
-              <div className="mt-6 flex items-center justify-center gap-3">
-                <span className="h-px w-12 bg-[#C2A95B]" />
-                <span className="text-[#C2A95B]">✦</span>
-                <span className="h-px w-12 bg-[#C2A95B]" />
-              </div>
-
-              <p
-                className="mx-auto mt-6 max-w-2xl text-sm font-light leading-relaxed text-[#800000]/70 md:text-base"
-                style={{ fontFamily: "var(--font-jakarta)" }}
-              >
-                The four great celebrations of the coming season. Dates follow
-                the Hindu lunar calendar and may shift by a day or two — please
-                confirm with the temple before travelling.
-              </p>
-            </div>
-          </div>
-
-          {/* MOBILE: horizontal snap scroll with smaller cards */}
-          <div className="md:hidden">
-            <div
-              className="flex snap-x snap-mandatory gap-3 overflow-x-auto px-6 pb-4"
-              style={{
-                scrollbarWidth: "none",
-                msOverflowStyle: "none",
-                WebkitOverflowScrolling: "touch",
-              }}
+        <div className="relative z-10 mx-auto max-w-7xl px-4 md:px-10">
+          <div className="mb-10 text-center md:mb-14">
+            <p
+              className="mb-2 text-xs font-medium text-[#C2A95B] md:mb-3 md:text-lg"
+              style={{ fontFamily: "var(--font-noto)" }}
             >
-              {upcomingFestivals.map((festival) => (
-                <div
-                  key={festival.name}
-                  className={`group relative h-[340px] w-[72vw] max-w-[260px] shrink-0 snap-start overflow-hidden rounded-xl border shadow-sm ${
-                    festival.highlight
-                      ? "border-[#C2A95B]"
-                      : "border-[#C2A95B]/30"
-                  }`}
-                >
-                  <Image
-                    src={festival.image}
-                    alt={festival.name}
-                    fill
-                    sizes="72vw"
-                    className="object-cover"
-                  />
+              मंदिर से जुड़े त्योहार / संस्कार
+            </p>
 
-                  {/* Base dark gradient */}
-                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/10" />
+            <h2
+              className="text-2xl font-bold leading-tight text-[#800000] md:text-5xl"
+              style={{ fontFamily: "var(--font-tiro)" }}
+            >
+              आगामी <span className="text-[#C2A95B]">त्योहार</span>
+            </h2>
 
-                  {/* Top badges */}
-                  <div className="absolute left-3 right-3 top-3 flex items-start justify-between gap-2">
-                    <span
-                      className="rounded-full border border-[#C2A95B]/60 bg-black/40 px-2 py-[3px] text-[7px] uppercase tracking-[0.15em] text-[#C2A95B] backdrop-blur-sm"
-                      style={{ fontFamily: "var(--font-jakarta)" }}
-                    >
-                      {festival.tag}
-                    </span>
-
-                    {festival.highlight && (
-                      <span
-                        className="rounded-full bg-[#C2A95B] px-2 py-[3px] text-[7px] font-bold uppercase tracking-[0.15em] text-[#800000]"
-                        style={{ fontFamily: "var(--font-jakarta)" }}
-                      >
-                        Featured
-                      </span>
-                    )}
-                  </div>
-
-                  {/* Content */}
-                  <div className="absolute bottom-0 left-0 right-0 p-4">
-                    <div className="mb-2 flex flex-wrap items-center gap-2">
-                      <span
-                        className="text-[8px] uppercase tracking-[0.2em] text-[#C2A95B]"
-                        style={{ fontFamily: "var(--font-jakarta)" }}
-                      >
-                        {festival.date}
-                      </span>
-                      <span className="h-2.5 w-px bg-[#C2A95B]/50" />
-                      <span
-                        className="text-[8px] uppercase tracking-[0.2em] text-white/60"
-                        style={{ fontFamily: "var(--font-jakarta)" }}
-                      >
-                        {festival.lunar}
-                      </span>
-                    </div>
-
-                    <div className="mb-2 h-px w-8 bg-[#C2A95B]" />
-
-                    <h3
-                      className="mb-2 text-base font-bold leading-tight text-white"
-                      style={{ fontFamily: "var(--font-cinzel)" }}
-                    >
-                      {festival.name}
-                    </h3>
-
-                    <p
-                      className="text-[10px] leading-snug text-white/80"
-                      style={{ fontFamily: "var(--font-jakarta)" }}
-                    >
-                      {festival.text}
-                    </p>
-                  </div>
-                </div>
-              ))}
+            <div className="mt-4 flex items-center justify-center gap-3 md:mt-6">
+              <span className="h-px w-10 bg-[#C2A95B] md:w-12" />
+              <span className="text-[#C2A95B]">✦</span>
+              <span className="h-px w-10 bg-[#C2A95B] md:w-12" />
             </div>
 
-            {/* Scroll hint */}
-            <div className="mt-1 flex items-center justify-center gap-2 px-6">
-              <span
-                className="text-[9px] uppercase tracking-[0.25em] text-[#C2A95B]/80"
-                style={{ fontFamily: "var(--font-jakarta)" }}
-              >
-                Swipe →
-              </span>
-            </div>
+            <p
+              className="mx-auto mt-4 max-w-2xl text-xs font-light leading-relaxed text-[#800000]/70 md:mt-6 md:text-lg"
+              style={{ fontFamily: "var(--font-noto)" }}
+            >
+              बोड़ेया मदन मोहन मंदिर में वर्षभर अनेक त्योहार एवं संस्कार
+              सम्पन्न होते हैं। यहाँ प्रत्येक पर्व भक्ति, परंपरा और समुदाय की
+              भावना से जुड़ा हुआ है।
+            </p>
           </div>
 
-          {/* DESKTOP: 2-col grid (unchanged) */}
-          <div className="mx-auto hidden max-w-7xl px-10 md:grid md:grid-cols-2 md:gap-6">
+          {/* ---------- Responsive grid: 2 cols mobile → 2 cols sm → 3 cols lg ---------- */}
+          <div className="grid grid-cols-2 gap-2 sm:gap-5 lg:grid-cols-3 md:gap-6">
             {upcomingFestivals.map((festival) => (
               <div
                 key={festival.name}
-                className={`group relative h-[480px] overflow-hidden rounded-2xl border shadow-sm transition-all duration-500 hover:-translate-y-1.5 hover:shadow-xl ${
+                className={`group relative h-[270px] overflow-hidden rounded-xl border shadow-sm transition-all duration-500 hover:-translate-y-1.5 hover:shadow-xl sm:h-[460px] sm:rounded-2xl ${
                   festival.highlight
                     ? "border-[#C2A95B]"
                     : "border-[#C2A95B]/30 hover:border-[#C2A95B]"
@@ -432,66 +342,48 @@ export default function EventsPage() {
                   src={festival.image}
                   alt={festival.name}
                   fill
-                  sizes="50vw"
+                  sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 33vw"
                   className="object-cover transition-transform duration-[900ms] ease-out group-hover:scale-105"
                 />
 
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/10" />
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/10" />
                 <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#800000]/85 via-[#800000]/15 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
 
-                <div className="absolute left-6 right-6 top-6 flex items-start justify-between gap-3">
+                <div className="absolute left-2 right-2 top-2 flex items-start justify-between gap-1 sm:left-4 sm:right-4 sm:top-4">
                   <span
-                    className="rounded-full border border-[#C2A95B]/60 bg-black/40 px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-[#C2A95B] backdrop-blur-sm"
-                    style={{ fontFamily: "var(--font-jakarta)" }}
+                    className="rounded-full border border-[#C2A95B]/60 bg-black/40 px-2 py-[3px] text-[8px] tracking-[0.05em] text-[#C2A95B] backdrop-blur-sm sm:px-3 sm:py-1 sm:text-[11px] md:text-[12px]"
+                    style={{ fontFamily: "var(--font-noto)" }}
                   >
                     {festival.tag}
                   </span>
-
-                  {festival.highlight && (
-                    <span
-                      className="rounded-full bg-[#C2A95B] px-3 py-1 text-[10px] font-bold uppercase tracking-[0.2em] text-[#800000]"
-                      style={{ fontFamily: "var(--font-jakarta)" }}
-                    >
-                      Featured
-                    </span>
-                  )}
                 </div>
 
-                <div className="absolute bottom-0 left-0 right-0 p-8">
-                  <div className="mb-3 flex flex-wrap items-center gap-3">
-                    <span
-                      className="text-xs uppercase tracking-[0.3em] text-[#C2A95B]"
-                      style={{ fontFamily: "var(--font-jakarta)" }}
-                    >
-                      {festival.date}
-                    </span>
-                    <span className="h-3 w-px bg-[#C2A95B]/50" />
-                    <span
-                      className="text-xs uppercase tracking-[0.3em] text-white/60"
-                      style={{ fontFamily: "var(--font-jakarta)" }}
-                    >
-                      {festival.lunar}
-                    </span>
-                  </div>
-
-                  <div className="mb-4 h-px w-12 bg-[#C2A95B] transition-all duration-500 group-hover:w-20" />
+                <div className="absolute bottom-0 left-0 right-0 p-2.5 sm:p-5 md:p-6">
+                  <div className="mb-1.5 h-px w-8 bg-[#C2A95B] transition-all duration-500 group-hover:w-16 sm:mb-3 sm:w-10" />
 
                   <h3
-                    className="mb-3 text-3xl font-bold text-white"
-                    style={{ fontFamily: "var(--font-cinzel)" }}
+                    className="mb-0.5 text-sm font-bold leading-tight text-white sm:mb-1 sm:text-2xl md:text-3xl"
+                    style={{ fontFamily: "var(--font-tiro)" }}
                   >
                     {festival.name}
                   </h3>
 
                   <p
-                    className="text-sm leading-relaxed text-white/80"
-                    style={{ fontFamily: "var(--font-jakarta)" }}
+                    className="mb-1 inline-block bg-[#800000]/60 px-1 py-[2px] text-[7px] tracking-[0.1em] text-[#C2A95B]/90 sm:mb-2 sm:px-1 sm:py-1 sm:text-[10px]"
+                    style={{ fontFamily: "var(--font-noto)" }}
+                  >
+                    {festival.nameEn}
+                  </p>
+
+                  <p
+                    className="line-clamp-3 text-[9px] leading-snug text-white/85 sm:line-clamp-none sm:text-[13px] sm:leading-relaxed md:text-sm"
+                    style={{ fontFamily: "var(--font-noto)" }}
                   >
                     {festival.text}
                   </p>
                 </div>
 
-                <div className="pointer-events-none absolute inset-0 rounded-2xl ring-1 ring-inset ring-transparent transition-all duration-500 group-hover:ring-[#C2A95B]/60" />
+                <div className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-inset ring-transparent transition-all duration-500 group-hover:ring-[#C2A95B]/60 sm:rounded-2xl" />
               </div>
             ))}
           </div>
@@ -499,7 +391,7 @@ export default function EventsPage() {
       </section>
 
       {/* ============================================================
-          SECTION 3 — ANNUAL CALENDAR (2-col on mobile)
+          SECTION 3 — ANNUAL CALENDAR
       ============================================================ */}
       <section className="relative w-full overflow-hidden bg-[#800000] py-20 md:py-28">
         <div
@@ -595,21 +487,15 @@ export default function EventsPage() {
               </div>
             ))}
           </div>
-
-          <p
-            className="mx-auto mt-10 max-w-2xl text-center text-xs text-[#FFF8E7]/50 md:text-sm"
-            style={{ fontFamily: "var(--font-jakarta)" }}
-          >
-            * Festival dates follow the lunar calendar and shift each year.
-            Please contact the temple for confirmed dates and timings.
-          </p>
         </div>
       </section>
 
       {/* ============================================================
-          SECTION 4 — WEEKLY SCHEDULE (2-col on mobile)
+          SECTION 4 — प्रवेश-निषेध (Garbhagriha Rules)
       ============================================================ */}
-      <section className="relative w-full overflow-hidden bg-white py-20 md:py-28">
+      <section
+        className={`${tiro.variable} ${noto.variable} relative w-full overflow-hidden bg-white py-20 md:py-28`}
+      >
         <div
           className="pointer-events-none absolute inset-0 opacity-[0.055]"
           style={{
@@ -623,85 +509,96 @@ export default function EventsPage() {
         />
         <div className="pointer-events-none absolute -right-40 top-1/3 h-[500px] w-[500px] rounded-full bg-[#C2A95B]/5 blur-3xl" />
 
-        <div className="relative z-10 mx-auto max-w-7xl px-4 md:px-10">
-          <div className="mb-14 text-center">
+        <div className="relative z-10 mx-auto max-w-6xl px-4 md:px-10">
+          <div className="mb-10 text-center md:mb-14">
             <p
-              className="mb-3 text-xs font-medium uppercase tracking-[0.4em] text-[#C2A95B]"
-              style={{ fontFamily: "var(--font-jakarta)" }}
+              className="mb-2 text-xs font-medium text-[#C2A95B] md:mb-3 md:text-lg"
+              style={{ fontFamily: "var(--font-noto)" }}
             >
-              A Living Rhythm
+              परंपरा एवं नियम
             </p>
 
             <h2
-              className="text-3xl font-bold leading-tight text-[#800000] md:text-5xl"
-              style={{ fontFamily: "var(--font-cinzel)" }}
+              className="text-2xl font-bold leading-tight text-[#800000] md:text-5xl"
+              style={{ fontFamily: "var(--font-tiro)" }}
             >
-              Regular <span className="text-[#C2A95B]">Satsang</span>
+              प्रवेश-<span className="text-[#C2A95B]">निषेध</span>
             </h2>
 
-            <div className="mt-6 flex items-center justify-center gap-3">
-              <span className="h-px w-12 bg-[#C2A95B]" />
+            <div className="mt-4 flex items-center justify-center gap-3 md:mt-6">
+              <span className="h-px w-10 bg-[#C2A95B] md:w-12" />
               <span className="text-[#C2A95B]">✦</span>
-              <span className="h-px w-12 bg-[#C2A95B]" />
+              <span className="h-px w-10 bg-[#C2A95B] md:w-12" />
             </div>
 
             <p
-              className="mx-auto mt-6 max-w-2xl text-sm font-light leading-relaxed text-[#800000]/70 md:text-base"
-              style={{ fontFamily: "var(--font-jakarta)" }}
+              className="mx-auto mt-4 max-w-3xl text-sm font-light leading-relaxed text-[#800000]/75 md:mt-6 md:text-lg"
+              style={{ fontFamily: "var(--font-noto)" }}
             >
-              Beyond the great festivals, the temple keeps a weekly rhythm of
-              prayer and song that anyone may join.
+              मंदिर के गर्भगृह में पुजारी के अतिरिक्त किसी का भी प्रवेश निषेध
+              है। विशेषकर महिलाओं के लिए (लक्ष्मी नारायण तिवारी के वंशजों में)
+              गर्भगृह में प्रवेश पूर्णतः निषिद्ध है।
             </p>
           </div>
 
-          <div className="grid grid-cols-2 gap-3 md:grid-cols-2 md:gap-5 lg:grid-cols-3">
-            {weeklySchedule.map((item) => (
+          {/* ---------- Two scenario cards ---------- */}
+          <div className="grid gap-4 sm:gap-6 md:grid-cols-2">
+            {garbhagrihaRules.map((rule) => (
               <div
-                key={item.name}
-                className="group rounded-xl border border-[#C2A95B]/30 bg-white/80 p-3.5 shadow-sm backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#C2A95B] hover:shadow-lg sm:rounded-2xl sm:p-5 md:p-7"
+                key={rule.title}
+                className="group relative overflow-hidden rounded-2xl border border-[#C2A95B]/30 bg-[#FFF8E7]/70 p-5 shadow-sm backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#C2A95B] hover:shadow-lg md:p-8"
               >
+                <div className="absolute right-0 top-0 h-20 w-20 translate-x-10 -translate-y-10 rotate-45 bg-[#C2A95B]/10 transition-colors duration-300 group-hover:bg-[#C2A95B]/20" />
+
                 <p
-                  className="mb-1.5 text-[8px] uppercase tracking-[0.2em] text-[#C2A95B] sm:mb-2 sm:text-[10px] sm:tracking-[0.3em] md:text-xs"
-                  style={{ fontFamily: "var(--font-jakarta)" }}
+                  className="mb-2 text-[11px] tracking-[0.1em] text-[#C2A95B] md:text-sm"
+                  style={{ fontFamily: "var(--font-noto)" }}
                 >
-                  {item.day}
+                  {rule.tag}
                 </p>
 
                 <h3
-                  className="mb-2 text-[13px] font-bold leading-snug text-[#800000] sm:mb-3 sm:text-base md:text-xl"
-                  style={{ fontFamily: "var(--font-cinzel)" }}
+                  className="mb-3 text-xl font-bold leading-tight text-[#800000] md:text-3xl"
+                  style={{ fontFamily: "var(--font-tiro)" }}
                 >
-                  {item.name}
+                  {rule.title}
                 </h3>
 
-                <div className="mb-2 flex items-center gap-1.5 sm:mb-3 sm:gap-2">
-                  <span className="text-[10px] text-[#C2A95B] sm:text-xs md:text-base">
-                    ✦
-                  </span>
-                  <span
-                    className="text-[9px] font-medium uppercase tracking-[0.1em] text-[#800000]/70 sm:text-[10px] sm:tracking-[0.15em] md:text-xs"
-                    style={{ fontFamily: "var(--font-jakarta)" }}
-                  >
-                    {item.time}
-                  </span>
-                </div>
-
-                <div className="mb-2.5 h-px w-8 bg-[#C2A95B]/50 transition-all duration-300 group-hover:w-14 sm:mb-4 sm:w-12 sm:group-hover:w-20" />
+                <div className="mb-4 h-px w-12 bg-[#C2A95B]/60 transition-all duration-300 group-hover:w-20" />
 
                 <p
-                  className="text-[10px] leading-snug text-[#800000]/70 sm:text-xs sm:leading-relaxed md:text-sm"
-                  style={{ fontFamily: "var(--font-jakarta)" }}
+                  className="text-sm leading-relaxed text-[#800000]/85 md:text-base"
+                  style={{ fontFamily: "var(--font-noto)" }}
                 >
-                  {item.text}
+                  {rule.text}
                 </p>
               </div>
             ))}
+          </div>
+
+          {/* ---------- Closing note ---------- */}
+          <div className="mt-8 rounded-2xl border border-[#C2A95B]/30 bg-[#800000]/[0.03] p-5 md:mt-10 md:p-8">
+            <div className="mb-3 flex items-center justify-center gap-3">
+              <span className="h-px w-8 bg-[#C2A95B]" />
+              <span className="text-[#C2A95B]">✦</span>
+              <span className="h-px w-8 bg-[#C2A95B]" />
+            </div>
+
+            <p
+              className="text-center text-sm leading-relaxed text-[#800000]/85 md:text-base"
+              style={{ fontFamily: "var(--font-noto)" }}
+            >
+              यह प्रथा तिवारी परिवार के लिए आदि काल से चली आ रही है। अन्य
+              ग्रामीणों के बीच भी यह प्रचलित है कि कोई भी नववधू का प्रवेश घर में
+              मदन मोहन स्वामी के दर्शन के पश्चात ही होता है। मदन मोहन स्वामी के
+              प्रति ग्रामीणों के हृदय की यह श्रद्धा आह्लादकारी है।
+            </p>
           </div>
         </div>
       </section>
 
       {/* ============================================================
-          SECTION 6 — CTA / CLOSING
+          SECTION 5 — CTA / CLOSING
       ============================================================ */}
       <section className="relative w-full overflow-hidden bg-[#800000] py-20 md:py-28">
         <div
