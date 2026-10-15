@@ -209,7 +209,7 @@ export default function AboutPage() {
 
               <div className="relative h-[420px] w-full overflow-hidden rounded-[1.75rem] bg-[#800000] md:h-[520px]">
                 <Image
-                  src="/images/g2.jpg"
+                  src="/images/about/mandir.jpg"
                   alt="Madan Mohan Shringar"
                   fill
                   priority
@@ -596,7 +596,7 @@ export default function AboutPage() {
 
               <div className="relative h-[420px] w-full overflow-hidden rounded-[1.75rem] bg-[#660000] md:h-[560px]">
                 <Image
-                  src="/gallery/temple-1.png"
+                  src="/images/about/temple-1.png"
                   alt="Boreya Madan Mohan Mandir"
                   fill
                   sizes="(max-width: 1024px) 100vw, 50vw"

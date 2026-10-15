@@ -19,19 +19,19 @@ const jakarta = Plus_Jakarta_Sans({
 // 🖼️ Add or replace images here — they'll cross-fade automatically
 const slideshowImages = [
   {
-    src: "/hero/hero2.png",
+    src: "/main/about/a1.png",
     alt: "Madan Mohan Mandir",
   },
   {
-    src: "/gallery/devotees-1.png",
+    src: "/main/about/a2.png",
     alt: "Temple Architecture",
   },
   {
-    src: "/gallery/festival-1.png",
+    src: "/main/about/a3.png",
     alt: "Devotees in Prayer",
   },
   {
-    src: "/gallery/aarti-1.png",
+    src: "/main/about/a4.png",
     alt: "Evening Aarti",
   },
 ];

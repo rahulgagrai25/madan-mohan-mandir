@@ -90,94 +90,6 @@ const upcomingFestivals = [
   },
 ];
 
-const calendar = [
-  {
-    month: "January",
-    events: [
-      { date: "14 Jan", name: "Makar Sankranti", note: "Sun enters Capricorn — special aarti" },
-      { date: "26 Jan", name: "Republic Day Kirtan", note: "Morning bhajan & flag offering" },
-    ],
-  },
-  {
-    month: "February",
-    events: [
-      { date: "02 Feb", name: "Vasant Panchami", note: "Saraswati puja and yellow shringar" },
-      { date: "12 Feb", name: "Magha Purnima", note: "Full-moon lamp offering" },
-    ],
-  },
-  {
-    month: "March",
-    events: [
-      { date: "04 Mar", name: "Holi", note: "Festival of colours — temple courtyard celebration" },
-      { date: "26 Mar", name: "Ram Navami", note: "Birth of Lord Rama — day-long kirtan" },
-    ],
-  },
-  {
-    month: "April",
-    events: [
-      { date: "08 Apr", name: "Chaitra Navratri", note: "Nine nights of Devi bhajan" },
-      { date: "16 Apr", name: "Ram Navami Aarti", note: "Special evening aarti" },
-    ],
-  },
-  {
-    month: "May",
-    events: [
-      { date: "10 May", name: "Akshaya Tritiya", note: "Auspicious day of eternal prosperity" },
-      { date: "21 May", name: "Narasimha Jayanti", note: "Evening kirtan" },
-    ],
-  },
-  {
-    month: "June",
-    events: [
-      { date: "05 Jun", name: "Ganga Dussehra", note: "River offering ceremony" },
-      { date: "28 Jun", name: "Snan Yatra", note: "The Lord's ceremonial bath" },
-    ],
-  },
-  {
-    month: "July",
-    events: [
-      { date: "10 Jul", name: "Guru Purnima", note: "Honouring the spiritual lineage" },
-      { date: "16 Jul", name: "Rath Yatra", note: "Chariot procession through Boreya" },
-    ],
-  },
-  {
-    month: "August",
-    events: [
-      { date: "05 Aug", name: "Jhulan Yatra", note: "The Lord swings on a flower-decorated swing" },
-      { date: "09 Aug", name: "Raksha Bandhan", note: "Sacred thread offering" },
-    ],
-  },
-  {
-    month: "September",
-    events: [
-      { date: "04 Sep", name: "Janmashtami", note: "Krishna's birth — night-long celebration" },
-      { date: "16 Sep", name: "Radhashtami", note: "Appearance of Shri Radha" },
-    ],
-  },
-  {
-    month: "October",
-    events: [
-      { date: "25 Oct", name: "Sharad Purnima", note: "Rasa Lila night under the full moon" },
-      { date: "29 Oct", name: "Karwa Chauth", note: "Evening aarti for married couples" },
-    ],
-  },
-  {
-    month: "November",
-    events: [
-      { date: "08 Nov", name: "Annakut", note: "The great mountain of food offering" },
-      { date: "09 Nov", name: "Govardhan Puja", note: "Remembrance of the lifting of the hill" },
-      { date: "11 Nov", name: "Bhai Dooj", note: "Sisters offer prayers for brothers" },
-    ],
-  },
-  {
-    month: "December",
-    events: [
-      { date: "20 Dec", name: "Vaikuntha Ekadashi", note: "Night-long kirtan and fast" },
-      { date: "30 Dec", name: "Gita Jayanti", note: "Reading of the Bhagavad Gita" },
-    ],
-  },
-];
-
 const garbhagrihaRules = [
   {
     title: "कन्या विवाह पर",
@@ -232,7 +144,7 @@ function FestivalCard({ festival }: { festival: Festival }) {
         className="object-cover transition-transform duration-[900ms] ease-out group-hover:scale-105"
       />
 
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transaprent" />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
       <div
         className={`pointer-events-none absolute inset-0 bg-gradient-to-t from-[#800000]/90 via-[#800000]/30 to-transparent transition-opacity duration-500 ${
           open ? "opacity-100" : "opacity-0 group-hover:opacity-100"
@@ -383,7 +295,7 @@ export default function EventsPage() {
 
             <div className="relative h-[320px] w-full overflow-hidden rounded-[1.75rem] bg-[#800000] md:h-[460px]">
               <Image
-                src="/gallery/festival-1.png"
+                src="/images/events/event.png"
                 alt="Festival celebration at Madan Mohan Temple"
                 fill
                 priority
@@ -475,7 +387,7 @@ export default function EventsPage() {
       </section>
 
       {/* ============================================================
-          SECTION 4 — प्रवेश-निषेध (Garbhagriha Rules)
+          SECTION 3 — प्रवेश-निषेध (Garbhagriha Rules)
       ============================================================ */}
       <section
         className={`${tiro.variable} ${noto.variable} relative w-full overflow-hidden bg-white py-20 md:py-28`}
@@ -582,7 +494,7 @@ export default function EventsPage() {
       </section>
 
       {/* ============================================================
-          SECTION 5 — CTA / CLOSING
+          SECTION 4 — CTA / CLOSING
       ============================================================ */}
       <section className="relative w-full overflow-hidden bg-[#800000] py-20 md:py-28">
         <div

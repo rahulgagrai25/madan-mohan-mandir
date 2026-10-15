@@ -18,21 +18,21 @@ const events = [
     name: "Holi",
     date: "Mar 14, 2025",
     desc: "The Lord is bathed with abir-mixed water, then carried to the Dol Chabutara where every villager offers colours before turning to friends and family.",
-    image: "/events/holi.png",
+    image: "/main/events/holi.png",
     tag: "Festival of Colours",
   },
   {
     name: "Janmashtami",
     date: "Aug 16, 2025",
     desc: "A midnight celebration of Shri Krishna's birth — marked with special worship, night-long bhajan and devotion at the Boreya Mandir.",
-    image: "/events/janmashtami.png",
+    image: "/main/events/janmashtami.png",
     tag: "Birth of Lord Krishna",
   },
   {
     name: "Diwali",
     date: "Oct 20, 2025",
     desc: "On Kartik Amavasya, the temple is lit entirely with lamps to welcome Lakshmi — its grandeur shining forth across Boreya.",
-    image: "/events/diwali.png",
+    image: "/main/events/diwali.png",
     tag: "Festival of Lights",
   },
 ];
@@ -179,7 +179,7 @@ export default function Events() {
                 </p>
 
                 <a
-                  href={`#event-${e.name.toLowerCase()}`}
+                  href={`/events`}
                   className="group/link inline-flex items-center gap-2 text-xs font-medium text-[#C2A95B] transition-colors hover:text-[#800000] md:text-sm"
                   style={{ fontFamily: "var(--font-jakarta)" }}
                 >

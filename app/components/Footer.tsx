@@ -77,7 +77,7 @@ export default function Footer() {
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{
-          backgroundImage: "url('/hero/hero2.png')",
+          backgroundImage: "url('/elements/footer.png')",
         }}
       />
 

@@ -973,7 +973,7 @@ export default function HistoryPage() {
             <figure className="group relative overflow-hidden rounded-2xl border border-[#C2A95B]/30 bg-[#FFF8E7] shadow-sm transition-all duration-300 hover:border-[#C2A95B] hover:shadow-xl">
               <div className="relative h-[300px] w-full md:h-[400px] overflow-hidden">
                 <Image
-                  src="/images/1.png"
+                  src="/images/history/1.png"
                   alt="मंदिर की स्थापना"
                   fill
                   priority

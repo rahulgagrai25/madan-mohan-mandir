@@ -16,11 +16,11 @@ const jakarta = Plus_Jakarta_Sans({
 });
 
 const heroImages = [
-  "images/g3.jpg",
-  "images/g2.jpg",
-  "images/g1.jpg",
-  "gallery/deity-1.png",
-  "gallery/devotees-1.png"
+  "/main/hero/h1.jpg",
+  "/main/hero/h2.jpg",
+  "/main/hero/h3.jpg",
+  "/main/hero/h4.jpg",
+  "/main/hero/h5.jpg"
 ];
 
 export default function Hero() {

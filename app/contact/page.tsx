@@ -603,7 +603,7 @@ export default function ContactPage() {
               ============================================================ */}
               <div className="relative order-1 h-48 border-b border-[#C2A95B]/40 sm:h-72 lg:order-2 lg:h-full lg:min-h-full lg:border-b-0 lg:border-l">
                 <img
-                  src="/background/bg3.png"
+                  src="/images/contact/image.png"
                   alt="Madan Mohan Mandir, Boreya, Kanke, Ranchi"
                   className="absolute inset-0 h-full w-full object-cover"
                 />

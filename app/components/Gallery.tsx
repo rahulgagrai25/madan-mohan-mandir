@@ -24,32 +24,32 @@ const jakarta = Plus_Jakarta_Sans({
 
 const previewImages = [
   {
-    src: "/gallery/temple-2.png",
+    src: "/main/gallery/temple-2.png",
     title: "Temple Exterior",
     span: "md:col-span-2 md:row-span-2",
   },
   {
-    src: "/gallery/deity-1.png",
+    src: "/main/gallery/deity-1.png",
     title: "Madan Mohan Shringar",
     span: "",
   },
   {
-    src: "/gallery/festival-1.png",
+    src: "/main/gallery/festival-1.png",
     title: "Janmashtami Utsav",
     span: "",
   },
   {
-    src: "/gallery/aarti-1.png",
+    src: "/main/gallery/aarti-1.png",
     title: "Evening Aarti",
     span: "md:col-span-2",
   },
   {
-    src: "/gallery/devotees-1.png",
+    src: "/main/gallery/devotees-1.png",
     title: "Devotees in Prayer",
     span: "",
   },
   {
-    src: "/gallery/temple-1.png",
+    src: "/main/gallery/temple-1.png",
     title: "Golden Spire",
     span: "md:col-span-2",
   },

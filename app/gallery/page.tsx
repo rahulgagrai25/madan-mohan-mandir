@@ -52,7 +52,7 @@ const galleryImages: GalleryImage[] = [
     category: "Temple",
   },
   {
-    src: "/events/ekadashi.png",
+    src: "/gallery/ekadashi.png",
     alt: "Shri Madan Mohan deity",
     caption: "Shri Madan Mohan — the enchanting form",
     category: "Deity",
@@ -82,13 +82,13 @@ const galleryImages: GalleryImage[] = [
     category: "Architecture",
   },
   {
-    src: "/images/10.png",
+    src: "/gallery/10.png",
     alt: "Radha Krishna shrine",
     caption: "Radha and Krishna together in the sanctum",
     category: "Deity",
   },
   {
-    src: "/events/radhashtami.png",
+    src: "/gallery/radhashtami.png",
     alt: "Radhashtami",
     caption: "Radhashtami — the appearance of Shri Radha",
     category: "Festivals",
@@ -100,19 +100,19 @@ const galleryImages: GalleryImage[] = [
     category: "Aarti",
   },
   {
-    src: "/images/5.png",
+    src: "/gallery/5.png",
     alt: "Temple entrance gate",
     caption: "The entrance gate, founded in 1668",
     category: "Architecture",
   },
   {
-    src: "/events/holi.png",
+    src: "/gallery/holi.png",
     alt: "Holi celebration",
     caption: "Holi — the festival of colours and joy",
     category: "Festivals",
   },
   {
-    src: "/events/janmashtami.png",
+    src: "/gallery/janmashtami.png",
     alt: "Deity shringar",
     caption: "Shringar — the deity adorned with fresh flowers",
     category: "Deity",
